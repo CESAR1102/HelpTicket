@@ -9,3 +9,14 @@ D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET\HelpTicket\Business\o
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET\HelpTicket\Business\obj\Debug\Business.csproj.CopyComplete
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET\HelpTicket\Business\obj\Debug\Business.dll
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET\HelpTicket\Business\obj\Debug\Business.pdb
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\bin\Debug\Business.dll
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\bin\Debug\Business.pdb
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\bin\Debug\Data.dll
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\bin\Debug\Entity.dll
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\bin\Debug\Data.pdb
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\bin\Debug\Entity.pdb
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\obj\Debug\Business.csprojAssemblyReference.cache
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\obj\Debug\Business.csproj.CoreCompileInputs.cache
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\obj\Debug\Business.csproj.CopyComplete
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\obj\Debug\Business.dll
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Business\obj\Debug\Business.pdb

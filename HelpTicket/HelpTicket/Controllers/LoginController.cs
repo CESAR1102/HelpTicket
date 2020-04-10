@@ -58,9 +58,31 @@ namespace HelpTicket.Controllers
 			return View();
 		}
 
-		
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Forgot_Password(string correo)
+        {
+            string mensaje;
+            if (usuarioservice.AsignarToken(correo, out mensaje)){
+                if (usuarioservice.EnviarEmailRecuperarContra(correo))
+                {
+                    return View("Notificacion_token");
+                }
+                else
+                {
+                    ViewBag.Message = "No se pudo enviar el correo. Intente nuevamente.";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.Message = mensaje;
+                return View();
+            }
+        }
 
-		[HttpGet]
+
+        [HttpGet]
 		public ActionResult Recovery(string token)
 		{
 			

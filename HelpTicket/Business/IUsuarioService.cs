@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Business
 {
-	public interface IUsuarioService:ICrudService<Usuario>
-	{
-	}
+    public interface IUsuarioService : ICrudService<Usuario>
+    {
+        bool AsignarToken(string correo, out string msm);
+        bool EnviarEmailRecuperarContra(string correo);
+    }
 }

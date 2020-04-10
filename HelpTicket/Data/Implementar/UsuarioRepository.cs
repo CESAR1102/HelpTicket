@@ -67,5 +67,84 @@ namespace Data.Implementar
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+        public string ValidarCorreo(string correo, out string msm)
+        {
+            string usuario = string.Empty;
+            msm = string.Empty;
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query = new SqlCommand("Select u.correo, u.codigo from Usuario as u where u.correo = '" + correo + "'", conexion);
+                    using (var dr = query.ExecuteReader())
+                    {
+
+                        while (dr.Read())
+                        {
+                            usuario = dr["codigo"].ToString(); ;
+                        }
+
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                msm = "Ocurrio un error";
+            }
+            return usuario;
+        }
+
+        public bool AsignarToken(string codigo, string token, out string msm)
+        {
+            int filas;
+            bool asignado = false;
+            msm = string.Empty;
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query = new SqlCommand("Update usuario set token = '" + token + "' where codigo = '" + codigo + "'", conexion);
+                    filas = query.ExecuteNonQuery();
+                    if (filas > 0) asignado = true;
+                }
+            }
+            catch (Exception)
+            {
+
+                msm = "Ocurrio un error";
+            }
+            return asignado;
+        }
+
+        public string GetTokenByEmail(string correo)
+        {
+            string token = string.Empty;
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query = new SqlCommand("Select u.token from Usuario as u where u.correo = '" + correo + "'", conexion);
+                    using (var dr = query.ExecuteReader())
+                    {
+
+                        while (dr.Read())
+                        {
+                            token = dr["token"].ToString(); ;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
+            return token;
+        }
+    }
 }

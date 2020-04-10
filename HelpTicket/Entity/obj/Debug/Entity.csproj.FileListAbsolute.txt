@@ -4,3 +4,9 @@ D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET\HelpTicket\Entity\obj
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET\HelpTicket\Entity\obj\Debug\Entity.dll
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET\HelpTicket\Entity\obj\Debug\Entity.pdb
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET\HelpTicket\Entity\obj\Debug\Entity.csprojAssemblyReference.cache
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Entity\bin\Debug\Entity.dll
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Entity\bin\Debug\Entity.pdb
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Entity\obj\Debug\Entity.csprojAssemblyReference.cache
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Entity\obj\Debug\Entity.dll
+C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Entity\obj\Debug\Entity.pdb

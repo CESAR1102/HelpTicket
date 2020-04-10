@@ -9,5 +9,8 @@ namespace Data
 {
 	public interface IUsuarioRepository:ICrudRepository<Usuario>
 	{
-	}
+        string ValidarCorreo(string correo, out string msm);
+        bool AsignarToken(string codigo, string token, out string msm);
+        string GetTokenByEmail(string correo);
+    }
 }
