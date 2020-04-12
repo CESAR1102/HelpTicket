@@ -16,3 +16,12 @@ C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Data\obj\Debug\Data.cs
 C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
 C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
 C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.pdb
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.pdb
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csprojAssemblyReference.cache
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb

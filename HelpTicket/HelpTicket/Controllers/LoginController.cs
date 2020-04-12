@@ -2,6 +2,7 @@
 using Business.Implementar;
 using Entity;
 using HelpTicket.Models;
+using HelpTicket.PartialClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,11 +61,11 @@ namespace HelpTicket.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Forgot_Password(string correo)
+        public ActionResult Forgot_Password(InputFields data)
         {
             string mensaje;
-            if (usuarioservice.AsignarToken(correo, out mensaje)){
-                if (usuarioservice.EnviarEmailRecuperarContra(correo))
+            if (usuarioservice.AsignarToken(data.correo, out mensaje)){
+                if (usuarioservice.EnviarEmailRecuperarContra(data.correo))
                 {
                     return View("Notificacion_token");
                 }
