@@ -61,19 +61,6 @@ namespace HelpTicket.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-<<<<<<< HEAD
-        public ActionResult Forgot_Password(InputFields data)
-        {
-            string mensaje;
-            if (usuarioservice.AsignarToken(data.correo, out mensaje)){
-                if (usuarioservice.EnviarEmailRecuperarContra(data.correo))
-                {
-                    return View("Notificacion_token");
-                }
-                else
-                {
-                    ViewBag.Message = "No se pudo enviar el correo. Intente nuevamente.";
-=======
         public ActionResult Forgot_Password(InputFields_ForgotPassword data)
         {
             if (ModelState.IsValid)
@@ -94,28 +81,17 @@ namespace HelpTicket.Controllers
                 else
                 {
                     ViewBag.Message = mensaje;
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
                     return View();
                 }
             }
             else
             {
-<<<<<<< HEAD
-                ViewBag.Message = mensaje;
-=======
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
                 return View();
             }
         }
 
-<<<<<<< HEAD
-
-        [HttpGet]
-		public ActionResult Recovery()
-=======
         [HttpGet]
 		public ActionResult Recovery(string token)
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
 		{
             if (token is null || token == string.Empty)
             {
@@ -139,14 +115,6 @@ namespace HelpTicket.Controllers
             }          
 		}
 
-<<<<<<< HEAD
-        [HttpGet]
-        public ActionResult Token_Expirado()
-        {
-
-            return View();
-
-=======
         [HttpPost]
         public ActionResult Recovery(InputFields_Recovery data)
         {
@@ -174,7 +142,6 @@ namespace HelpTicket.Controllers
             {
                 return View();
             }
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
         }
     }
 }

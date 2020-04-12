@@ -105,20 +105,12 @@ namespace Data.Implementar
             int filas;
             bool asignado = false;
             msm = string.Empty;
-<<<<<<< HEAD
-=======
             int registros = 0;
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
             try
             {
                 using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
                 {
                     conexion.Open();
-<<<<<<< HEAD
-                    var query = new SqlCommand("Update usuario set token = '" + token + "' where codigo = '" + codigo + "'", conexion);
-                    filas = query.ExecuteNonQuery();
-                    if (filas > 0) asignado = true;
-=======
                     var query1 = new SqlCommand("Select count(*) as num from usuario where codigo = '" + codigo + "'", conexion);
                     using (var dr = query1.ExecuteReader())
                     {
@@ -133,7 +125,6 @@ namespace Data.Implementar
                         filas = query2.ExecuteNonQuery();
                         if (filas > 0) asignado = true;
                     }
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
                 }
             }
             catch (Exception)
@@ -202,9 +193,6 @@ namespace Data.Implementar
 			//}
 			return usuarios;
 		}
-<<<<<<< HEAD
-	}
-=======
 
         public string VerificarToken(string token)
         {
@@ -282,5 +270,4 @@ namespace Data.Implementar
             return actualizado;
         }
     }
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
 }

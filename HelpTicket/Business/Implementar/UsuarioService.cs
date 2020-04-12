@@ -160,10 +160,6 @@ namespace Business.Implementar
             }
         }
 
-<<<<<<< HEAD
-		
-	}
-=======
         public bool VerificarToken(string token, out string codigo)
         {
             codigo = string.Empty;
@@ -192,5 +188,4 @@ namespace Business.Implementar
             }
         }
     }
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
 }

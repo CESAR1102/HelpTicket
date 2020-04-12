@@ -13,10 +13,7 @@ namespace Data
         bool AsignarToken(string codigo, string token, out string msm);
         string GetTokenByEmail(string correo);
 		List<Usuario> validar_usuario(string codigo,string contraseña);
-<<<<<<< HEAD
-=======
         string VerificarToken(string token);
         bool ActualizarContraseña(string codigo, string contra);
->>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
     }
 }
