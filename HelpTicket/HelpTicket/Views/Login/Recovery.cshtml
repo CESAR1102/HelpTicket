@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿@model HelpTicket.Models.ViewModel.RecoveryPassword
+=======
+﻿@model HelpTicket.PartialClass.InputFields_Recovery
+>>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
 
 	@{
 		Layout = "~/Views/Shared/_Layout_Login.cshtml";
@@ -21,6 +25,7 @@
 									<h1 class="h4 text-gray-900 mb-2">Restablecer contraseña</h1>
 								</div>
 								<br/>
+<<<<<<< HEAD
 								<form action="@Url.Content("~/Login/Recovery")" method="post">
 									@Html.HiddenFor(d => d.token)
 
@@ -37,6 +42,28 @@
 									</div>
 
 								</form>
+=======
+                                <form action="@Url.Content("~/Login/Recovery")" method="post">
+                                    @Html.HiddenFor(d => d.codigo)
+
+                                    <label>Escribe tu nueva contraseña</label>
+                                    @Html.PasswordFor(d => d.password1, new { @class = "form-control"})
+                                    @Html.ValidationMessageFor(d => d.password1, null, new { style = "color:red;" })
+
+                                    <label>Vuelve a escribir contraseña</label>
+                                    @Html.PasswordFor(d => d.password2, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.password2, null, new { style = "color:red;" })
+                                    <br/>
+                                    <div class="text-right">
+                                        <input type="submit" value="Recuperar" class="btn btn-danger btn-user btn-block" />
+                                    </div>
+                                    <hr>
+                                    @if (ViewBag.Message != null)
+                                    {
+                                        <p class="text-center alert-danger p-1">@ViewBag.Message</p>
+                                    }
+                                </form>
+>>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
 								<hr>
 							
 									<div class="text-center">

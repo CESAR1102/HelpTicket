@@ -16,6 +16,7 @@ C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Data\obj\Debug\Data.cs
 C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
 C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
 C:\Users\ALVARO\Desktop\Trabajo TDP\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb
+<<<<<<< HEAD
 C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.dll
 C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.pdb
 C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.dll
@@ -25,6 +26,8 @@ C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.
 C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
 C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
 C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb
+=======
+>>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\bin\Debug\Data.dll
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\bin\Debug\Data.pdb
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\bin\Debug\Entity.dll
@@ -34,3 +37,15 @@ D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\Hel
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb
+<<<<<<< HEAD
+=======
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.pdb
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.pdb
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csprojAssemblyReference.cache
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb
+>>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9

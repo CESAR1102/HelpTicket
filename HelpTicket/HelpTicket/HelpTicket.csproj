@@ -134,7 +134,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\SesionData.cs" />
+<<<<<<< HEAD
     <Compile Include="PartialClass\InputFields.cs" />
+=======
+    <Compile Include="PartialClass\InputFields_ForgotPassword.cs" />
+    <Compile Include="PartialClass\InputFields_Recovery.cs" />
+>>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1951,6 +1956,10 @@
     <Content Include="Views\Login\Notificacion_token.cshtml" />
     <Content Include="Views\Login\Recovery.cshtml" />
     <Content Include="Views\Login\Token_Expirado.cshtml" />
+<<<<<<< HEAD
+=======
+    <Content Include="Views\Login\Notificacion_UpdatePass.cshtml" />
+>>>>>>> 3d87a9705ccfca685b47ff329697db7141d27bc9
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
