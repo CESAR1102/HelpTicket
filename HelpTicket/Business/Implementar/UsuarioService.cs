@@ -41,6 +41,29 @@ namespace Business.Implementar
 		{
 			throw new NotImplementedException();
 		}
+		
+		public bool logeo(string codigo,string contraseña)
+		{
+			
+
+			if (usuario.validar_usuario(codigo,contraseña).Count() > 0)
+			{
+				Usuario user = new Usuario();
+				var datos = usuario.validar_usuario(codigo, contraseña).ToList();
+				foreach (var Data in datos)
+				{
+					
+					user.codigo = Data.codigo;
+					user.contraseña = Data.contraseña;
+
+				}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
         private string GenerarToken(string correo, out string msm, out string codigo)
         {
@@ -136,5 +159,7 @@ namespace Business.Implementar
                 return false;
             }
         }
-    }
+
+		
+	}
 }

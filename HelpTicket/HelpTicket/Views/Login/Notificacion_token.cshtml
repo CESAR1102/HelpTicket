@@ -1,36 +1,32 @@
-﻿@model HelpTicket.Models.UserLogin
+﻿@model HelpTicket.PartialClass.InputFields
 @{
 	Layout = "~/Views/Shared/_Layout_Login.cshtml";
 	ViewBag.Title = "Forgot_Password";
 }
-
 <div class="row justify-content-center">
 	<div class="col-xl-10 col-lg-12 col-md-9">
 		<br /> <br /> <br /><br />
 		<div class="card o-hidden border-0 shadow-lg my-2">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-2">Se envió el Link de recuperación de contraseña</h1>
-                                <div class="mb-4">
-                                    <p>Revisa tu correo para que puedas acceder al Link de recuperacion de Contraseña.</p>
-                                    <p>Revisa tu carpeta de Spam sino encuentras en correo en tu bandeja de entrada.</p>
-                                    <p>Si aun asi no lo encuentras intenta otra vez.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text-center p-4">
-                            <a class="btn btn-success" href="@Url.Action("Login_", "Login")">¡Listo! Regresemos</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<div class="card-body p-0">
+				<!-- Nested Row within Card Body -->
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-2">Se envió el Link de recuperación de contraseña</h1>
+								<div class="mb-4">
+									<p>Revisa tu correo para que puedas acceder al Link de recuperacion de Contraseña.</p>
+									<p>Revisa tu carpeta de Spam sino encuentras en correo en tu bandeja de entrada.</p>
+									<p>Si aun asi no lo encuentras intenta otra vez.</p>
+								</div>
+							</div>
+						</div>
+						<div class="text-center p-4">
+							<a class="btn btn-success" href="@Url.Action("Login_", "Login")">¡Listo! Regresemos</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-

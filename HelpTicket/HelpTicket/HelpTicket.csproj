@@ -129,31 +129,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Models\ContenedorModelos.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DBModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\SesionData.cs" />
-    <Compile Include="Models\UserLogin.cs" />
-    <Compile Include="Models\Usuario.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="PartialClass\InputFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1769,16 +1749,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\DBModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\DBModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <LastGenOutput>DBModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\scss\navs\_global.scss" />
@@ -1948,13 +1918,6 @@
     <Content Include="Content\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Content\vendor\jquery\jquery.min.map" />
     <Content Include="Content\vendor\jquery\jquery.slim.min.map" />
-    <EntityDeploy Include="Models\DBModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DBModel.edmx.diagram">
-      <DependentUpon>DBModel.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

@@ -9,7 +9,7 @@ namespace Entity
 {
 	public class Usuario
 	{
-		public int ID_usuario { get; set; }
+		//public int ID_usuario { get; set; }
 		public string nombres { get; set; }
 		public string correo { get; set; }
 
@@ -20,10 +20,10 @@ namespace Entity
 		[StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos de 6 caracteres")]
 		[Required(ErrorMessage = " La contraseña es requerida")]
 		[Display(Name = "Contraseña")]
-		public string Contraseña { get; set; }
+		public string contraseña { get; set; }
 
-		public string Rol { get; set; }
-		public DateTime Fecha_creacion { get; set; }
+		public string rol_creacion { get; set; }
+		public DateTime fecha_creacion { get; set; }
 		public string token { get; set; }
 
 		

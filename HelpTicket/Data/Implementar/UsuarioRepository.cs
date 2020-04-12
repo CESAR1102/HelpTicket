@@ -18,18 +18,18 @@ namespace Data.Implementar
 				using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 				{
 					conexion.Open();
-					var query = new SqlCommand("Select u.ID_usuario, u.nombres,u.correo,u.codigo,u.contraseña from Usuario as u ", conexion);
+					var query = new SqlCommand("Select u.ID_usuario, u.nombres,u.correo,u.codigo,u.contraseña from usuario as u ", conexion);
 					using (var dr = query.ExecuteReader())
 					{
 
 						while (dr.Read())
 						{
 							var usuario = new Usuario();
-							usuario.ID_usuario = Convert.ToInt32(dr["ID_usuario"]);
+							
 							usuario.nombres = dr["nombres"].ToString();
 							usuario.correo = dr["correo"].ToString();
 							usuario.codigo = dr["codigo"].ToString();
-							usuario.Contraseña = dr["contraseña"].ToString();
+							usuario.contraseña = dr["contraseña"].ToString();
 							
 
 							usuarios.Add(usuario);
@@ -68,7 +68,9 @@ namespace Data.Implementar
 			throw new NotImplementedException();
 		}
 
-        public string ValidarCorreo(string correo, out string msm)
+		
+
+		public string ValidarCorreo(string correo, out string msm)
         {
             string usuario = string.Empty;
             msm = string.Empty;
@@ -146,5 +148,38 @@ namespace Data.Implementar
             }
             return token;
         }
-    }
+		public List<Usuario> validar_usuario(string codigo, string contraseña)
+		{
+
+			var usuarios = new List<Usuario>();
+			//try
+			//{
+		
+			using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+			{
+				conexion.Open();
+				var query = new SqlCommand("Select u.codigo, u.contraseña from usuario as u where u.codigo = '" + codigo + "'" + " and u.contraseña = '" + contraseña + "'", conexion);
+				using (var dr = query.ExecuteReader())
+				{
+					var usuario = new Usuario();
+					while (dr.Read())
+					{
+						usuario.codigo = dr["codigo"].ToString();
+						usuario.contraseña = dr["contraseña"].ToString();
+						usuarios.Add(usuario);
+					}
+
+
+				}
+			}
+			//}
+			//catch (Exception)
+			//{
+
+			//	throw;
+			//	//msm = "Ocurrio un error";
+			//}
+			return usuarios;
+		}
+	}
 }

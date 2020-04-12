@@ -11,5 +11,6 @@ namespace Business
     {
         bool AsignarToken(string correo, out string msm);
         bool EnviarEmailRecuperarContra(string correo);
+		bool logeo(string codigo,string contraseña);
     }
 }

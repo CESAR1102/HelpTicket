@@ -12,5 +12,6 @@ namespace Data
         string ValidarCorreo(string correo, out string msm);
         bool AsignarToken(string codigo, string token, out string msm);
         string GetTokenByEmail(string correo);
+		List<Usuario> validar_usuario(string codigo,string contraseña);
     }
 }
