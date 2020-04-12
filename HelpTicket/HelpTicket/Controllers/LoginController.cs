@@ -2,6 +2,7 @@
 using Business.Implementar;
 using Entity;
 using HelpTicket.Models;
+using HelpTicket.PartialClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,11 @@ namespace HelpTicket.Controllers
 
 		[HttpPost]
 		[AllowAnonymous]
-		public async Task<ActionResult> Login_(UserLogin datos)
+		public async Task<ActionResult> Login_(Usuario datos)
 		{
 			if (ModelState.IsValid)
 			{
-				if (datos.logeo() == true)
+				if (usuarioservice.logeo(datos.codigo,datos.contraseña) == true)
 				{
 					return RedirectToAction("Index", "Home");
 				}
@@ -58,15 +59,44 @@ namespace HelpTicket.Controllers
 			return View();
 		}
 
-		
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Forgot_Password(InputFields data)
+        {
+            string mensaje;
+            if (usuarioservice.AsignarToken(data.correo, out mensaje)){
+                if (usuarioservice.EnviarEmailRecuperarContra(data.correo))
+                {
+                    return View("Notificacion_token");
+                }
+                else
+                {
+                    ViewBag.Message = "No se pudo enviar el correo. Intente nuevamente.";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.Message = mensaje;
+                return View();
+            }
+        }
 
-		[HttpGet]
-		public ActionResult Recovery(string token)
+
+        [HttpGet]
+		public ActionResult Recovery()
 		{
 			
 				return View();
 			
 		}
-	
-	}
+
+        [HttpGet]
+        public ActionResult Token_Expirado()
+        {
+
+            return View();
+
+        }
+    }
 }

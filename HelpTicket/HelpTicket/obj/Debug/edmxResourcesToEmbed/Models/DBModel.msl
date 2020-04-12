@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="WebApp_TicketModelStoreContainer" CdmEntityContainer="WebApp_TicketEntities">
-    <EntitySetMapping Name="Usuario">
-      <EntityTypeMapping TypeName="WebApp_TicketModel.Usuario">
-        <MappingFragment StoreEntitySet="Usuario">
-          <ScalarProperty Name="ID_usuario" ColumnName="ID_usuario" />
+  <EntityContainerMapping StorageEntityContainer="Help_TicketModelStoreContainer" CdmEntityContainer="Help_TicketEntities">
+    <EntitySetMapping Name="usuario">
+      <EntityTypeMapping TypeName="Help_TicketModel.usuario">
+        <MappingFragment StoreEntitySet="usuario">
           <ScalarProperty Name="nombres" ColumnName="nombres" />
           <ScalarProperty Name="correo" ColumnName="correo" />
           <ScalarProperty Name="codigo" ColumnName="codigo" />

@@ -1,4 +1,4 @@
-﻿@model HelpTicket.Models.UserLogin
+﻿@model Entity.Usuario
 @{
 	Layout = "~/Views/Shared/_Layout_Login.cshtml";
 	ViewBag.Title = "Login_";
@@ -42,9 +42,9 @@
 											<div class="input-group-prepend">
 												<span class="input-group-text" id="inputGroup-sizing-sm"><i class="fas fa-unlock-alt"></i></span>
 											</div>
-											@Html.PasswordFor(d1 => d1.Contraseña, new { @class = "form-control form-control-user ", @placeholder = "Contraseña" })
+											@Html.PasswordFor(d1 => d1.contraseña, new { @class = "form-control form-control-user ", @placeholder = "Contraseña" })
 										</div>
-										@Html.ValidationMessageFor(d1 => d1.Contraseña, "", new { @class = "text-danger" })
+										@Html.ValidationMessageFor(d1 => d1.contraseña, "", new { @class = "text-danger" })
 
 									</div>
 									<div class="form-group">

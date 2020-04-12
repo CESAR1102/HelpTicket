@@ -1,0 +1,54 @@
+﻿@model HelpTicket.Models.ViewModel.RecoveryPassword
+
+	@{
+		Layout = "~/Views/Shared/_Layout_Login.cshtml";
+		ViewBag.Title = "Recovery";
+	}
+
+
+
+	<div class="row justify-content-center">
+		<div class="col-xl-10 col-lg-12 col-md-9">
+			<br /> <br /> <br /><br /><br /><br /><br />
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+					<!-- Nested Row within Card Body -->
+					<div class="row">
+						<div class="col-lg-6 d-none d-lg-block bg-dark" style="background-image: url('../img/login/LOGO.png') "></div>
+						<div class="col-lg-6">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-2">Restablecer contraseña</h1>
+								</div>
+								<br/>
+								<form action="@Url.Content("~/Login/Recovery")" method="post">
+									@Html.HiddenFor(d => d.token)
+
+									<label>Escribe tu nueva contraseña</label>
+									@Html.PasswordFor(d => d.Password, new { @class = "form-control" })
+									@Html.ValidationMessageFor(d => d.Password, null, new { style = "color:red;" })
+
+									<label>Vuelve a escribir contraseña</label>
+									@Html.PasswordFor(d => d.Password2, new { @class = "form-control" })
+									@Html.ValidationMessageFor(d => d.Password2, null, new { style = "color:red;" })
+									<br />
+									<div class="text-right">
+										<input type="submit" value="Recuperar" class="btn btn-danger btn-user btn-block" />
+									</div>
+
+								</form>
+								<hr>
+							
+									<div class="text-center">
+										<a class="small text-danger" href="@Url.Action("Login_", "Login")">¿Recordate tu contraseña? ¡Iniciar sesión!</a>
+									</div>
+									
+								
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
