@@ -1986,6 +1986,8 @@
     <Content Include="Views\Login\Login_.cshtml" />
     <Content Include="Views\Login\Forgot_Password.cshtml" />
     <Content Include="Views\Login\Notificacion_token.cshtml" />
+    <Content Include="Views\Login\Recovery.cshtml" />
+    <Content Include="Views\Login\Token_Expirado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

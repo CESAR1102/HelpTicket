@@ -1,0 +1,41 @@
+﻿
+@{
+	Layout = "~/Views/Shared/_Layout_Login.cshtml";
+	ViewBag.Title = "Token_Expirado";
+}
+
+
+
+<div class="row justify-content-center">
+
+	<div class="col-xl-10 col-lg-12 col-md-9">
+		<br /> <br /> <br /><br /><br /><br /><br />
+		<div class="card o-hidden border-0 shadow-lg my-5">
+			<div class="card-body p-0">
+
+				<div class="row">
+					<div class="col-lg-6 d-none d-lg-block " style="background-image: url('../img/login/LOGO.png') "></div>
+					<div class="col-lg-6" >
+						<div class="p-5">
+							<img src="../img/login/alerta.jpeg" class="rounded align-content-center" alt="Cinque Terre">
+
+							<br /><br />
+							<div class="text-center">
+								<h2 class="h4 text-gray-900 mb-2">Tu Solicitude de restableciento de contraseña ha expirado.</h2>
+								<p class="mb-4"></p>
+							</div>
+							<hr>
+							<div class="text-center">
+								<a class="small text-danger" href="@Url.Action("Login_", "Login")">Iniciar sesión</a>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

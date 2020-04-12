@@ -84,12 +84,19 @@ namespace HelpTicket.Controllers
 
 
         [HttpGet]
-		public ActionResult Recovery(string token)
+		public ActionResult Recovery()
 		{
 			
 				return View();
 			
 		}
-	
-	}
+
+        [HttpGet]
+        public ActionResult Token_Expirado()
+        {
+
+            return View();
+
+        }
+    }
 }
