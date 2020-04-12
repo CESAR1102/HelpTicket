@@ -105,14 +105,26 @@ namespace Data.Implementar
             int filas;
             bool asignado = false;
             msm = string.Empty;
+            int registros = 0;
             try
             {
                 using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
                 {
                     conexion.Open();
-                    var query = new SqlCommand("Update usuario set token = '" + token + "' where codigo = '" + codigo + "'", conexion);
-                    filas = query.ExecuteNonQuery();
-                    if (filas > 0) asignado = true;
+                    var query1 = new SqlCommand("Select count(*) as num from usuario where codigo = '" + codigo + "'", conexion);
+                    using (var dr = query1.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            registros = Convert.ToInt32(dr["num"].ToString());
+                        }
+                    }
+                    if (registros == 1)
+                    {
+                        var query2 = new SqlCommand("Update usuario set token = '" + token + "' where codigo = '" + codigo + "'", conexion);
+                        filas = query2.ExecuteNonQuery();
+                        if (filas > 0) asignado = true;
+                    }
                 }
             }
             catch (Exception)
@@ -181,5 +193,81 @@ namespace Data.Implementar
 			//}
 			return usuarios;
 		}
-	}
+
+        public string VerificarToken(string token)
+        {
+            string codigo = string.Empty;
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query = new SqlCommand("Select u.codigo, u.token from Usuario as u where u.token = '" + token + "'", conexion);
+                    using (var dr = query.ExecuteReader())
+                    {
+
+                        while (dr.Read())
+                        {
+                            codigo = dr["codigo"].ToString(); ;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
+            return codigo;
+        }
+
+        public bool ActualizarContraseña(string codigo, string contra)
+        {
+            int filas;
+            bool actualizado = false;
+            int registros = 0;
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query1 = new SqlCommand("Select count(*) as num from usuario where codigo = '" + codigo + "'", conexion);
+                    using (var dr = query1.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            registros = Convert.ToInt32(dr["num"].ToString());
+                        }
+                    }
+                    if (registros == 1)
+                    {
+                        var query2 = new SqlCommand("begin transaction", conexion);
+                        query2.ExecuteNonQuery();
+                        query2 = new SqlCommand("Update usuario set contraseña = '" + contra + "' where codigo = '" + codigo + "'", conexion);
+                        filas = query2.ExecuteNonQuery();
+                        if (filas > 0)
+                        {
+                            query2 = new SqlCommand("Update usuario set token = NULL where codigo = '" + codigo + "'", conexion);
+                            filas = query2.ExecuteNonQuery();
+                            if (filas > 0)
+                            {
+                                query2 = new SqlCommand("commit", conexion);
+                                query2.ExecuteNonQuery();
+                                actualizado = true;
+                            }
+                            else
+                            {
+                                query2 = new SqlCommand("rollback", conexion);
+                                query2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return actualizado;
+        }
+    }
 }

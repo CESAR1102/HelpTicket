@@ -61,42 +61,87 @@ namespace HelpTicket.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Forgot_Password(InputFields data)
+        public ActionResult Forgot_Password(InputFields_ForgotPassword data)
         {
-            string mensaje;
-            if (usuarioservice.AsignarToken(data.correo, out mensaje)){
-                if (usuarioservice.EnviarEmailRecuperarContra(data.correo))
+            if (ModelState.IsValid)
+            {
+                string mensaje;
+                if (usuarioservice.AsignarToken(data.correo, out mensaje))
                 {
-                    return View("Notificacion_token");
+                    if (usuarioservice.EnviarEmailRecuperarContra(data.correo))
+                    {
+                        return View("Notificacion_token");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "No se pudo enviar el correo. Intente nuevamente.";
+                        return View();
+                    }
                 }
                 else
                 {
-                    ViewBag.Message = "No se pudo enviar el correo. Intente nuevamente.";
+                    ViewBag.Message = mensaje;
                     return View();
                 }
             }
             else
             {
-                ViewBag.Message = mensaje;
                 return View();
             }
         }
 
-
         [HttpGet]
-		public ActionResult Recovery()
+		public ActionResult Recovery(string token)
 		{
-			
-				return View();
-			
+            if (token is null || token == string.Empty)
+            {
+                return View("Token_Expirado");
+            }
+            else
+            {
+                string codigo;
+                if (usuarioservice.VerificarToken(token, out codigo))
+                {
+                    if (codigo == string.Empty) return View("Token_Expirado");
+                    else
+                    {
+                        return View(new InputFields_Recovery(codigo, string.Empty, string.Empty));
+                    }
+                }
+                else
+                {
+                    return View("Token_Expirado");
+                }
+            }          
 		}
 
-        [HttpGet]
-        public ActionResult Token_Expirado()
+        [HttpPost]
+        public ActionResult Recovery(InputFields_Recovery data)
         {
-
-            return View();
-
+            if (ModelState.IsValid)
+            {
+                string msm;
+                if (data.password1 == data.password2) {
+                    if(usuarioservice.ActualizarContraseña(data.codigo, data.password1, out msm))
+                    {
+                        return View("Notificacion_UpdatePass");
+                    }
+                    else
+                    {
+                        ViewBag.Message = msm;
+                        return View();
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Las contraseñas deben ser iguales";
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

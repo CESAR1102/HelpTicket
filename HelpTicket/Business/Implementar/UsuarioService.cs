@@ -160,6 +160,32 @@ namespace Business.Implementar
             }
         }
 
-		
-	}
+        public bool VerificarToken(string token, out string codigo)
+        {
+            codigo = string.Empty;
+            codigo = usuario.VerificarToken(token);
+            if(codigo == string.Empty)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool ActualizarContraseña(string codigo, string contra, out string msm)
+        {
+            msm = string.Empty;
+            if (usuario.ActualizarContraseña(codigo, contra))
+            {
+                return true;
+            }
+            else
+            {
+                msm = "No se pudo actualizar la contraseña. Intente otra vez."; 
+                return false;
+            }
+        }
+    }
 }
