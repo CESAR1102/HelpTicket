@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICrudRepository.cs" />
+    <Compile Include="Implementar\TicketRepository.cs" />
     <Compile Include="Implementar\UsuarioRepository.cs" />
+    <Compile Include="ITicketRepository.cs" />
     <Compile Include="IUsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

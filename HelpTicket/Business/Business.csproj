@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICrudService.cs" />
+    <Compile Include="Implementar\TicketService.cs" />
     <Compile Include="Implementar\UsuarioService.cs" />
+    <Compile Include="ITicketService.cs" />
     <Compile Include="IUsuarioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
