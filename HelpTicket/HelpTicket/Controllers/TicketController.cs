@@ -18,23 +18,23 @@ namespace HelpTicket.Controllers
         private IUsuarioService usuarioservice = new UsuarioService();
         SesionData session = new SesionData();
 
-        [HttpGet]
-        public ActionResult AgregarTicket()
-        { 
-            return View(new Ticket());
-        }
+        //[HttpGet]
+        //public ActionResult AgregarTicket()
+        //{ 
+        //    return View(new Ticket());
+        //}
 
-        [HttpPost]
-        public ActionResult AgregarTicket(Ticket ticket)
-        {
-            if (ModelState.IsValid)
-            {
-                return View(new Ticket());
-            }
-            else
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //public ActionResult AgregarTicket(Ticket ticket)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        return View(new Ticket());
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

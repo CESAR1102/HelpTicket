@@ -140,6 +140,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ContentHome\assets\img\bg-masthead.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\fullsize\1.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\fullsize\2.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\fullsize\3.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\fullsize\4.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\fullsize\5.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\fullsize\6.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\thumbnails\1.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\thumbnails\2.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\thumbnails\3.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\thumbnails\4.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\thumbnails\5.jpg" />
+    <Content Include="ContentHome\assets\img\portfolio\thumbnails\6.jpg" />
+    <Content Include="ContentHome\css\styles.css" />
+    <Content Include="ContentHome\js\scripts.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1954,6 +1969,9 @@
     <Content Include="Views\Login\Recovery.cshtml" />
     <Content Include="Views\Login\Token_Expirado.cshtml" />
     <Content Include="Views\Login\Notificacion_UpdatePass.cshtml" />
+    <Content Include="Views\Shared\_Layout_Home.cshtml" />
+    <Content Include="Views\Home\Cliente.cshtml" />
+    <Content Include="Views\Shared\_Layout_Vista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

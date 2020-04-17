@@ -35,7 +35,9 @@ namespace HelpTicket
 
 			bundles.Add(new StyleBundle("~/bundles/css").Include(
 					"~/Content/vendor/fontawesome-free/css/all.min.css",
-					"~/Content/css/sb-admin-2.min.css"));
+					"~/Content/css/sb-admin-2.min.css",
+					
+					  	"~/ContentHome/css/styles.css"));
 
 
 
@@ -44,7 +46,9 @@ namespace HelpTicket
 			 "~/Content/vendor/jquery/jquery.min.js",
 			 "~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js",
 			 "~/Content/vendor/jquery-easing/jquery.easing.min.js",
-			 "~/Content/js/sb-admin-2.min.js"
+			 "~/Content/js/sb-admin-2.min.js",
+			 "~/ContentHome/js/scripts.js"
+
 			  ));
 
 		}
