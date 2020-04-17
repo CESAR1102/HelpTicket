@@ -43,9 +43,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICrudRepository.cs" />
+    <Compile Include="IDepartamentoRepository.cs" />
+    <Compile Include="Implementar\DepartamentoRepository.cs" />
     <Compile Include="Implementar\TicketRepository.cs" />
+    <Compile Include="Implementar\TopicoRepository.cs" />
     <Compile Include="Implementar\UsuarioRepository.cs" />
     <Compile Include="ITicketRepository.cs" />
+    <Compile Include="ITopicoRepository.cs" />
     <Compile Include="IUsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

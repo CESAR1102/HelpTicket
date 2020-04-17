@@ -11,7 +11,7 @@ namespace Business.Implementar
 {
     public class TicketService : ITicketService
     {
-        private ITicketRepository usuario = new TicketRepository();
+        private ITicketRepository ticket_1 = new TicketRepository();
 
         public bool Delete(int id)
         {
@@ -26,7 +26,7 @@ namespace Business.Implementar
         public Ticket FindByCodAtencion(string cod_atencion, out string msm)
         {
             msm = string.Empty;
-            Ticket ticket = usuario.FindByCodAtencion(cod_atencion);
+            Ticket ticket = ticket_1.FindByCodAtencion(cod_atencion);
             if (ticket is null)
             {
                 msm = "ERROR";
@@ -50,13 +50,13 @@ namespace Business.Implementar
 
         public bool Insert(Ticket t)
         {
-            return usuario.Insert(t);
+            return ticket_1.Insert(t);
         }
 
         public List<Ticket> TicketsAsignados(string codigo_trabajador, out string msm)
         {
             msm = string.Empty;
-            List<Ticket> tickets = usuario.TicketsAsignados(codigo_trabajador);
+            List<Ticket> tickets = ticket_1.TicketsAsignados(codigo_trabajador);
             if (tickets is null)
             {
                 msm = "ERROR";
@@ -75,7 +75,7 @@ namespace Business.Implementar
         public List<Ticket> TicketsSolicitados(string codigo_cliente, out string msm)
         {
             msm = string.Empty;
-            List<Ticket> tickets = usuario.TicketsSolicitados(codigo_cliente);
+            List<Ticket> tickets = ticket_1.TicketsSolicitados(codigo_cliente);
             if (tickets is null)
             {
                 msm = "ERROR";
