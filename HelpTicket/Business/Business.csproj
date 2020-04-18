@@ -42,11 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICrudService.cs" />
-<<<<<<< HEAD
-    <Compile Include="Implementar\TicketService.cs" />
-    <Compile Include="Implementar\UsuarioService.cs" />
-    <Compile Include="ITicketService.cs" />
-=======
     <Compile Include="IDepartamentoService.cs" />
     <Compile Include="Implementar\DepartamentoService.cs" />
     <Compile Include="Implementar\TicketService.cs" />
@@ -54,7 +49,6 @@
     <Compile Include="Implementar\UsuarioService.cs" />
     <Compile Include="ITicketService.cs" />
     <Compile Include="ITopicoService.cs" />
->>>>>>> ed4d2e59db9aba7b9b7f8a06c04d35776d5e9002
     <Compile Include="IUsuarioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -130,11 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-<<<<<<< HEAD
-    <Compile Include="Controllers\TicketController.cs" />
-=======
     <Compile Include="Controllers\ModuloClienteController.cs" />
->>>>>>> ed4d2e59db9aba7b9b7f8a06c04d35776d5e9002
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1971,21 +1967,14 @@
     <Content Include="Views\Login\Recovery.cshtml" />
     <Content Include="Views\Login\Token_Expirado.cshtml" />
     <Content Include="Views\Login\Notificacion_UpdatePass.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Shared\_Layout_Home.cshtml" />
-    <Content Include="Views\Home\Cliente.cshtml" />
-    <Content Include="Views\Shared\_Layout_Vista.cshtml" />
-=======
     <Content Include="Views\ModuloCliente\AgregarTicket.cshtml" />
     <Content Include="Views\Shared\_Layout_Home.cshtml" />
     <Content Include="Views\Shared\_Layout_Vista.cshtml" />
     <Content Include="Views\ModuloCliente\Cliente.cshtml" />
->>>>>>> ed4d2e59db9aba7b9b7f8a06c04d35776d5e9002
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="img\login\" />
-    <Folder Include="Views\Ticket\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -90,11 +90,7 @@ namespace Data.Implementar
 
                     sql.Append("Insert Into Ticket (solicitante_id, topico_id, importancia, descripcion, estado, fecha_solicitado )");
                     sql.Append("Values (" + t.solicitante_id + ", " + t.topico_id + ", " + t.importancia + ", " + t.descripcion);
-<<<<<<< HEAD
-                    sql.Append(", " + t.estado + ", " + t.fecha_solicitado + ")");
-=======
                     sql.Append(", " + t.estado + ", " + DateTime.Now + ")");
->>>>>>> ed4d2e59db9aba7b9b7f8a06c04d35776d5e9002
 
                     query1 = new SqlCommand(sql.ToString(), conexion);
 

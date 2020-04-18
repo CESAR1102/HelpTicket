@@ -13,13 +13,5 @@ namespace HelpTicket.Controllers
         {
             return View();
         }
-
-		public ActionResult Cliente()
-		{
-
-			var nombre = Convert.ToString(Session["usuario"]);
-			ViewBag.nombre = nombre;
-			return View();
-		}
-	}
+    }
 }
