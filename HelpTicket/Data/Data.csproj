@@ -43,9 +43,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICrudRepository.cs" />
+<<<<<<< HEAD
     <Compile Include="Implementar\TicketRepository.cs" />
     <Compile Include="Implementar\UsuarioRepository.cs" />
     <Compile Include="ITicketRepository.cs" />
+=======
+    <Compile Include="IDepartamentoRepository.cs" />
+    <Compile Include="Implementar\DepartamentoRepository.cs" />
+    <Compile Include="Implementar\TicketRepository.cs" />
+    <Compile Include="Implementar\TopicoRepository.cs" />
+    <Compile Include="Implementar\UsuarioRepository.cs" />
+    <Compile Include="ITicketRepository.cs" />
+    <Compile Include="ITopicoRepository.cs" />
+>>>>>>> ed4d2e59db9aba7b9b7f8a06c04d35776d5e9002
     <Compile Include="IUsuarioRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
