@@ -26,7 +26,7 @@ namespace HelpTicket.Controllers
 
 		[HttpPost]
 		[AllowAnonymous]
-		public async Task<ActionResult> Login_(Usuario datos)
+		public async Task<ActionResult> Login_(InputFields_Loguin datos)
 		{
 			if (ModelState.IsValid)
 			{

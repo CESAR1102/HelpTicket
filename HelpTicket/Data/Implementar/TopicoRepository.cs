@@ -29,7 +29,6 @@ namespace Data.Implementar
                 using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
                 {
                     conexion.Open();
-
                     sql.Append("Select id, topico from topico where estado = '");
                     sql.Append("S");
                     sql.Append("' and departamento_id =");

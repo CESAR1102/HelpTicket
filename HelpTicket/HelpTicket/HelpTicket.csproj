@@ -136,6 +136,7 @@
     </Compile>
     <Compile Include="Models\SesionData.cs" />
     <Compile Include="PartialClass\InputFields_ForgotPassword.cs" />
+    <Compile Include="PartialClass\InputFields_Loguin.cs" />
     <Compile Include="PartialClass\InputFields_Recovery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
