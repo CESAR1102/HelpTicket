@@ -42,27 +42,22 @@ namespace Business.Implementar
 			throw new NotImplementedException();
 		}
 		
-		public bool logeo(string codigo,string contraseña)
+		public Usuario logeo(string codigo,string contraseña)
 		{
-			
 
-			if (usuario.validar_usuario(codigo,contraseña).Count() > 0)
+            Usuario user = null;
+            if (usuario.validar_usuario(codigo,contraseña).Count() > 0)
 			{
-				Usuario user = new Usuario();
-				var datos = usuario.validar_usuario(codigo, contraseña).ToList();
+                user = new Usuario();
+                var datos = usuario.validar_usuario(codigo, contraseña).ToList();
 				foreach (var Data in datos)
 				{
-					
 					user.codigo = Data.codigo;
-					user.contraseña = Data.contraseña;
-
-				}
-				return true;
+                    user.nombres = Data.nombres;
+                    user.correo = Data.correo;
+                }
 			}
-			else
-			{
-				return false;
-			}
+			return user;
 		}
 
         private string GenerarToken(string correo, out string msm, out string codigo)

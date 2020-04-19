@@ -1,6 +1,7 @@
 ﻿using Business;
 using Business.Implementar;
 using Entity;
+using HelpTicket.Autorizacion;
 using HelpTicket.Models;
 using HelpTicket.PartialClass;
 using System;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace HelpTicket.Controllers
 {
+    [Logueado]
     public class ModuloClienteController : Controller
     {
         private ITicketService usuarioservice = new TicketService();
@@ -23,16 +25,12 @@ namespace HelpTicket.Controllers
         [HttpGet]
         public ActionResult Cliente()
         {
-
-            var nombre = Convert.ToString(Session["usuario"]);
-            ViewBag.nombre = nombre;
             return View();
         }
 
         [HttpGet]
         public ActionResult AgregarTicket()
         {
-           // Ticket t = new Ticket();
             ViewBag.Importancia = ImportanciaTickets();
             ViewBag.Departamentos = Departamentos();
             ViewBag.Topicos = Topicos(0);

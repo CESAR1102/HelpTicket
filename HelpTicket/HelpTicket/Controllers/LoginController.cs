@@ -30,9 +30,12 @@ namespace HelpTicket.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				if (usuarioservice.logeo(datos.codigo,datos.contraseña) == true)
+                Usuario user = usuarioservice.logeo(datos.codigo, datos.contraseña);
+                //if (usuarioservice.logeo(datos.codigo,datos.contraseña) == true)
+                if (user != null)
 				{
-					return RedirectToAction("Index", "Home");
+                    session.setSession("usuario", user);
+                    return RedirectToAction("Index", "Home");
 				}
 				else
 				{
