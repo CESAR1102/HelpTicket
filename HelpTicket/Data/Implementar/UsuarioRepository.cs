@@ -170,7 +170,7 @@ namespace Data.Implementar
 			using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 			{
 				conexion.Open();
-				var query = new SqlCommand("Select u.codigo, u.contraseña from usuario as u where u.codigo = '" + codigo + "'" + " and u.contraseña = '" + contraseña + "'", conexion);
+				var query = new SqlCommand("Select u.codigo, u.contraseña, u.nombres, u.correo from usuario as u where u.codigo = '" + codigo + "'" + " and u.contraseña = '" + contraseña + "'", conexion);
 				using (var dr = query.ExecuteReader())
 				{
 					var usuario = new Usuario();
@@ -178,7 +178,9 @@ namespace Data.Implementar
 					{
 						usuario.codigo = dr["codigo"].ToString();
 						usuario.contraseña = dr["contraseña"].ToString();
-						usuarios.Add(usuario);
+                        usuario.nombres = dr["nombres"].ToString();
+                        usuario.correo = dr["correo"].ToString();
+                        usuarios.Add(usuario);
 					}
 
 

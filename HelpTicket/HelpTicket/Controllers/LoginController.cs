@@ -26,13 +26,16 @@ namespace HelpTicket.Controllers
 
 		[HttpPost]
 		[AllowAnonymous]
-		public async Task<ActionResult> Login_(Usuario datos)
+		public async Task<ActionResult> Login_(InputFields_Loguin datos)
 		{
 			if (ModelState.IsValid)
 			{
-				if (usuarioservice.logeo(datos.codigo,datos.contraseña) == true)
+                Usuario user = usuarioservice.logeo(datos.codigo, datos.contraseña);
+                //if (usuarioservice.logeo(datos.codigo,datos.contraseña) == true)
+                if (user != null)
 				{
-					return RedirectToAction("Index", "Home");
+                    session.setSession("usuario", user);
+                    return RedirectToAction("Index", "Home");
 				}
 				else
 				{

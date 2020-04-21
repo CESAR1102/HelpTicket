@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="ICrudService.cs" />
     <Compile Include="IDepartamentoService.cs" />
+    <Compile Include="IModuloService.cs" />
     <Compile Include="Implementar\DepartamentoService.cs" />
+    <Compile Include="Implementar\ModuloService.cs" />
     <Compile Include="Implementar\TicketService.cs" />
     <Compile Include="Implementar\TopicoService.cs" />
     <Compile Include="Implementar\UsuarioService.cs" />
