@@ -16,7 +16,7 @@ namespace Entity
         [Display(Name = "topico")]
         public int topico_id { get; set; }
 
-        public int asignado_id { get; set; }
+        public int? asignado_id { get; set; }
 
         [Required(ErrorMessage = "Es necesario elegir un grado de importancia")]
         [Display(Name = "importancia")]
@@ -29,9 +29,9 @@ namespace Entity
 
         public char estado { get; set; }
         public DateTime fecha_solicitado { get; set; }
-        public DateTime fecha_asignado { get; set; }
-        public DateTime fecha_finalizado { get; set; }
+        public DateTime? fecha_asignado { get; set; }
+        public DateTime? fecha_finalizado { get; set; }
 
-        public int aprobador_id { get; set; }
+        public int? aprobador_id { get; set; }
     }
 }

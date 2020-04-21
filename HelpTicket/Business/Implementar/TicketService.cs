@@ -12,6 +12,7 @@ namespace Business.Implementar
     public class TicketService : ITicketService
     {
         private ITicketRepository ticket_1 = new TicketRepository();
+        private IUsuarioModuloRolRepository umr = new UsuarioModuloRolRepository();
 
         public bool Delete(int id)
         {
@@ -48,48 +49,48 @@ namespace Business.Implementar
             throw new NotImplementedException();
         }
 
-        public bool Insert(Ticket t)
+        public bool Insert(Ticket t, string userCode, out string msm)
         {
+            msm = string.Empty;
+            string moduloCliente = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Cliente"];
+            string rolCliente = System.Configuration.ConfigurationSettings.AppSettings["Rol_Cliente"];
+
+            int id = umr.obtenerIDUserModRol(userCode, moduloCliente, rolCliente);
+            if (id == 0)
+            {
+                msm = "No se encontro usuario. Intente nuevamente.";
+                return false;
+            }
+            t.codigo_atencion = "";
+            t.solicitante_id = id;
+            t.estado = 'I';
             return ticket_1.Insert(t);
         }
 
-        public List<Ticket> TicketsAsignados(string codigo_trabajador, out string msm)
+        public List<Ticket> TicketsAsignados(string codigo_trabajador)
         {
-            msm = string.Empty;
             List<Ticket> tickets = ticket_1.TicketsAsignados(codigo_trabajador);
-            if (tickets is null)
+            if (tickets != null)
             {
-                msm = "ERROR";
-                return null;
-            }else if(tickets.Count == 0)
-            {
-                msm = "Aun no has solicitdo ningún ticket";
-                return null;
+                if (tickets.Count == 0)
+                {
+                    return null;
+                }
             }
-            else
-            {
-                return tickets;
-            }
+            return tickets;
         }
 
-        public List<Ticket> TicketsSolicitados(string codigo_cliente, out string msm)
+        public List<Ticket> TicketsSolicitados(string codigo_cliente)
         {
-            msm = string.Empty;
             List<Ticket> tickets = ticket_1.TicketsSolicitados(codigo_cliente);
-            if (tickets is null)
+            if (tickets != null)
             {
-                msm = "ERROR";
-                return null;
+                if (tickets.Count == 0)
+                {
+                    return null;
+                }
             }
-            else if (tickets.Count == 0)
-            {
-                msm = "Aun no has solicitdo ningún ticket";
-                return null;
-            }
-            else
-            {
-                return tickets;
-            }
+            return tickets;
         }
 
         public bool Update(Ticket t)
