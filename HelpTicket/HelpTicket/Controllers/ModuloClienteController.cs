@@ -18,9 +18,10 @@ namespace HelpTicket.Controllers
     [SoloClientes]
     public class ModuloClienteController : Controller
     {
-        private ITicketService usuarioservice = new TicketService();
+        private ITicketService ticketservice = new TicketService();
         private IDepartamentoService departamentoservice = new DepartamentoService();
         private ITopicoService topicoservice = new TopicoService();
+        private TicketsPersonalizados tPersonalizados = new TicketsPersonalizados();
         SesionData session = new SesionData();
 
         [HttpGet]
@@ -60,6 +61,13 @@ namespace HelpTicket.Controllers
         [HttpGet]
         public ActionResult VerTickets()
         {
+            var usuario = (Entity.Usuario)(Session["usuario"]);
+            List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
+            if (ticketsAsignados is null)
+            {
+                ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
+            }
+            ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados); ;
             return View();
         }
 

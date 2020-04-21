@@ -128,7 +128,7 @@ namespace Data.Implementar
 
                     sql.Append("Select codigo_atencion, solicitante_id, topico_id, asignado_id, importancia, descripcion, estado, ");
                     sql.Append("fecha_solicitado, fecha_asignado, fecha_finalizado, aprobador_id from Ticket ");
-                    sql.Append("where asignado_id = '" + codigo_trabajador + "'");
+                    sql.Append("where asignado_id = '" + codigo_trabajador + "' order by fecha_asignado desc");
 
                     var query = new SqlCommand(sql.ToString(), conexion);
 
@@ -172,9 +172,9 @@ namespace Data.Implementar
                 {
                     conexion.Open();
 
-                    sql.Append("Select codigo_atencion, solicitante_id, topico_id, asignado_id, importancia, descripcion, estado, ");
-                    sql.Append("fecha_solicitado, fecha_asignado, fecha_finalizado, aprobador_id from Ticket ");
-                    sql.Append("where solicitante_id = '" + codigo_cliente + "'");
+                    sql.Append("Select t.codigo_atencion, t.solicitante_id, t.topico_id, t.asignado_id, t.importancia, t.descripcion, t.estado, ");
+                    sql.Append("t.fecha_solicitado, t.fecha_asignado, t.fecha_finalizado, t.aprobador_id from Ticket t, usuario_modulo_rol umr ");
+                    sql.Append("where t.solicitante_id = umr.id and umr.usuario_id = '" + codigo_cliente + "' order by t.fecha_solicitado desc");
 
                     var query = new SqlCommand(sql.ToString(), conexion);
 
@@ -187,23 +187,30 @@ namespace Data.Implementar
                             ticket.codigo_atencion = dr["codigo_atencion"].ToString();
                             ticket.solicitante_id = Convert.ToInt32(dr["solicitante_id"].ToString());
                             ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
-                            ticket.asignado_id = Convert.ToInt32(dr["asignado_id"].ToString());
+                            if (dr["asignado_id"] != null)
+                            {
+                                ticket.asignado_id = Convert.ToInt32(dr["asignado_id"].ToString());
+                            }
+                            else
+                            {
+
+                            }
                             ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
                             ticket.descripcion = dr["descripcion"].ToString();
                             ticket.estado = Convert.ToChar(dr["estado"].ToString());
                             ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
-                            ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
-                            ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
-                            ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());
+                            if (dr["fecha_asignado"] != null) ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
+                            if (dr["fecha_finalizado"] != null) ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
+                            if (dr["aprobador_id"] != null) ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());
 
                             t.Add(ticket);
                         }
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                var a = e.Message;
             }
             return t;
         }
