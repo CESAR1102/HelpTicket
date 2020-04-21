@@ -88,9 +88,10 @@ namespace Data.Implementar
                     var query1 = new SqlCommand("begin transaction", conexion);
                     query1.ExecuteNonQuery();
 
-                    sql.Append("Insert Into Ticket (solicitante_id, topico_id, importancia, descripcion, estado, fecha_solicitado )");
-                    sql.Append("Values (" + t.solicitante_id + ", " + t.topico_id + ", " + t.importancia + ", " + t.descripcion);
-                    sql.Append(", " + t.estado + ", " + DateTime.Now + ")");
+                    sql.Append("Insert Into Ticket (codigo_atencion, solicitante_id, topico_id, importancia, descripcion, estado, fecha_solicitado )");
+                    sql.Append("Values ('" + t.codigo_atencion + "', " + t.solicitante_id + ", " + t.topico_id + ", " + t.importancia + ", '" + t.descripcion);
+                    sql.Append("', '" + t.estado + "', '");
+                    sql.Append(DateTime.Now.Year + " - " + DateTime.Now.Month + "-" + DateTime.Now.Day + "')");
 
                     query1 = new SqlCommand(sql.ToString(), conexion);
 
@@ -180,6 +181,7 @@ namespace Data.Implementar
 
                     using (var dr = query.ExecuteReader())
                     {
+                        var aux = string.Empty;
                         t = new List<Ticket>();
                         while (dr.Read())
                         {
@@ -187,22 +189,39 @@ namespace Data.Implementar
                             ticket.codigo_atencion = dr["codigo_atencion"].ToString();
                             ticket.solicitante_id = Convert.ToInt32(dr["solicitante_id"].ToString());
                             ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
-                            if (dr["asignado_id"] != null)
-                            {
-                                ticket.asignado_id = Convert.ToInt32(dr["asignado_id"].ToString());
-                            }
-                            else
-                            {
 
+                            aux = dr["asignado_id"].ToString();
+                            ticket.asignado_id = null;
+                            if (aux != string.Empty)
+                            {
+                                ticket.asignado_id = Convert.ToInt32(aux);
                             }
+
                             ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
                             ticket.descripcion = dr["descripcion"].ToString();
                             ticket.estado = Convert.ToChar(dr["estado"].ToString());
                             ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
-                            if (dr["fecha_asignado"] != null) ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
-                            if (dr["fecha_finalizado"] != null) ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
-                            if (dr["aprobador_id"] != null) ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());
 
+                            aux = dr["fecha_asignado"].ToString();
+                            ticket.fecha_asignado = null;
+                            if (aux != string.Empty)
+                            {
+                                ticket.fecha_asignado = Convert.ToDateTime(aux);
+                            }
+
+                            aux = dr["fecha_finalizado"].ToString();
+                            ticket.fecha_finalizado = null;
+                            if (aux != string.Empty)
+                            {
+                                ticket.fecha_finalizado = Convert.ToDateTime(aux);
+                            }
+
+                            aux = dr["aprobador_id"].ToString();
+                            ticket.aprobador_id = null;
+                            if (aux != string.Empty)
+                            {
+                                ticket.aprobador_id = Convert.ToInt32(aux);
+                            }
                             t.Add(ticket);
                         }
                     }

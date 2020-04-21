@@ -46,8 +46,17 @@ namespace HelpTicket.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.Agregado = "Se generó un ticket satisfactoriamente con el codigo de atención: ";
-                return View("VerTickets");
+                string msm;
+                var user = (Usuario)session.getSession("usuario");
+                if (ticketservice.Insert2(ticket, user.codigo, out msm))
+                {
+                    TempData["Agregado"] = "Se generó un ticket satisfactoriamente con el codigo de atención: " + msm;
+                }
+                else {
+                    ViewBag.Error = msm;
+                }
+                
+                return RedirectToAction("VerTickets");
             }
             else
             {
@@ -67,7 +76,9 @@ namespace HelpTicket.Controllers
             {
                 ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
             }
-            ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados); ;
+            if (TempData["Agregado"] !=null)
+                ViewBag.Agregado = TempData["Agregado"].ToString();
+            ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados);
             return View();
         }
 

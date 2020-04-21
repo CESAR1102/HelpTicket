@@ -22,6 +22,16 @@
     </div>
 }
 
+@if (ViewBag.Error != null)
+{
+    <div class="container">
+        <div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error!</strong> @ViewBag.Error
+        </div>
+    </div>
+}
+
 <div class="container">
     <h2>Ver Tickets</h2>
     <p>Todos tus tickets solicitados</p>
