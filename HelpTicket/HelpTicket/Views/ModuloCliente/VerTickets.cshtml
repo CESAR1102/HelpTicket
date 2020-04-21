@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Vista.cshtml";
+    ViewBag.Title = "Cliente";
+}
+@if (ViewBag.Agregado != null)
+{
+    <div class="container">
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Éxito!</strong> @ViewBag.Agregado
+        </div>
+    </div>
+}
+
+<div class="container">
+  <h2>Ver Tickets</h2>
+  <p>Todos tus tickets solicitados</p>            
+  <table class="table">
+      <thead>
+          <tr>
+              <th>Codigo de Atención</th>
+              <th>Solicitante</th>
+              <th>Tópico</th>
+              <th>Estado</th>
+              <th>Detalles</th>
+          </tr>
+      </thead>
+    <tbody>
+        <tr>
+            <td>TK1</td>
+            <td>Juan Ramirez</td>
+            <td>Despliegue de proyecto en ambiente prueba</td>
+            <td>Ingresado</td>
+            <td><a href="#">Ver</a></td>
+        </tr>
+        <tr>
+            <td>TK2</td>
+            <td>Juan Ramirez</td>
+            <td>Desarrollo de aplicación mobil - Android</td>
+            <td>Asignado</td>
+            <td><a  href="#">Ver</a></td>
+        </tr>
+    </tbody>
+  </table>
+</div>

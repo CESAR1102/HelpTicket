@@ -15,8 +15,8 @@ namespace HelpTicket.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var nombre = (Entity.Usuario)(Session["usuario"]);
-            ViewBag.nombre = nombre.nombres;
+            var usuario = (Entity.Usuario)(Session["usuario"]);
+            ViewBag.nombre = usuario.nombres;
             return View();
         }
 
@@ -24,6 +24,11 @@ namespace HelpTicket.Controllers
         {
             sesion.destroySession();
             return RedirectToAction("Login_", "Login");
+        }
+
+        public ActionResult AccesoDenegado()
+        {
+            return View();
         }
     }
 }

@@ -15,6 +15,7 @@ using System.Web.Mvc;
 namespace HelpTicket.Controllers
 {
     [Logueado]
+    [SoloClientes]
     public class ModuloClienteController : Controller
     {
         private ITicketService usuarioservice = new TicketService();
@@ -25,6 +26,8 @@ namespace HelpTicket.Controllers
         [HttpGet]
         public ActionResult Cliente()
         {
+            var usuario = (Entity.Usuario)(Session["usuario"]);
+            ViewBag.nombre = usuario.nombres;
             return View();
         }
 
@@ -42,10 +45,8 @@ namespace HelpTicket.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.Importancia = ImportanciaTickets();
-                ViewBag.Departamentos = Departamentos();
-                ViewBag.Topicos = Topicos(0);
-                return View(new Ticket());
+                ViewBag.Agregado = "Se generó un ticket satisfactoriamente con el codigo de atención: ";
+                return View("VerTickets");
             }
             else
             {
@@ -54,6 +55,12 @@ namespace HelpTicket.Controllers
                 ViewBag.Topicos = Topicos(0);
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult VerTickets()
+        {
+            return View();
         }
 
         [ActionName("ObtenerTopicos")]
