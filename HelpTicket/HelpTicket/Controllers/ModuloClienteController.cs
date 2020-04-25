@@ -46,8 +46,17 @@ namespace HelpTicket.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.Agregado = "Se generó un ticket satisfactoriamente con el codigo de atención: ";
-                return View("VerTickets");
+                string msm;
+                var user = (Usuario)session.getSession("usuario");
+                if (ticketservice.Insert2(ticket, user.codigo, out msm))
+                {
+                    TempData["Agregado"] = "Se generó un ticket satisfactoriamente con el codigo de atención: " + msm;
+                }
+                else {
+                    ViewBag.Error = msm;
+                }
+                
+                return RedirectToAction("VerTickets");
             }
             else
             {
@@ -58,20 +67,24 @@ namespace HelpTicket.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult VerTickets()
-        {
-            var usuario = (Entity.Usuario)(Session["usuario"]);
-            List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
-            if (ticketsAsignados is null)
-            {
-                ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
-            }
-            ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados); ;
-            return View();
-        }
+		
+		[HttpGet]
+		public ActionResult VerTickets()
+		{
+			var usuario = (Entity.Usuario)(Session["usuario"]);
+			List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
+			if (ticketsAsignados is null)
+			{
+				ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
+			}
+			if (TempData["Agregado"] != null)
+				ViewBag.Agregado = TempData["Agregado"].ToString();
+			ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados);
+			return View(ticketsAsignados);
+		}
 
-        [ActionName("ObtenerTopicos")]
+
+		[ActionName("ObtenerTopicos")]
         public ActionResult ObtenerTopicos(string id)
         {
             var topicos = Topicos(Convert.ToInt32(id));

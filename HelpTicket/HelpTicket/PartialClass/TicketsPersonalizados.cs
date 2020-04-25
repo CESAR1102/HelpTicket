@@ -55,6 +55,7 @@ namespace HelpTicket.PartialClass
                     t.fecha_finalizado = item.fecha_finalizado;
                     t.aprobador_nombre = "p";
                     t.aprobador_codigo = "p";
+                    nuevosTickets.Add(t);
                 }
             }
             return nuevosTickets;

@@ -13,6 +13,7 @@ namespace Business.Implementar
     {
         private ITicketRepository ticket_1 = new TicketRepository();
         private IUsuarioModuloRolRepository umr = new UsuarioModuloRolRepository();
+        Random ran = new Random();
 
         public bool Delete(int id)
         {
@@ -20,6 +21,11 @@ namespace Business.Implementar
         }
 
         public List<Ticket> FindAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Insert(Ticket t)
         {
             throw new NotImplementedException();
         }
@@ -49,7 +55,7 @@ namespace Business.Implementar
             throw new NotImplementedException();
         }
 
-        public bool Insert(Ticket t, string userCode, out string msm)
+        public bool Insert2(Ticket t, string userCode, out string msm)
         {
             msm = string.Empty;
             string moduloCliente = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Cliente"];
@@ -61,10 +67,22 @@ namespace Business.Implementar
                 msm = "No se encontro usuario. Intente nuevamente.";
                 return false;
             }
-            t.codigo_atencion = "";
+            string code = "TK" + id + t.topico_id;
+
+            for (int i = 0; i < 15; i++)
+            {
+                code += (char)ran.Next(65, 90);
+            }
+            t.codigo_atencion = code;
             t.solicitante_id = id;
             t.estado = 'I';
-            return ticket_1.Insert(t);
+            if (!ticket_1.Insert(t))
+            {
+                msm = "Ocurrio un error. Intente nuevamente";
+                return false;
+            }
+            msm = code;
+            return true;
         }
 
         public List<Ticket> TicketsAsignados(string codigo_trabajador)
@@ -80,20 +98,20 @@ namespace Business.Implementar
             return tickets;
         }
 
-        public List<Ticket> TicketsSolicitados(string codigo_cliente)
-        {
-            List<Ticket> tickets = ticket_1.TicketsSolicitados(codigo_cliente);
-            if (tickets != null)
-            {
-                if (tickets.Count == 0)
-                {
-                    return null;
-                }
-            }
-            return tickets;
-        }
+		public List<Ticket> TicketsSolicitados(string codigo_cliente)
+		{
+			List<Ticket> tickets = ticket_1.TicketsSolicitados(codigo_cliente);
+			if (tickets != null)
+			{
+				if (tickets.Count == 0)
+				{
+					return null;
+				}
+			}
+			return tickets;
+		}
 
-        public bool Update(Ticket t)
+		public bool Update(Ticket t)
         {
             throw new NotImplementedException();
         }

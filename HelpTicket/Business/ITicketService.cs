@@ -12,5 +12,6 @@ namespace Business
         Ticket FindByCodAtencion(string cod_atencion, out string msm);
         List<Ticket> TicketsSolicitados(string codigo_cliente);
         List<Ticket> TicketsAsignados(string codigo_trabajador);
+        bool Insert2(Ticket t, string userCode, out string msm);
     }
 }
