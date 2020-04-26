@@ -14,5 +14,6 @@ namespace Business
 		Usuario logeo(string codigo,string contraseña);
         bool VerificarToken(string token, out string codigo);
         bool ActualizarContraseña(string codigo, string contra, out string msm);
+        string ObtenerCorreo(string codigo);
     }
 }

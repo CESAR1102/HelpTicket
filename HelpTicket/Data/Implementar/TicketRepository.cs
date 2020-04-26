@@ -15,6 +15,38 @@ namespace Data.Implementar
             throw new NotImplementedException();
         }
 
+        public string DestinatarioPara(string codigo_atencion)
+        {
+            string codigo = string.Empty;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+
+                    sql.Append("Select umr.usuario_id ");
+                    sql.Append("from Ticket t, usuario_modulo_rol umr ");
+                    sql.Append("where t.codigo_atencion = '" + codigo_atencion + "' and t.asignado_id = umr.id");
+
+                    var query = new SqlCommand(sql.ToString(), conexion);
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            codigo = dr["usuario_id"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return codigo;
+        }
+
         public List<Ticket> FindAll()
         {
             throw new NotImplementedException();
@@ -165,74 +197,65 @@ namespace Data.Implementar
 
         public List<Ticket> TicketsSolicitados(string codigo_cliente)
         {
-            List<Ticket> t = null;
-            StringBuilder sql = new StringBuilder();
-            try
-            {
-                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
-                {
-                    conexion.Open();
+			//List<Ticket> t = null;
+			//StringBuilder sql = new StringBuilder();
+			var ticketsolicitados = new List<Ticket>();
+			try
+			{
+				using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conexion.Open();
+					var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
+					  " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id " +
+					 " where t.solicitante_id = umr.id and umr.usuario_id = '" + codigo_cliente + "' order by t.fecha_solicitado desc", conexion);
+					
 
-                    sql.Append("Select t.codigo_atencion, t.solicitante_id, t.topico_id, t.asignado_id, t.importancia, t.descripcion, t.estado, ");
-                    sql.Append("t.fecha_solicitado, t.fecha_asignado, t.fecha_finalizado, t.aprobador_id from Ticket t, usuario_modulo_rol umr ");
-                    sql.Append("where t.solicitante_id = umr.id and umr.usuario_id = '" + codigo_cliente + "' order by t.fecha_solicitado desc");
+					using (var dr = query.ExecuteReader())
+					{
+						//t = new List<Ticket>();
+						while (dr.Read())
+						{
+							var ticket = new Ticket();
+							var topico = new Topico();
+							var umr = new Usuario_Modulo_Rol();
+							/*	Ticket ticket = new Ticket();*/
+							ticket.codigo_atencion = dr["codigo_atencion"].ToString();
+							ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
+							//if (dr["asignado_id"] != null)
+							//{
+							//    ticket.asignado_id = Convert.ToInt32(dr["asignado_id"].ToString());
+							//}
+							//else
+							//{
 
-                    var query = new SqlCommand(sql.ToString(), conexion);
+							//}
+							ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
+							ticket.descripcion = dr["descripcion"].ToString();
+							ticket.estado = Convert.ToChar(dr["estado"].ToString());
+							ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
 
-                    using (var dr = query.ExecuteReader())
-                    {
-                        var aux = string.Empty;
-                        t = new List<Ticket>();
-                        while (dr.Read())
-                        {
-                            Ticket ticket = new Ticket();
-                            ticket.codigo_atencion = dr["codigo_atencion"].ToString();
-                            ticket.solicitante_id = Convert.ToInt32(dr["solicitante_id"].ToString());
-                            ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
+							topico.topico= dr["topico"].ToString();
+							umr.id= Convert.ToInt32(dr["solicitante_id"].ToString());
+							umr.usuario_id= dr["usuario_id"].ToString();
+							ticket.Topico = topico;
+							ticket.Usuario_Modulo_Rol = umr;
 
-                            aux = dr["asignado_id"].ToString();
-                            ticket.asignado_id = null;
-                            if (aux != string.Empty)
-                            {
-                                ticket.asignado_id = Convert.ToInt32(aux);
-                            }
+							
+							//if (dr["fecha_asignado"] != null) ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
+							//if (dr["fecha_finalizado"] != null) ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
+							//if (dr["aprobador_id"] != null) ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());
 
-                            ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
-                            ticket.descripcion = dr["descripcion"].ToString();
-                            ticket.estado = Convert.ToChar(dr["estado"].ToString());
-                            ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
-
-                            aux = dr["fecha_asignado"].ToString();
-                            ticket.fecha_asignado = null;
-                            if (aux != string.Empty)
-                            {
-                                ticket.fecha_asignado = Convert.ToDateTime(aux);
-                            }
-
-                            aux = dr["fecha_finalizado"].ToString();
-                            ticket.fecha_finalizado = null;
-                            if (aux != string.Empty)
-                            {
-                                ticket.fecha_finalizado = Convert.ToDateTime(aux);
-                            }
-
-                            aux = dr["aprobador_id"].ToString();
-                            ticket.aprobador_id = null;
-                            if (aux != string.Empty)
-                            {
-                                ticket.aprobador_id = Convert.ToInt32(aux);
-                            }
-                            t.Add(ticket);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                var a = e.Message;
-            }
-            return t;
-        }
+							ticketsolicitados.Add(ticket);
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				var a = e.Message;
+			}
+			return ticketsolicitados;
+		}
 
         public bool Update(Ticket t)
         {

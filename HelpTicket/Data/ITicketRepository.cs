@@ -12,5 +12,6 @@ namespace Data
         Ticket FindByCodAtencion(string cod_atencion);
         List<Ticket> TicketsSolicitados(string codigo_cliente);
         List<Ticket> TicketsAsignados(string codigo_trabajador);
+        string DestinatarioPara(string codigo_atencion);
     }
 }

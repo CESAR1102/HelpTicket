@@ -98,22 +98,53 @@ namespace Business.Implementar
             return tickets;
         }
 
-        public List<Ticket> TicketsSolicitados(string codigo_cliente)
-        {
-            List<Ticket> tickets = ticket_1.TicketsSolicitados(codigo_cliente);
-            if (tickets != null)
-            {
-                if (tickets.Count == 0)
-                {
-                    return null;
-                }
-            }
-            return tickets;
-        }
+		public List<Ticket> TicketsSolicitados(string codigo_cliente)
+		{
+			List<Ticket> tickets = ticket_1.TicketsSolicitados(codigo_cliente);
+			if (tickets != null)
+			{
+				if (tickets.Count == 0)
+				{
+					return null;
+				}
+			}
+			return tickets;
+		}
 
-        public bool Update(Ticket t)
+		public bool Update(Ticket t)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Ticket> TicketsSolicitadosParaMsm(string codigo_cliente)
+        {
+            List<Ticket> originales = TicketsSolicitados(codigo_cliente);
+            if (originales != null)
+            {
+                for (short i = 0; i < originales.Count; i++)
+                {
+                    if (originales[i].estado != 'P' && originales[i].estado != 'A')
+                    {
+                        originales.Remove(originales[i]);
+                        i--;
+                    }
+                }
+            }
+            else
+            {
+                originales = new List<Ticket>();
+            }
+            return originales;
+        }
+
+        public string DestinatarioPara(string codigo_atencion)
+        {
+            string codigo = ticket_1.DestinatarioPara(codigo_atencion);
+            if (codigo == string.Empty)
+            {
+                return "Error";
+            }
+            return codigo;
         }
     }
 }

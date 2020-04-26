@@ -182,5 +182,10 @@ namespace Business.Implementar
                 return false;
             }
         }
+
+        public string ObtenerCorreo(string codigo)
+        {
+            return usuario.ObtenerCorreo(codigo);
+        }
     }
 }

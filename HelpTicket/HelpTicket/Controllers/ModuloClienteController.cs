@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 
@@ -21,7 +22,8 @@ namespace HelpTicket.Controllers
         private ITicketService ticketservice = new TicketService();
         private IDepartamentoService departamentoservice = new DepartamentoService();
         private ITopicoService topicoservice = new TopicoService();
-        private TicketsPersonalizados tPersonalizados = new TicketsPersonalizados();
+        private IMensajeService mensajeservice = new MensajeService();
+        //private TicketsPersonalizados tPersonalizados = new TicketsPersonalizados();
         SesionData session = new SesionData();
 
         [HttpGet]
@@ -67,29 +69,85 @@ namespace HelpTicket.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult VerTickets()
-        {
-            var usuario = (Entity.Usuario)(Session["usuario"]);
-            List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
-            if (ticketsAsignados is null)
-            {
-                ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
-            }
-            if (TempData["Agregado"] !=null)
-                ViewBag.Agregado = TempData["Agregado"].ToString();
-            ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados);
-            return View();
-        }
+		
+		[HttpGet]
+		public ActionResult VerTickets()
+		{
+			var usuario = (Entity.Usuario)(Session["usuario"]);
+			List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
+			if (ticketsAsignados is null)
+			{
+				ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
+			}
+			if (TempData["Agregado"] != null)
+				ViewBag.Agregado = TempData["Agregado"].ToString();
+			//ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados);
+			return View(ticketsAsignados);
+		}
 
-        [ActionName("ObtenerTopicos")]
+
+		[ActionName("ObtenerTopicos")]
         public ActionResult ObtenerTopicos(string id)
         {
             var topicos = Topicos(Convert.ToInt32(id));
             return Json(topicos, JsonRequestBehavior.AllowGet);
         }
 
-     //interno
+        [ActionName("ObtenerDestinatario")]
+        public ActionResult ObtenerDestinatario(string id)
+        {
+            //string codigo = ticketservice.DestinatarioPara(id);
+            ResponseDestinatarios respuesta = new ResponseDestinatarios();
+            respuesta.response = ticketservice.DestinatarioPara(id); ;
+            return Json(respuesta, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Detalle_Tickets()
+		{
+			var usuario = (Entity.Usuario)(Session["usuario"]);
+			List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
+			
+			//ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados);
+			return PartialView(ticketsAsignados);
+		}
+
+		public ActionResult Enviar_Mensaje()
+		{
+            Mensaje msm = new Mensaje();
+            var usuario = (Entity.Usuario)(Session["usuario"]);
+            //ViewBag.Tickets = ticketservice.TicketsSolicitadosParaMsm(usuario.codigo);
+            ViewBag.Tickets = TicketsAsignadoDisponibles(usuario.codigo);
+            return View(msm);
+		}
+
+        [HttpPost]
+        public ActionResult Enviar_Mensaje(Mensaje msm)
+        {
+            var usuario = (Entity.Usuario)(Session["usuario"]);
+            msm.remitente_id = usuario.codigo;
+            msm.enviado_el = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                if (mensajeservice.EnviarMensaje(msm))
+                {
+                    ViewBag.Exito = "Se envio el mensaje Satisfactoriamente";
+                }
+                else
+                {
+                    ViewBag.Error = "No se pudo enviar el mensaje. Intente nuevamente";
+                }
+                ViewBag.Tickets = TicketsAsignadoDisponibles(usuario.codigo);
+                   // ticketservice.TicketsSolicitadosParaMsm(usuario.codigo);
+                return View(new Mensaje());
+            }
+            else
+            {
+                ViewBag.Tickets = TicketsAsignadoDisponibles(usuario.codigo);
+                //ViewBag.Tickets = ticketservice.TicketsSolicitadosParaMsm(usuario.codigo);
+                return View();
+            }
+        }
+        //interno
 
         private List<SelectListItem> ImportanciaTickets()
         {
@@ -133,6 +191,22 @@ namespace HelpTicket.Controllers
                 }
             }
             return tops;
+        }
+
+        private List<SelectListItem> TicketsAsignadoDisponibles(string codigo)
+        {
+            List<SelectListItem> ticket = new List<SelectListItem>();
+
+            List<Ticket> tickets = ticketservice.TicketsSolicitadosParaMsm(codigo);
+            if (!(tickets is null))
+            {
+                ticket.Add(new SelectListItem { Text = "Seleccione un ticket cmo referencia al mensaje...", Value = "0" });
+                foreach (var d in tickets)
+                {
+                    ticket.Add(new SelectListItem { Text = d.codigo_atencion, Value = d.codigo_atencion.ToString() });
+                }
+            }
+            return ticket;
         }
     }
 }

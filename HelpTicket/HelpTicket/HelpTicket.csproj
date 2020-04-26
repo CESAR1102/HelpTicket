@@ -143,6 +143,7 @@
     <Compile Include="PartialClass\InputFields_ForgotPassword.cs" />
     <Compile Include="PartialClass\InputFields_Loguin.cs" />
     <Compile Include="PartialClass\InputFields_Recovery.cs" />
+    <Compile Include="PartialClass\ResponseDestinatarios.cs" />
     <Compile Include="PartialClass\TicketsPersonalizados.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1980,6 +1981,8 @@
     <Content Include="Views\ModuloCliente\Cliente.cshtml" />
     <Content Include="Views\ModuloCliente\VerTickets.cshtml" />
     <Content Include="Views\Home\AccesoDenegado.cshtml" />
+    <Content Include="Views\ModuloCliente\Detalle_Tickets.cshtml" />
+    <Content Include="Views\ModuloCliente\Enviar_Mensaje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
