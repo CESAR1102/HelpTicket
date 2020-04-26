@@ -91,9 +91,25 @@ namespace HelpTicket.Controllers
             return Json(topicos, JsonRequestBehavior.AllowGet);
         }
 
-     //interno
+		public ActionResult Detalle_Tickets()
+		{
+			var usuario = (Entity.Usuario)(Session["usuario"]);
+			List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
+			
+			ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados);
+			return PartialView(ticketsAsignados);
+		}
 
-        private List<SelectListItem> ImportanciaTickets()
+		public ActionResult Enviar_Mensaje()
+		{
+			
+			return View();
+		}
+
+
+		//interno
+
+		private List<SelectListItem> ImportanciaTickets()
         {
             List<SelectListItem> importancias = new List<SelectListItem>()
             {

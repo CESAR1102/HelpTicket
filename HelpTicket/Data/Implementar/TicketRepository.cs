@@ -176,11 +176,7 @@ namespace Data.Implementar
 					var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
 					  " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id " +
 					 " where t.solicitante_id = umr.id and umr.usuario_id = '" + codigo_cliente + "' order by t.fecha_solicitado desc", conexion);
-					//sql.Append("Select t.codigo_atencion, t.solicitante_id, t.topico_id, t.asignado_id, t.importancia, t.descripcion, t.estado, ");
-					//sql.Append("t.fecha_solicitado, t.fecha_asignado, t.fecha_finalizado, t.aprobador_id from Ticket t, usuario_modulo_rol umr ");
-					//sql.Append("where t.solicitante_id = umr.id and umr.usuario_id = '" + codigo_cliente + "' order by t.fecha_solicitado desc");
-
-					//var query = new SqlCommand(sql.ToString(), conexion);
+					
 
 					using (var dr = query.ExecuteReader())
 					{
@@ -192,7 +188,6 @@ namespace Data.Implementar
 							var umr = new Usuario_Modulo_Rol();
 							/*	Ticket ticket = new Ticket();*/
 							ticket.codigo_atencion = dr["codigo_atencion"].ToString();
-							ticket.solicitante_id = Convert.ToInt32(dr["solicitante_id"].ToString());
 							ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
 							//if (dr["asignado_id"] != null)
 							//{
@@ -207,7 +202,13 @@ namespace Data.Implementar
 							ticket.estado = Convert.ToChar(dr["estado"].ToString());
 							ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
 
+							topico.topico= dr["topico"].ToString();
+							umr.id= Convert.ToInt32(dr["solicitante_id"].ToString());
+							umr.usuario_id= dr["usuario_id"].ToString();
+							ticket.Topico = topico;
+							ticket.Usuario_Modulo_Rol = umr;
 
+							
 							//if (dr["fecha_asignado"] != null) ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
 							//if (dr["fecha_finalizado"] != null) ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
 							//if (dr["aprobador_id"] != null) ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());

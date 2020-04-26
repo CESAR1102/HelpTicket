@@ -10,7 +10,18 @@ namespace Entity
     public class Ticket
     {
         public string codigo_atencion { get; set; }
-        public int solicitante_id { get; set; }
+
+
+		public Topico Topico { get; set; }
+
+		public Usuario_Modulo_Rol Usuario_Modulo_Rol { get; set; }
+
+
+
+
+
+
+		public int solicitante_id { get; set; }
 
         [Required(ErrorMessage = "Es necesario elegir un topico")]
         [Display(Name = "topico")]

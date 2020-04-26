@@ -1,0 +1,110 @@
+﻿@model Entity.Mensaje
+
+@{
+	ViewBag.Title = "Enviar_Mensaje";
+	Layout = "~/Views/Shared/_Layout_Vista.cshtml";
+}
+
+
+<body>
+
+
+
+	<div class="col-lg-12">
+			<div class="card shadow mb-4">
+				<div class="card-header" >
+					<h6 class="m-0 font-weight-bold text-dark">ENVIAR MENSAJE</h6>
+				</div>
+				<div class="card-body card-block border-bottom-light">
+
+					<div class="container">
+						@using (Html.BeginForm())
+						{
+							@Html.AntiForgeryToken()
+
+						<div class="form-horizontal">
+							<h4>Mensaje</h4>
+							<hr />
+							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+							<div class="form-group">
+								<h5 class="">Asunto</h5>
+								<div class="col-md-10">
+									@Html.EditorFor(model => model.remitente_id, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.remitente_id, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="form-group">
+								<h5 class="">Motivo</h5>
+								<div class="col-md-10">
+									@Html.EditorFor(model => model.ticket_id, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.ticket_id, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="form-group">
+								<h5 class="">Destinatario</h5>
+								<div class="col-md-10">
+									@Html.EditorFor(model => model.destinatario_id, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.enviado_el, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							
+							<div class="form-group">
+								<h5 class="">Mensaje</h5>
+								<div class="col-md-10">
+									@Html.TextAreaFor(d => d.contenido, new { @class = "form-control form-control-user", @placeholder = "Escriba el mensaje ...", id = "descripcionTicket", rows = "7" })
+									<p style="text-align:right" id="textContador">0/600</p>
+									@Html.ValidationMessageFor(d => d.contenido, "", new { @class = "text-danger", @font_size = "1" })
+								</div>
+								
+							</div>
+							
+							<div class="form-group">
+								<div class="col-md-offset-2 col-md-10">
+									<input type="submit" value="Enviar" class="btn btn-primary" />
+								</div>
+							</div>
+						</div>
+						}
+
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+</body>
+
+<script>const origen = document.getElementById("select_departamentos");
+    const dependiente = document.getElementById("select_topico");
+    const testAreaDescripcion = document.getElementById("descripcionTicket");
+    const contador = document.getElementById("textContador");
+
+
+    origen.addEventListener("change", (event) => {
+        let url = '/ModuloCliente/ObtenerTopicos/' + origen.value;
+        fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                removerTodo();
+                for (var i = 0; i < out.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = out[i]['Value']
+                    option.innerHTML = out[i]['Text'];
+                    dependiente.appendChild(option);
+                }
+            })
+            .catch(err => { throw err });
+    });
+    function removerTodo() {
+        for (let i = dependiente.options.length; i >= 0; i--) {
+            dependiente.remove(i);
+        }
+    }
+
+    testAreaDescripcion.addEventListener("input", (event) => {
+        contador.innerText = testAreaDescripcion.value.length + "/600";
+    });</script>

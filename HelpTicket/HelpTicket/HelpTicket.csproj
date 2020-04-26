@@ -1980,6 +1980,8 @@
     <Content Include="Views\ModuloCliente\Cliente.cshtml" />
     <Content Include="Views\ModuloCliente\VerTickets.cshtml" />
     <Content Include="Views\Home\AccesoDenegado.cshtml" />
+    <Content Include="Views\ModuloCliente\Detalle_Tickets.cshtml" />
+    <Content Include="Views\ModuloCliente\Enviar_Mensaje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
