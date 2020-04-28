@@ -8,12 +8,13 @@ using System.Web.Mvc;
 namespace HelpTicket.Controllers
 {
     [Logueado]
-    [SoloTrabajadores]
-    public class ModuloTrabajadorController : Controller
+    [SoloAdministradores]
+    public class ModuloAdministrador : Controller
     {
-		public ActionResult Trabajador()
-		{
-			return View();
-		}
-	}
+        [HttpGet]
+        public ActionResult Administrador()
+        {
+            return View();
+        }
+    }
 }

@@ -134,6 +134,7 @@
     <Compile Include="Autorizacion\SoloClientes.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ModuloAdministrador.cs" />
     <Compile Include="Controllers\ModuloClienteController.cs" />
     <Compile Include="Controllers\ModuloTrabajadorController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1990,6 +1991,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="img\login\" />
+    <Folder Include="Views\ModuloAdministrador\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
