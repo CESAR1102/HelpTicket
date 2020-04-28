@@ -271,5 +271,30 @@ namespace Data.Implementar
             }
             return actualizado;
         }
+
+        public string ObtenerCorreo(string codigo)
+        {
+            string cod = string.Empty;
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query1 = new SqlCommand("Select correo from usuario where codigo = '" + codigo + "'", conexion);
+                    using (var dr = query1.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            cod = dr["correo"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return cod;
+        }
     }
 }

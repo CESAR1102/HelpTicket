@@ -15,6 +15,38 @@ namespace Data.Implementar
             throw new NotImplementedException();
         }
 
+        public string DestinatarioPara(string codigo_atencion)
+        {
+            string codigo = string.Empty;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+
+                    sql.Append("Select umr.usuario_id ");
+                    sql.Append("from Ticket t, usuario_modulo_rol umr ");
+                    sql.Append("where t.codigo_atencion = '" + codigo_atencion + "' and t.asignado_id = umr.id");
+
+                    var query = new SqlCommand(sql.ToString(), conexion);
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            codigo = dr["usuario_id"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return codigo;
+        }
+
         public List<Ticket> FindAll()
         {
             throw new NotImplementedException();

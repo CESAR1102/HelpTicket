@@ -15,5 +15,6 @@ namespace Data
 		List<Usuario> validar_usuario(string codigo,string contraseña);
         string VerificarToken(string token);
         bool ActualizarContraseña(string codigo, string contra);
+        string ObtenerCorreo(string codigo);
     }
 }
