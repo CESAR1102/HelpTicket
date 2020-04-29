@@ -102,25 +102,28 @@ namespace HelpTicket.Controllers
             return Json(respuesta, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Detalle_Tickets()
+       
+		public ActionResult Detalle_Tickets(string id)
 		{
-			var usuario = (Entity.Usuario)(Session["usuario"]);
-			List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
-			
-			//ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados);
-			return PartialView(ticketsAsignados);
-		}
 
+			if (id == null)
+			{
+				return HttpNotFound();
+			}
+
+			return View(ticketservice.FindId(id));
+
+		}
 		public ActionResult Enviar_Mensaje()
 		{
-            Mensaje msm = new Mensaje();
-            var usuario = (Entity.Usuario)(Session["usuario"]);
-            //ViewBag.Tickets = ticketservice.TicketsSolicitadosParaMsm(usuario.codigo);
-            ViewBag.Tickets = TicketsAsignadoDisponibles(usuario.codigo);
-            return View(msm);
+			Mensaje msm = new Mensaje();
+			var usuario = (Entity.Usuario)(Session["usuario"]);
+			//ViewBag.Tickets = ticketservice.TicketsSolicitadosParaMsm(usuario.codigo);
+			ViewBag.Tickets = TicketsAsignadoDisponibles(usuario.codigo);
+			return View(msm);
 		}
 
-        [HttpPost]
+		[HttpPost]
         public ActionResult Enviar_Mensaje(Mensaje msm)
         {
             var usuario = (Entity.Usuario)(Session["usuario"]);

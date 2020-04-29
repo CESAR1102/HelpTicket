@@ -1,12 +1,10 @@
 ﻿@model Entity.Ticket
-
 @{
+	Layout = "~/Views/Shared/_Layout_Vista.cshtml";
 	ViewBag.Title = "Details";
 
 }
-
 <body>
-
 
 	<div class="card-body">
 		<div class="col-lg-auto">
@@ -14,111 +12,81 @@
 				<h6 class="m-0 font-weight-bold text-dark">DETALLE  DE TICKET</h6>
 				<hr />
 				<dl class="dl-horizontal">
-
 					<dt>
 						@Html.DisplayNameFor(model => model.codigo_atencion)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.codigo_atencion)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.solicitante_id)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.solicitante_id)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.topico_id)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.topico_id)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.asignado_id)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.asignado_id)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.importancia)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.importancia)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.descripcion)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.descripcion)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.estado)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.estado)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.fecha_solicitado)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.fecha_solicitado)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.fecha_asignado)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.fecha_asignado)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.fecha_finalizado)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.fecha_finalizado)
 					</dd>
-
 					<dt>
 						@Html.DisplayNameFor(model => model.aprobador_id)
 					</dt>
-
 					<dd>
 						@Html.DisplayFor(model => model.aprobador_id)
 					</dd>
-
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-10">
-
 							<a href="@Url.Action("VerTickets","ModuloCliente")" class="btn btn-secondary" id="btnReturn">Retornar</a>
-
 						</div>
-
 					</div>
-
-
 
 
 				</dl>
 			</div>
-
 		</div>
 	</div>
-
 </body>

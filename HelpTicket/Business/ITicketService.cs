@@ -15,5 +15,6 @@ namespace Business
         List<Ticket> TicketsAsignados(string codigo_trabajador);
         bool Insert2(Ticket t, string userCode, out string msm);
         string DestinatarioPara(string codigo_atencion);
-    }
+		Ticket FindId(string id);
+	}
 }

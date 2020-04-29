@@ -64,7 +64,7 @@
 								<td>@item.Usuario_Modulo_Rol.usuario_id</td>
 								<td>@item.Topico.topico</td>
 								<td>@item.estado</td>
-								<td><button type="button" class="btn btn-danger" onclick="llamarVistaParcial();" data-toggle="modal" data-target="#myModal">Detalle</button></td>
+								<td>@Html.ActionLink("Detalle", "Detalle_Tickets", new { id = item.codigo_atencion })</td>
 							</tr>
 						}
 					</tbody>

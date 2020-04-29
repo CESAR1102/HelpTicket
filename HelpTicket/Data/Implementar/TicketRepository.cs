@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -106,7 +107,53 @@ namespace Data.Implementar
             throw new NotImplementedException();
         }
 
-        public bool Insert(Ticket t)
+		public Ticket FindId(string id)
+		{
+			var ticket = new Ticket();
+			try
+			{
+				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conn.Open();
+					var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
+				  " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id " +
+				 " where t.codigo_atencion = @id", conn);
+					query.Parameters.AddWithValue("@id", id);
+
+
+					using (var dr = query.ExecuteReader())
+					{
+						while (dr.Read())
+						{
+
+							ticket.Topico = new Topico();
+							ticket.Usuario_Modulo_Rol = new Usuario_Modulo_Rol();
+
+
+							ticket.codigo_atencion = dr["codigo_atencion"].ToString();
+							ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
+							ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
+							ticket.descripcion = dr["descripcion"].ToString();
+							ticket.estado = Convert.ToChar(dr["estado"].ToString());
+							ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
+							ticket.Topico.topico = dr["topico"].ToString();
+							ticket.Usuario_Modulo_Rol.id = Convert.ToInt32(dr["solicitante_id"].ToString());
+							ticket.Usuario_Modulo_Rol.usuario_id = dr["usuario_id"].ToString();
+
+
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+			return ticket;
+		}
+
+		public bool Insert(Ticket t)
         {
             int filas;
             bool resultado = false;
