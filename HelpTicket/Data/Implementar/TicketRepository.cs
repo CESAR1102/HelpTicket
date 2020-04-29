@@ -204,31 +204,39 @@ namespace Data.Implementar
             {
                 using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
                 {
-                    conexion.Open();
+                   
+					conexion.Open();
+					var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
+					  " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id " +
+					 " where t.solicitante_id = umr.id and umr.usuario_id = '" + codigo_trabajador + "' order by t.fecha_solicitado desc", conexion);
 
-                    sql.Append("Select codigo_atencion, solicitante_id, topico_id, asignado_id, importancia, descripcion, estado, ");
-                    sql.Append("fecha_solicitado, fecha_asignado, fecha_finalizado, aprobador_id from Ticket ");
-                    sql.Append("where asignado_id = '" + codigo_trabajador + "' order by fecha_asignado desc");
-
-                    var query = new SqlCommand(sql.ToString(), conexion);
 
                     using (var dr = query.ExecuteReader())
                     {
                         t = new List<Ticket>();
-                        while (dr.Read())
+						Ticket ticket = new Ticket();
+						while (dr.Read())
                         {
-                            Ticket ticket = new Ticket();
-                            ticket.codigo_atencion = dr["codigo_atencion"].ToString();
-                            ticket.solicitante_id = Convert.ToInt32(dr["solicitante_id"].ToString());
-                            ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
-                            ticket.asignado_id = Convert.ToInt32(dr["asignado_id"].ToString());
-                            ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
-                            ticket.descripcion = dr["descripcion"].ToString();
-                            ticket.estado = Convert.ToChar(dr["estado"].ToString());
-                            ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
-                            ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
-                            ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
-                            ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());
+							if (dr["asignado_id"] != null)
+							{
+								ticket.codigo_atencion = dr["codigo_atencion"].ToString();
+								ticket.solicitante_id = Convert.ToInt32(dr["solicitante_id"].ToString());
+								ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
+								ticket.asignado_id = Convert.ToInt32(dr["asignado_id"].ToString());
+								ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
+								ticket.descripcion = dr["descripcion"].ToString();
+								ticket.estado = Convert.ToChar(dr["estado"].ToString());
+								ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
+								ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
+								ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
+								ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());
+							}
+							else
+							{
+								
+							}
+							
+                            
 
                             t.Add(ticket);
                         }

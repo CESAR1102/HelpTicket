@@ -1,4 +1,7 @@
-﻿using HelpTicket.Autorizacion;
+﻿using Business;
+using Business.Implementar;
+using Entity;
+using HelpTicket.Autorizacion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +14,13 @@ namespace HelpTicket.Controllers
     [SoloAdministradores]
     public class ModuloAdministrador : Controller
     {
-        [HttpGet]
+	
+
+		[HttpGet]
         public ActionResult Administrador()
         {
             return View();
         }
-    }
+
+	}
 }

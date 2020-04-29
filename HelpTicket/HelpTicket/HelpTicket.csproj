@@ -1987,6 +1987,7 @@
     <Content Include="Views\ModuloCliente\Enviar_Mensaje.cshtml" />
     <Content Include="Views\Shared\_Layout_Trabajador.cshtml" />
     <Content Include="Views\ModuloTrabajador\Trabajador.cshtml" />
+    <Content Include="Views\ModuloTrabajador\VerTicketsAsignados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

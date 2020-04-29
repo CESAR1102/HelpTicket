@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Entity.Ticket>
+@{
+	Layout = "~/Views/Shared/_Layout_Trabajador.cshtml";
+	ViewBag.Title = "VerTicketsAsignados";
+}
+
+
+<div class="col-lg-12">
+	<div class="card shadow mb-4">
+		<div class="card-header">
+			<h6 class="m-0 font-weight-bold text-dark">HISTORIAL DE TICKETS</h6>
+		</div>
+		<div class="card-body card-block border-bottom-light">
+			@if (ViewBag.Agregado != null)
+			{
+				<div class="container">
+					<div class="alert alert-success alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Éxito!</strong> @ViewBag.Agregado
+					</div>
+				</div>
+			}
+			@if (ViewBag.mensajeInformativo != null)
+			{
+				<div class="container">
+					<div class="alert alert-warning alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Atención!</strong> @ViewBag.mensajeInformativo
+					</div>
+				</div>
+			}
+			@if (ViewBag.Error != null)
+			{
+				<div class="container">
+					<div class="alert alert-danger alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Error!</strong> @ViewBag.Error
+					</div>
+				</div>
+			}
+			<div class="container">
+				<h2>Ver Tickets</h2>
+				<p>Todos tus tickets solicitados</p>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Codigo de Atención</th>
+							<th>Solicitante</th>
+							<th>Tópico</th>
+							<th>Estado</th>
+							<th>Detalles</th>
+						</tr>
+					</thead>
+					<tbody>
+						@*@foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.codigo_atencion</td>
+								<td>@item.descripcion</td>
+								<td>@item.Topico.topico</td>
+								<td>@item.asignado_id</td>
+								<td>@Html.ActionLink("Detalle", "Detalle_Tickets", new { id = item.codigo_atencion })</td>
+							</tr>
+						}*@
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+	</div>
+</div>
+

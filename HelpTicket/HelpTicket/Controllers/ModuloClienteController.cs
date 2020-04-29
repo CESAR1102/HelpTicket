@@ -74,6 +74,7 @@ namespace HelpTicket.Controllers
 		public ActionResult VerTickets()
 		{
 			var usuario = (Entity.Usuario)(Session["usuario"]);
+			
 			List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
 			if (ticketsAsignados is null)
 			{

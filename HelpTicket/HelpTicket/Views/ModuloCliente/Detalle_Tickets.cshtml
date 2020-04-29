@@ -6,87 +6,100 @@
 }
 <body>
 
-	<div class="card-body">
-		<div class="col-lg-auto">
-			<div>
-				<h6 class="m-0 font-weight-bold text-dark">DETALLE  DE TICKET</h6>
-				<hr />
-				<dl class="dl-horizontal">
-					<dt>
-						@Html.DisplayNameFor(model => model.codigo_atencion)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.codigo_atencion)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.solicitante_id)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.solicitante_id)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.topico_id)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.topico_id)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.asignado_id)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.asignado_id)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.importancia)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.importancia)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.descripcion)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.descripcion)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.estado)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.estado)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.fecha_solicitado)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.fecha_solicitado)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.fecha_asignado)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.fecha_asignado)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.fecha_finalizado)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.fecha_finalizado)
-					</dd>
-					<dt>
-						@Html.DisplayNameFor(model => model.aprobador_id)
-					</dt>
-					<dd>
-						@Html.DisplayFor(model => model.aprobador_id)
-					</dd>
+	<div class="col-lg-12">
+		<div class="card shadow mb-4">
+			<div class="card-header">
+				<h6 class="m-0 font-weight-bold text-dark">HISTORIAL DE TICKETS</h6>
+			</div>
+
+
+
+			<div class="container">
+			
+
+				<div class="form-horizontal">
+					<h4>Mensaje</h4>
+					<hr />
+				
+					<div class="form-group">
+						<h5 class="col-md-10">Codigo del ticket</h5>
+						<div class="col-md-10">
+						
+							@Html.DisplayFor(model => model.codigo_atencion)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Solicitante</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.solicitante_id)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Topico</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.Topico.topico)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Trabajador asignado</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.asignado_id)
+						</div>
+					</div>
+
+					<div class="form-group">
+						<h5 class="col-md-10">Importancia</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.importancia)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Desacripcion</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.descripcion)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Estado</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.estado)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Fecha Solicitado</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.fecha_solicitado)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Fecha asignado</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.fecha_asignado)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Fecha finalizado</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.fecha_finalizado)
+						</div>
+					</div>
+					<div class="form-group">
+						<h5 class="col-md-10">Aprobador</h5>
+						<div class="col-md-10">
+							@Html.DisplayFor(model => model.aprobador_id)
+						</div>
+					</div>
+
 					<div class="form-group">
 						<div class="col-md-offset-2 col-md-10">
 							<a href="@Url.Action("VerTickets","ModuloCliente")" class="btn btn-secondary" id="btnReturn">Retornar</a>
 						</div>
 					</div>
+				</div>
+			
 
-
-				</dl>
 			</div>
-		</div>
+
+			</div>
 	</div>
 </body>
