@@ -146,5 +146,10 @@ namespace Business.Implementar
             }
             return codigo;
         }
-    }
+
+		public Ticket FindId(string id)
+		{
+			return ticket_1.FindId(id);
+		}
+	}
 }

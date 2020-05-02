@@ -134,7 +134,9 @@
     <Compile Include="Autorizacion\SoloClientes.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ModuloAdministrador.cs" />
     <Compile Include="Controllers\ModuloClienteController.cs" />
+    <Compile Include="Controllers\ModuloTrabajadorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1983,10 +1985,14 @@
     <Content Include="Views\Home\AccesoDenegado.cshtml" />
     <Content Include="Views\ModuloCliente\Detalle_Tickets.cshtml" />
     <Content Include="Views\ModuloCliente\Enviar_Mensaje.cshtml" />
+    <Content Include="Views\Shared\_Layout_Trabajador.cshtml" />
+    <Content Include="Views\ModuloTrabajador\Trabajador.cshtml" />
+    <Content Include="Views\ModuloTrabajador\VerTicketsAsignados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="img\login\" />
+    <Folder Include="Views\ModuloAdministrador\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

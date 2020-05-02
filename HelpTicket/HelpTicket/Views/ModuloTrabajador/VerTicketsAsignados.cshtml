@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<Entity.Ticket>
 @{
-	Layout = "~/Views/Shared/_Layout_Vista.cshtml";
-	ViewBag.Title = "Cliente";
+	Layout = "~/Views/Shared/_Layout_Trabajador.cshtml";
+	ViewBag.Title = "VerTicketsAsignados";
 }
-
-
 
 
 <div class="col-lg-12">
@@ -22,7 +20,6 @@
 					</div>
 				</div>
 			}
-
 			@if (ViewBag.mensajeInformativo != null)
 			{
 				<div class="container">
@@ -32,7 +29,6 @@
 					</div>
 				</div>
 			}
-
 			@if (ViewBag.Error != null)
 			{
 				<div class="container">
@@ -42,7 +38,6 @@
 					</div>
 				</div>
 			}
-
 			<div class="container">
 				<h2>Ver Tickets</h2>
 				<p>Todos tus tickets solicitados</p>
@@ -57,53 +52,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (var item in Model)
+						@*@foreach (var item in Model)
 						{
 							<tr>
 								<td>@item.codigo_atencion</td>
-								<td>@item.Usuario_Modulo_Rol.usuario_id</td>
+								<td>@item.descripcion</td>
 								<td>@item.Topico.topico</td>
-								<td>@item.estado</td>
+								<td>@item.asignado_id</td>
 								<td>@Html.ActionLink("Detalle", "Detalle_Tickets", new { id = item.codigo_atencion })</td>
 							</tr>
-						}
+						}*@
 					</tbody>
 				</table>
 			</div>
+			
+		</div>
+	</div>
+</div>
 
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-				<div class="modal-dialog modal-xl">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body">
-							<div id="resultado"></div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<script>
-        function llamarVistaParcial() {
-            var laURLDeLaVista = '@Url.Action("Detalle_Tickets", "ModuloCliente")';
-            $.ajax({
-                cache: false,
-                async: true,
-                type: "GET",
-                url: laURLDeLaVista,
-                data: {},
-                success: function (response) {
-                    $('#resultado').html('');
-                    $('#resultado').html(response);
-                }
-            });
-        }
-			</script>
-</div>
-</div>
-</div>
