@@ -1988,6 +1988,7 @@
     <Content Include="Views\Shared\_Layout_Trabajador.cshtml" />
     <Content Include="Views\ModuloTrabajador\Trabajador.cshtml" />
     <Content Include="Views\ModuloTrabajador\VerTicketsAsignados.cshtml" />
+    <Content Include="Views\ModuloTrabajador\SolicitarRecurso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

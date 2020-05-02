@@ -23,6 +23,7 @@ namespace HelpTicket.Controllers
         private IDepartamentoService departamentoservice = new DepartamentoService();
         private ITopicoService topicoservice = new TopicoService();
         private IMensajeService mensajeservice = new MensajeService();
+        string identificador = "c";
         //private TicketsPersonalizados tPersonalizados = new TicketsPersonalizados();
         SesionData session = new SesionData();
 
@@ -50,7 +51,7 @@ namespace HelpTicket.Controllers
             {
                 string msm;
                 var user = (Usuario)session.getSession("usuario");
-                if (ticketservice.Insert2(ticket, user.codigo, out msm))
+                if (ticketservice.Insert2(ticket, user.codigo, out msm, identificador))
                 {
                     TempData["Agregado"] = "Se generó un ticket satisfactoriamente con el codigo de atención: " + msm;
                 }
@@ -185,7 +186,7 @@ namespace HelpTicket.Controllers
         {
             List<SelectListItem> tops = new List<SelectListItem>();
 
-            List<Topico> topicos = topicoservice.FindByDepartamento(departamento_id);
+            List<Topico> topicos = topicoservice.FindByDepartamento(departamento_id, identificador);
             if (!(topicos is null))
             {
                 tops.Add(new SelectListItem { Text = "Seleccione un Tópico...", Value = "" });

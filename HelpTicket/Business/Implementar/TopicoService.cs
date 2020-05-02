@@ -23,9 +23,9 @@ namespace Business.Implementar
             throw new NotImplementedException();
         }
 
-        public List<Topico> FindByDepartamento(int departamento_id)
+        public List<Topico> FindByDepartamento(int departamento_id, string identificador)
         {
-            return topico.FindByDepartamento(departamento_id);
+            return topico.FindByDepartamento(departamento_id, identificador);
         }
 
         public Topico FindById(int? id)

@@ -9,6 +9,6 @@ namespace Data
 {
     public interface ITopicoRepository:ICrudRepository<Topico>
     {
-        List<Topico> FindByDepartamento(int departamento_id);
+        List<Topico> FindByDepartamento(int departamento_id, string identificador);
     }
 }

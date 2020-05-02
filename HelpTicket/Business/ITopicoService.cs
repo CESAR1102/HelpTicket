@@ -9,6 +9,6 @@ namespace Business
 {
     public interface ITopicoService: ICrudService<Topico>
     {
-        List<Topico> FindByDepartamento(int departamento_id);
+        List<Topico> FindByDepartamento(int departamento_id, string identificador);
     }
 }
