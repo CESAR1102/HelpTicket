@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,39 @@ namespace Data.Implementar
         {
             throw new NotImplementedException();
         }
-
-        public List<Topico> FindAll()
+	
+		public List<Topico> FindAll()
         {
-            throw new NotImplementedException();
-        }
+			var topicos = new List<Topico>();
+			try
+			{
+				using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					con.Open();
+
+					var query = new SqlCommand("SELECT * FROM Topico ", con);
+					using (var dr = query.ExecuteReader())
+					{
+						while (dr.Read())
+						{
+							var topico = new Topico();
+							topico.id = Convert.ToInt32(dr["id"]);
+							topico.topico = dr["topico"].ToString();
+							topico.usuario_modificacion = dr["usuario_modificacion"].ToString();
+							
+
+
+							topicos.Add(topico);
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			return topicos;
+		}
 
         public List<Topico> FindByDepartamento(int departamento_id, string identificador)
         {

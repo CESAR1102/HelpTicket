@@ -314,7 +314,28 @@ namespace Data.Implementar
 
         public bool Update(Ticket t)
         {
-            throw new NotImplementedException();
-        }
-    }
+			bool seActualizo = false;
+			try
+			{
+				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conn.Open();
+					var query = new SqlCommand("UPDATE Ticket SET topico_id=@topico_id  WHERE codigo_atencion=@id", conn);
+
+					query.Parameters.AddWithValue("@id", t.codigo_atencion);
+					query.Parameters.AddWithValue("@topico_id", t.topico_id);
+				
+					query.ExecuteNonQuery();
+					seActualizo = true;
+				}
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+			return seActualizo;
+		}
+		
+	}
 }
