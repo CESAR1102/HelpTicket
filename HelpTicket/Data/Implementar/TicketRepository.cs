@@ -207,8 +207,8 @@ namespace Data.Implementar
                    
 					conexion.Open();
 					var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
-					  " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id " +
-					 " where t.solicitante_id = umr.id and umr.usuario_id = '" + codigo_trabajador + "' order by t.fecha_solicitado desc", conexion);
+                      " inner join usuario_modulo_rol umr on t.asignado_id= umr.id " +
+                     " where t.asignado_id = umr.id and umr.usuario_id = '" + codigo_trabajador + "' order by t.fecha_solicitado desc", conexion);
 
 
                     using (var dr = query.ExecuteReader())
@@ -217,8 +217,8 @@ namespace Data.Implementar
 						Ticket ticket = new Ticket();
 						while (dr.Read())
                         {
-							if (dr["asignado_id"] != null)
-							{
+							//if (dr["asignado_id"] != null)
+							//{
 								ticket.codigo_atencion = dr["codigo_atencion"].ToString();
 								ticket.solicitante_id = Convert.ToInt32(dr["solicitante_id"].ToString());
 								ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
@@ -230,11 +230,11 @@ namespace Data.Implementar
 								ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
 								ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
 								ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());
-							}
-							else
-							{
+							//}
+							//else
+							//{
 								
-							}
+							//}
 							
                             
 

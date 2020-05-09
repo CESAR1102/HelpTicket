@@ -20,7 +20,7 @@ namespace Data.Implementar
             throw new NotImplementedException();
         }
 
-        public List<Topico> FindByDepartamento(int departamento_id)
+        public List<Topico> FindByDepartamento(int departamento_id, string identificador)
         {
             List<Topico> topicos = null;
             StringBuilder sql = new StringBuilder();
@@ -33,7 +33,8 @@ namespace Data.Implementar
                     sql.Append("S");
                     sql.Append("' and departamento_id =");
                     sql.Append(departamento_id.ToString());
-
+                    sql.Append(" and acceso_usuario like '%");
+                    sql.Append(identificador + "%'");
                     var query = new SqlCommand(sql.ToString(), conexion);
 
                     using (var dr = query.ExecuteReader())

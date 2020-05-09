@@ -55,13 +55,39 @@ namespace Business.Implementar
             throw new NotImplementedException();
         }
 
-        public bool Insert2(Ticket t, string userCode, out string msm)
+        private void llenar_datos(out string modulo, out string rol, string mod)
+        {
+            switch (mod) {
+                case "c":
+                    modulo = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Cliente"];
+                    rol = System.Configuration.ConfigurationSettings.AppSettings["Rol_Cliente"];
+                    break;
+                case "t":
+                    modulo = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Trabajador"];
+                    rol = System.Configuration.ConfigurationSettings.AppSettings["Rol_Trabajador"];
+                    break;
+                case "a":
+                    modulo = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Administrador"];
+                    rol = System.Configuration.ConfigurationSettings.AppSettings["Rol_Administrador"];
+                    break;
+                default:
+                    modulo = string.Empty;
+                    rol = string.Empty;
+                    break;
+            }
+        }
+
+        public bool Insert2(Ticket t, string userCode, out string msm, string mod)
         {
             msm = string.Empty;
-            string moduloCliente = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Cliente"];
-            string rolCliente = System.Configuration.ConfigurationSettings.AppSettings["Rol_Cliente"];
+            //string moduloCliente = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Cliente"];
+            // string rolCliente = System.Configuration.ConfigurationSettings.AppSettings["Rol_Cliente"];
+            string modulo;
+            string rol;
 
-            int id = umr.obtenerIDUserModRol(userCode, moduloCliente, rolCliente);
+            llenar_datos(out modulo, out rol, mod);
+            // int id = umr.obtenerIDUserModRol(userCode, moduloCliente, rolCliente);
+            int id = umr.obtenerIDUserModRol(userCode, modulo, rol);
             if (id == 0)
             {
                 msm = "No se encontro usuario. Intente nuevamente.";

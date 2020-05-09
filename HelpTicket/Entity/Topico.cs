@@ -12,7 +12,7 @@ namespace Entity
         public int id { get; set; }
 
         [Required(ErrorMessage = "Es necesario el nombre del topico")]
-        [MaxLength(50, ErrorMessage = "El nombre del topico debe tener un maximo de 50 caracteres")]
+        [MaxLength(70, ErrorMessage = "El nombre del topico debe tener un maximo de 70 caracteres")]
         [Display(Name = "topico")]
         public string topico { get; set; }
 

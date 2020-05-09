@@ -44,5 +44,7 @@ namespace Entity
         public DateTime? fecha_finalizado { get; set; }
 
         public int? aprobador_id { get; set; }
+
+        public string acceso_usuario { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Business
         List<Ticket> TicketsSolicitados(string codigo_cliente);
         List<Ticket> TicketsSolicitadosParaMsm(string codigo_cliente);
         List<Ticket> TicketsAsignados(string codigo_trabajador);
-        bool Insert2(Ticket t, string userCode, out string msm);
+        bool Insert2(Ticket t, string userCode, out string msm, string mod);
         string DestinatarioPara(string codigo_atencion);
 		Ticket FindId(string id);
 	}
