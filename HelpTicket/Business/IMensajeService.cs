@@ -10,5 +10,6 @@ namespace Business
     public interface IMensajeService:ICrudService<Mensaje>
     {
         bool EnviarMensaje(Mensaje msm);
+        bool MensajeSolFinTicket(string de, string contenido, string cod_Atencion);
     }
 }

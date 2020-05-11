@@ -8,6 +8,7 @@ using Data.Implementar;
 using Entity;
 using System.Net;
 using System.Net.Mail;
+using Business.Util;
 
 namespace Business.Implementar
 {
@@ -15,6 +16,7 @@ namespace Business.Implementar
 	{
 		private IUsuarioRepository usuario = new UsuarioRepository();
         private Random valor = new Random();
+        
 
 		public bool Delete(int id)
 		{
@@ -107,11 +109,9 @@ namespace Business.Implementar
         {
             try
             {
-                MailMessage mail = new MailMessage();
-                string user = System.Configuration.ConfigurationSettings.AppSettings["EmailUser"];
-                string password = System.Configuration.ConfigurationSettings.AppSettings["EMailPassword"];
                 string link = System.Configuration.ConfigurationSettings.AppSettings["IP"] + System.Configuration.ConfigurationSettings.AppSettings["LinkRecuperar"];
                 string token = string.Empty;
+                Correo mail = new Correo();
                 StringBuilder mensaje = new StringBuilder();
                 token = usuario.GetTokenByEmail(correo);
                 if (token != string.Empty)
@@ -132,21 +132,14 @@ namespace Business.Implementar
                 mensaje.Append("No responder a este correo ya que nadie respondera. Envio automático.</p>");
                 mensaje.Append("</body></html>");
 
-                mail.Priority = MailPriority.High;
-                mail.Subject = "Recuperación de Contraseña - HelpTicket";
-                // mail.Body = "Estimado usuario,\nIngresar a este Link: " + link + " para cambiar la contraseña.\n\nNo responder a este correo ya que nadie respondera. Envio automático.";
-                mail.IsBodyHtml = true;
-                mail.Body = mensaje.ToString();
-                mail.From = new MailAddress(user);
-                mail.To.Add(correo);
-
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "eas.outlook.com";
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                smtp.Credentials = new NetworkCredential(user, password);
-                smtp.Send(mail);
-                return true;
+                if (mail.RecuperarContraseña(correo, mensaje.ToString()))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -186,6 +179,11 @@ namespace Business.Implementar
         public string ObtenerCorreo(string codigo)
         {
             return usuario.ObtenerCorreo(codigo);
+        }
+
+        public string ObtenerAdministrador(string codigo)
+        {
+            return usuario.ObtenerAdministrador(codigo);
         }
     }
 }

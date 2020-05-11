@@ -115,40 +115,60 @@ namespace Data.Implementar
 				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 				{
 					conn.Open();
-					var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
-				  " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id " +
-				 " where t.codigo_atencion = @id", conn);
-					query.Parameters.AddWithValue("@id", id);
+                    //var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
+                    // " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id " +
+                    //" where t.codigo_atencion = @id", conn);
+                    //query.Parameters.AddWithValue("@id", id);
 
-
-					using (var dr = query.ExecuteReader())
+                    var query = new SqlCommand("select t.*, o.*, umr.usuario_id from ticket t inner join topico o on t.topico_id =o.id" +
+                     " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id" +
+                    " where t.codigo_atencion = @id", conn);
+                    query.Parameters.AddWithValue("@id", id);
+                    using (var dr = query.ExecuteReader())
 					{
 						while (dr.Read())
 						{
 
-							ticket.Topico = new Topico();
-							ticket.Usuario_Modulo_Rol = new Usuario_Modulo_Rol();
+							//ticket.Topico = new Topico();
+							//ticket.Usuario_Modulo_Rol = new Usuario_Modulo_Rol();
 
 
-							ticket.codigo_atencion = dr["codigo_atencion"].ToString();
-							ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
-							ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
-							ticket.descripcion = dr["descripcion"].ToString();
-							ticket.estado = Convert.ToChar(dr["estado"].ToString());
-							ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
-							ticket.Topico.topico = dr["topico"].ToString();
-							ticket.Usuario_Modulo_Rol.id = Convert.ToInt32(dr["solicitante_id"].ToString());
-							ticket.Usuario_Modulo_Rol.usuario_id = dr["usuario_id"].ToString();
+							//ticket.codigo_atencion = dr["codigo_atencion"].ToString();
+							//ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
+							//ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
+							//ticket.descripcion = dr["descripcion"].ToString();
+							//ticket.estado = Convert.ToChar(dr["estado"].ToString());
+							//ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
+							//ticket.Topico.topico = dr["topico"].ToString();
+							//ticket.Usuario_Modulo_Rol.id = Convert.ToInt32(dr["solicitante_id"].ToString());
+							//ticket.Usuario_Modulo_Rol.usuario_id = dr["usuario_id"].ToString();
 
+                            //var ticket = new Ticket();
+                            var topico = new Topico();
+                            var umr = new Usuario_Modulo_Rol();
+                            ticket.codigo_atencion = dr["codigo_atencion"].ToString();
+                            ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
 
-						}
+                            ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
+                            ticket.descripcion = dr["descripcion"].ToString();
+                            ticket.estado = Convert.ToChar(dr["estado"].ToString());
+                            ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
+
+                            topico.topico = dr["topico"].ToString();
+                            umr.id = Convert.ToInt32(dr["solicitante_id"].ToString());
+                            umr.usuario_id = dr["usuario_id"].ToString();
+                            ticket.Topico = topico;
+                            ticket.Usuario_Modulo_Rol = umr;
+
+                            //t.Add(ticket);
+                        }
 					}
 				}
 			}
 			catch (Exception)
 			{
 
-				throw;
+				//throw;
 			}
 			return ticket;
 		}
@@ -208,44 +228,39 @@ namespace Data.Implementar
 					conexion.Open();
 					var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
                       " inner join usuario_modulo_rol umr on t.asignado_id= umr.id " +
-                     " where t.asignado_id = umr.id and umr.usuario_id = '" + codigo_trabajador + "' order by t.fecha_solicitado desc", conexion);
+                     " where t.asignado_id = umr.id and umr.usuario_id = '" + codigo_trabajador + "' and t.estado in ('A', 'P') order by t.fecha_solicitado desc", conexion);
 
 
                     using (var dr = query.ExecuteReader())
                     {
                         t = new List<Ticket>();
-						Ticket ticket = new Ticket();
 						while (dr.Read())
                         {
-							//if (dr["asignado_id"] != null)
-							//{
-								ticket.codigo_atencion = dr["codigo_atencion"].ToString();
-								ticket.solicitante_id = Convert.ToInt32(dr["solicitante_id"].ToString());
-								ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
-								ticket.asignado_id = Convert.ToInt32(dr["asignado_id"].ToString());
-								ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
-								ticket.descripcion = dr["descripcion"].ToString();
-								ticket.estado = Convert.ToChar(dr["estado"].ToString());
-								ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
-								ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
-								ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
-								ticket.aprobador_id = Convert.ToInt32(dr["aprobador_id"].ToString());
-							//}
-							//else
-							//{
-								
-							//}
-							
-                            
+                            var ticket = new Ticket();
+                            var topico = new Topico();
+                            var umr = new Usuario_Modulo_Rol();
+                            ticket.codigo_atencion = dr["codigo_atencion"].ToString();
+                            ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
+
+                            ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
+                            ticket.descripcion = dr["descripcion"].ToString();
+                            ticket.estado = Convert.ToChar(dr["estado"].ToString());
+                            ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
+
+                            topico.topico = dr["topico"].ToString();
+                            umr.id = Convert.ToInt32(dr["solicitante_id"].ToString());
+                            umr.usuario_id = dr["usuario_id"].ToString();
+                            ticket.Topico = topico;
+                            ticket.Usuario_Modulo_Rol = umr;
 
                             t.Add(ticket);
                         }
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                var a = e.Message;
             }
             return t;
         }

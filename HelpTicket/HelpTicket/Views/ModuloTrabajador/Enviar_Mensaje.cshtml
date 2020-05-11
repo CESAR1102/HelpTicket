@@ -1,0 +1,145 @@
+﻿@model Entity.Mensaje
+
+@{
+    ViewBag.Title = "Enviar_Mensaje";
+    Layout = "~/Views/Shared/_Layout_Vista.cshtml";
+
+    var tks = ViewBag.Tickets as List<SelectListItem>;
+}
+
+
+
+
+
+
+	<div class="col-lg-12">
+			<div class="card shadow mb-4">
+				<div class="card-header" >
+					<h6 class="m-0 font-weight-bold text-dark">ENVIAR MENSAJE</h6>
+				</div>
+                <div class="card-body card-block border-bottom-light">
+                    @if (ViewBag.Exito != null)
+                    {
+                        <div class="container">
+                            <div class="alert alert-success alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Éxito!</strong> @ViewBag.Exito
+                            </div>
+                        </div>
+                    }
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="container">
+                            <div class="alert alert-danger alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>Error!</strong> @ViewBag.Error
+                            </div>
+                        </div>
+                    }
+                    <div class="container">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                <h4>Mensaje</h4>
+                                <hr />
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group">
+                                    <h5 class="col-md-10">Ticket</h5>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.ticket_id, tks, new { @class = "form-control", id = "ticket_referencia" })
+                                       
+                                        @Html.ValidationMessageFor(model => model.ticket_id, "", new { @class = "text-danger", @font_size = "1" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h5 class="col-md-10">Asunto</h5>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.asunto, new { htmlAttributes = new { @class = "form-control", id = "textasunto", style = "background-color:palegoldenrod" } })
+                                        @Html.ValidationMessageFor(model => model.asunto, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h5 class="col-md-10">Motivo</h5>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.motivo, new { htmlAttributes = new { @class = "form-control", id = "textmotivo" } })
+                                        @Html.ValidationMessageFor(model => model.motivo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h5 class="col-md-10">Destinatario</h5>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.destinatario_id, new { htmlAttributes = new { @class = "form-control", id = "textdestinatario", style = "background-color:palegoldenrod"} })
+                                        @Html.ValidationMessageFor(model => model.destinatario_id, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <h5 class="col-md-10">Mensaje</h5>
+                                    <div class="col-md-10">
+                                        @Html.TextAreaFor(d => d.contenido, new { @class = "form-control form-control-user", @placeholder = "Escriba el mensaje ...", id = "descripcionMensaje", rows = "7" })
+                                        <p style="text-align:right" id="textContador">0/1000</p>
+                                        @Html.ValidationMessageFor(d => d.contenido, "", new { @class = "text-danger", @font_size = "1" })
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Enviar" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+			</div>
+		</div>
+
+
+
+
+<script>const ticket = document.getElementById("ticket_referencia");
+    const testAreaMensaje = document.getElementById("descripcionMensaje");
+    const contador = document.getElementById("textContador");
+    const destinatario = document.getElementById("textdestinatario");
+    const asunto = document.getElementById("textasunto");
+    const motivo = document.getElementById("textmotivo");
+    
+
+    ticket.addEventListener("change", (event) => {
+        let url = '/ModuloCliente/ObtenerDestinatario/' + ticket.value;
+        fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                if (out['response'] == "Error") {
+                    asunto.value = "";
+                    destinatario.value = "";
+                } else {
+                    asunto.value = "Cod Atención: " + ticket.value + " - " + motivo.value;
+                    destinatario.value = out['response'];
+                }
+            })
+            .catch(err => { throw err });
+    });
+
+    motivo.addEventListener("input", (event) => {
+        if (ticket.value == "0") {
+            asunto.value = "";
+        } else {
+            asunto.value = "Cod Atención: " + ticket.value + " - " + motivo.value;
+        }
+    });
+
+    testAreaMensaje.addEventListener("input", (event) => {
+        contador.innerText = testAreaMensaje.value.length + "/1000";
+    });</script>

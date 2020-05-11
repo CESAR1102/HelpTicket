@@ -1,5 +1,6 @@
 ﻿using Business;
 using Business.Implementar;
+using Business.Util;
 using Entity;
 using HelpTicket.Autorizacion;
 using HelpTicket.Models;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HelpTicket.PartialClass;
 
 namespace HelpTicket.Controllers
 {
@@ -18,6 +20,7 @@ namespace HelpTicket.Controllers
 		private ITicketService ticketservice = new TicketService();
         private IDepartamentoService departamentoservice = new DepartamentoService();
         private ITopicoService topicoservice = new TopicoService();
+        private IMensajeService mensajeservice = new MensajeService();
         SesionData session = new SesionData();
         string identificador = "t";
 
@@ -79,11 +82,65 @@ namespace HelpTicket.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult SolicitarFinalizacion()
+        {
+            FinalizarTicket f = new FinalizarTicket();
+            var usuario = (Entity.Usuario)(Session["usuario"]);
+
+            ViewBag.Tickets = TicketsAsignadoDisponibles(usuario.codigo);
+
+            return View(f);
+        }
+
+        [HttpPost]
+        public ActionResult SolicitarFinalizacion(FinalizarTicket f)
+        {
+            var usuario = (Entity.Usuario)(Session["usuario"]);
+            ViewBag.Tickets = TicketsAsignadoDisponibles(usuario.codigo);
+            if (ModelState.IsValid)
+            {
+                if (mensajeservice.MensajeSolFinTicket(usuario.codigo, f.Contenido, f.ticket))
+                {
+                    ViewBag.Exito = "Se envio satisfactoriamente su solicitud de finalizacion del ticket";
+                    return View(new FinalizarTicket());
+                }
+                else
+                {
+                    ViewBag.Error = "No se pudo enviar la solicictud. Intente nuevamente";
+                    return View(f);
+                }
+            }
+            else
+            {
+                return View(f);
+            }
+        }
+
         [ActionName("ObtenerTopicos")]
         public ActionResult ObtenerTopicos(string id)
         {
             var topicos = Topicos(Convert.ToInt32(id));
             return Json(topicos, JsonRequestBehavior.AllowGet);
+        }
+
+        [ActionName("ObtenerDatosTicket1")]
+        public ActionResult ObtenerDatosTicket1(string id)
+        {
+            var response = new ResponseTicket1();
+            var t = ticketservice.FindId(id);
+            if (t.codigo_atencion != null)
+            {
+                response.response = "OK";
+                response.descripcion = t.descripcion;
+                response.solicitante = t.Usuario_Modulo_Rol.usuario_id;
+                response.topico = t.Topico.topico;
+            }
+            else
+            {
+                response.response = "Error";
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         private List<SelectListItem> ImportanciaTickets()
@@ -128,6 +185,22 @@ namespace HelpTicket.Controllers
                 }
             }
             return tops;
+        }
+
+        private List<SelectListItem> TicketsAsignadoDisponibles(string codigo)
+        {
+            List<SelectListItem> ticket = new List<SelectListItem>();
+
+            List<Ticket> tickets = ticketservice.TicketsAsignadosParaFinalizar(codigo);
+            if (!(tickets is null))
+            {
+                ticket.Add(new SelectListItem { Text = "Seleccione un ticket como referencia al mensaje...", Value = "" });
+                foreach (var d in tickets)
+                {
+                    ticket.Add(new SelectListItem { Text = d.codigo_atencion, Value = d.codigo_atencion.ToString() });
+                }
+            }
+            return ticket;
         }
     }
 }
