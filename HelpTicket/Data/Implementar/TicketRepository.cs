@@ -50,7 +50,50 @@ namespace Data.Implementar
 
         public List<Ticket> FindAll()
         {
-            throw new NotImplementedException();
+            List<Ticket> t = new List<Ticket>(); ;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+
+                    conexion.Open();
+                    var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
+                      " inner join usuario_modulo_rol umr on t.solicitante_id = umr.id " +
+                     " where t.solicitante_id = umr.id order by t.fecha_solicitado desc", conexion);
+
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            var ticket = new Ticket();
+                            var topico = new Topico();
+                            var umr = new Usuario_Modulo_Rol();
+                            ticket.codigo_atencion = dr["codigo_atencion"].ToString();
+                            ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
+
+                            ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
+                            ticket.descripcion = dr["descripcion"].ToString();
+                            ticket.estado = Convert.ToChar(dr["estado"].ToString());
+                            ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
+
+                            topico.topico = dr["topico"].ToString();
+                            umr.id = Convert.ToInt32(dr["solicitante_id"].ToString());
+                            umr.usuario_id = dr["usuario_id"].ToString();
+                            ticket.Topico = topico;
+                            ticket.Usuario_Modulo_Rol = umr;
+
+                            t.Add(ticket);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
+            return t;
         }
 
         public Ticket FindByCodAtencion(string cod_atencion)
@@ -329,7 +372,29 @@ namespace Data.Implementar
 
         public bool Update(Ticket t)
         {
-            throw new NotImplementedException();
-        }
+
+			bool seActualizo = false;
+			try
+			{
+				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conn.Open();
+					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id  WHERE codigo_atencion=@codigo_atencion", conn);
+
+					query.Parameters.AddWithValue("@codigo_atencion", t.codigo_atencion);
+			
+					query.Parameters.AddWithValue("@topico_id", t.topico_id);
+
+					query.ExecuteNonQuery();
+					seActualizo = true;
+				}
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+			return seActualizo;
+		}
     }
 }

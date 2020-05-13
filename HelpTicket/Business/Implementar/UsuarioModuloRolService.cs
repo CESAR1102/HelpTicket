@@ -20,8 +20,8 @@ namespace Business.Implementar
 
         public List<Usuario_Modulo_Rol> FindAll()
         {
-            throw new NotImplementedException();
-        }
+			return usuarioModuloRol.FindAll();
+		}
 
         public Usuario_Modulo_Rol FindById(int? id)
         {

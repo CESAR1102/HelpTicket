@@ -134,7 +134,7 @@
     <Compile Include="Autorizacion\SoloClientes.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\ModuloAdministrador.cs" />
+    <Compile Include="Controllers\ModuloAdministradorController.cs" />
     <Compile Include="Controllers\ModuloClienteController.cs" />
     <Compile Include="Controllers\ModuloTrabajadorController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1993,11 +1993,14 @@
     <Content Include="Views\ModuloTrabajador\SolicitarRecurso.cshtml" />
     <Content Include="Views\ModuloTrabajador\SolicitarFinalizacion.cshtml" />
     <Content Include="Views\ModuloTrabajador\Enviar_Mensaje.cshtml" />
+    <Content Include="Views\ModuloAdministrador\Administrador.cshtml" />
+    <Content Include="Views\ModuloAdministrador\VerTicketsClientes.cshtml" />
+    <Content Include="Views\ModuloAdministrador\Editar_Tickets.cshtml" />
+    <Content Include="Views\Shared\_Layout_Administrador.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="img\login\" />
-    <Folder Include="Views\ModuloAdministrador\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

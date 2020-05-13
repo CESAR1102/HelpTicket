@@ -25,5 +25,12 @@ namespace Entity
         [MaxLength(50, ErrorMessage = "El comentario debe tener un maximo de 50 caracteres")]
         [Display(Name = "comentario")]
         public string comentario { get; set; }
-    }
+
+
+		public Modulo_Rol Modulo_Rol { get; set; }
+
+		public Usuario Usuario { get; set; }
+
+
+	}
 }

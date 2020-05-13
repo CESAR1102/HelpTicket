@@ -16,7 +16,7 @@ namespace Entity
 
 		public Usuario_Modulo_Rol Usuario_Modulo_Rol { get; set; }
 
-
+		public Usuario Usuario { get; set; }
 
 
 

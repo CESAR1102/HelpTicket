@@ -22,7 +22,7 @@ namespace Business.Implementar
 
         public List<Ticket> FindAll()
         {
-            throw new NotImplementedException();
+            return ticket_1.FindAll();
         }
 
         public bool Insert(Ticket t)
@@ -139,8 +139,8 @@ namespace Business.Implementar
 
 		public bool Update(Ticket t)
         {
-            throw new NotImplementedException();
-        }
+			return ticket_1.Update(t);
+		}
 
         public List<Ticket> TicketsSolicitadosParaMsm(string codigo_cliente)
         {

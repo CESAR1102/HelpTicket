@@ -45,23 +45,23 @@
 					<thead>
 						<tr>
 							<th>Codigo de Atención</th>
-							<th>Solicitante</th>
+							<th>Asignado</th>
 							<th>Tópico</th>
 							<th>Estado</th>
 							<th>Detalles</th>
 						</tr>
 					</thead>
 					<tbody>
-						@*@foreach (var item in Model)
+						@foreach (var item in Model)
 						{
 							<tr>
 								<td>@item.codigo_atencion</td>
-								<td>@item.descripcion</td>
+								<td>@item.Usuario_Modulo_Rol.usuario_id</td>
 								<td>@item.Topico.topico</td>
-								<td>@item.asignado_id</td>
+								<td>@item.estado</td>
 								<td>@Html.ActionLink("Detalle", "Detalle_Tickets", new { id = item.codigo_atencion })</td>
 							</tr>
-						}*@
+						}
 					</tbody>
 				</table>
 			</div>

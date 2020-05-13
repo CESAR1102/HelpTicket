@@ -24,5 +24,7 @@ namespace Entity
         public DateTime fecha_modificacion { get; set; }
         public string usuario_modificacion { get; set; }
         public char estado { get; set; }
-    }
+
+		public Departamento Departamento { get; set; }
+	}
 }

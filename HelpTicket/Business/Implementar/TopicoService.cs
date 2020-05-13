@@ -20,8 +20,8 @@ namespace Business.Implementar
 
         public List<Topico> FindAll()
         {
-            throw new NotImplementedException();
-        }
+			return topico.FindAll();
+		}
 
         public List<Topico> FindByDepartamento(int departamento_id, string identificador)
         {

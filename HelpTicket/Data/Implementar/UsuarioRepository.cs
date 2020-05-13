@@ -18,7 +18,7 @@ namespace Data.Implementar
 				using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 				{
 					conexion.Open();
-					var query = new SqlCommand("Select u.ID_usuario, u.nombres,u.correo,u.codigo,u.contraseña from usuario as u ", conexion);
+					var query = new SqlCommand("Select * from usuario as u ", conexion);
 					using (var dr = query.ExecuteReader())
 					{
 
