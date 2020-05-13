@@ -25,15 +25,22 @@ namespace Data.Implementar
 				{
 					con.Open();
 
-					var query = new SqlCommand("SELECT * FROM Topico ", con);
+					var query = new SqlCommand("SELECT * FROM topico as t inner join departamento as d on  d.id=t.departamento_id", con);
 					using (var dr = query.ExecuteReader())
 					{
 						while (dr.Read())
 						{
 							var topico = new Topico();
+							var departamento = new Departamento();
 							topico.id = Convert.ToInt32(dr["id"]);
 							topico.topico = dr["topico"].ToString();
 							topico.usuario_modificacion = dr["usuario_modificacion"].ToString();
+							//topico.estado = Convert.ToChar("estado");
+
+						
+
+							departamento.id = Convert.ToInt32(dr["departamento_id"]);
+							topico.Departamento = departamento;
 
 
 

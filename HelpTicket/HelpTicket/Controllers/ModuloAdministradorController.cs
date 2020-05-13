@@ -19,6 +19,8 @@ namespace HelpTicket.Controllers
 		private ITicketService ticketservice = new TicketService();
 		private IDepartamentoService departamentoservice = new DepartamentoService();
 		private ITopicoService topicoservice = new TopicoService();
+		private IUsuarioModuloRolService umrservice = new UsuarioModuloRolService();
+		private IUsuarioService usuarioservice = new UsuarioService();
 		private IMensajeService mensajeservice = new MensajeService();
 		string identificador = "c";
 		//private TicketsPersonalizados tPersonalizados = new TicketsPersonalizados();
@@ -56,6 +58,8 @@ namespace HelpTicket.Controllers
 		[HttpGet]
 		public ActionResult Editar_Tickets(string id)
 		{
+			ViewBag.umr = umrservice.FindAll();
+			ViewBag.usuarios = usuarioservice.FindAll();
 			ViewBag.topicos = topicoservice.FindAll();
 			if (id == null)
 			{
@@ -70,6 +74,8 @@ namespace HelpTicket.Controllers
 		[HttpPost]
 		public ActionResult Editar_Tickets(Ticket t)
 		{
+			ViewBag.umr = umrservice.FindAll();
+			ViewBag.usuarios = usuarioservice.FindAll();
 			ViewBag.topicos = topicoservice.FindAll();
 			bool ed = ticketservice.Update(t);
 			if (ed)
@@ -80,5 +86,7 @@ namespace HelpTicket.Controllers
 			return View();
 
 		}
+		
+
 	}
 }

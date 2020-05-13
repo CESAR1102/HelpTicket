@@ -336,9 +336,10 @@ namespace Data.Implementar
 				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 				{
 					conn.Open();
-					var query = new SqlCommand("UPDATE Ticket SET topico_id=@topico_id  WHERE codigo_atencion=@id", conn);
+					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id  WHERE codigo_atencion=@codigo_atencion", conn);
 
-					query.Parameters.AddWithValue("@id", t.codigo_atencion);
+					query.Parameters.AddWithValue("@codigo_atencion", t.codigo_atencion);
+			
 					query.Parameters.AddWithValue("@topico_id", t.topico_id);
 
 					query.ExecuteNonQuery();

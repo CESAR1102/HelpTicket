@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -17,8 +18,46 @@ namespace Data.Implementar
 
         public List<Usuario_Modulo_Rol> FindAll()
         {
-            throw new NotImplementedException();
-        }
+			var umrs = new List<Usuario_Modulo_Rol>();
+			try
+			{
+				using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					con.Open();
+
+					var query = new SqlCommand("SELECT * FROM usuario_modulo_rol as umr inner join modulo_rol as mr on  umr.modulo_rol_id=mr.id inner join usuario as u on u.codigo=umr.usuario_id", con);
+					using (var dr = query.ExecuteReader())
+					{
+						while (dr.Read())
+						{
+							var umr = new Usuario_Modulo_Rol();
+							var usuario = new Usuario();
+							var mr = new Modulo_Rol();
+
+
+							umr.id = Convert.ToInt32(dr["id"]);
+							umr.estado = Convert.ToChar(dr["estado"]); 
+							umr.comentario = dr["comentario"].ToString(); 
+
+							usuario.codigo= dr["usuario_id"].ToString();
+							umr.Usuario = usuario;
+
+							mr.id= Convert.ToInt32(dr["modulo_rol_id"]);
+							umr.Modulo_Rol = mr;
+
+						
+
+							umrs.Add(umr);
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			return umrs;
+		}
 
         public Usuario_Modulo_Rol FindById(int? id)
         {
