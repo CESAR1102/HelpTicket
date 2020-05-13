@@ -296,5 +296,31 @@ namespace Data.Implementar
             }
             return cod;
         }
+
+        public string ObtenerAdministrador(string codigo)
+        {
+            string cod = string.Empty;
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query1 = new SqlCommand("select umr.usuario_id from ticket t inner join usuario_modulo_rol umr on t.aprobador_id= umr.id " +
+                    "where t.codigo_atencion = '" + codigo + "'", conexion);
+                    using (var dr = query1.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            cod = dr["usuario_id"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return cod;
+        }
     }
 }

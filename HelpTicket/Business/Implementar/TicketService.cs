@@ -163,6 +163,27 @@ namespace Business.Implementar
             return originales;
         }
 
+        public List<Ticket> TicketsAsignadosParaFinalizar(string codigo_trabajador)
+        {
+            List<Ticket> originales = TicketsAsignados(codigo_trabajador);
+            if (originales != null)
+            {
+                for (short i = 0; i < originales.Count; i++)
+                {
+                    if (originales[i].estado != 'P' && originales[i].estado != 'A')
+                    {
+                        originales.Remove(originales[i]);
+                        i--;
+                    }
+                }
+            }
+            else
+            {
+                originales = new List<Ticket>();
+            }
+            return originales;
+        }
+
         public string DestinatarioPara(string codigo_atencion)
         {
             string codigo = ticket_1.DestinatarioPara(codigo_atencion);

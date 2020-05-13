@@ -57,15 +57,15 @@
 					<tbody>
 						@foreach (var item in Model)
 						{
-						<tr>
-							<td>@item.codigo_atencion</td>
-							<td>@item.Usuario_Modulo_Rol.usuario_id</td>
-							<td>@item.Topico.topico</td>
-							<td>@item.descripcion</td>
-							<td>@item.estado</td>
-							<td>@item.importancia</td>
-							<td>@Html.ActionLink("Editar", "Editar_Tickets", new { id = item.codigo_atencion })|@Html.ActionLink("Asignar", "#", new { id = item.codigo_atencion })</td>
-						</tr>
+							<tr>
+								<td>@item.codigo_atencion</td>
+								<td>@item.Usuario_Modulo_Rol.usuario_id</td>
+								<td>@item.Topico.topico</td>
+								<td>@item.descripcion</td>
+								<td>@item.estado</td>
+								<td>@item.importancia</td>
+								<td>@Html.ActionLink("Editar", "Editar_Tickets", new { id = item.codigo_atencion })|@Html.ActionLink("Asignar", "#", new { id = item.codigo_atencion })</td>
+							</tr>
 						}
 					</tbody>
 				</table>

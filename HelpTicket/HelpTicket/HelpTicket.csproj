@@ -142,10 +142,12 @@
     </Compile>
     <Compile Include="Models\SesionData.cs" />
     <Compile Include="PartialClass\DatosCompartidos.cs" />
+    <Compile Include="PartialClass\FinalizarTicket.cs" />
     <Compile Include="PartialClass\InputFields_ForgotPassword.cs" />
     <Compile Include="PartialClass\InputFields_Loguin.cs" />
     <Compile Include="PartialClass\InputFields_Recovery.cs" />
     <Compile Include="PartialClass\ResponseDestinatarios.cs" />
+    <Compile Include="PartialClass\ResponseTicket1.cs" />
     <Compile Include="PartialClass\TicketsPersonalizados.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1989,10 +1991,12 @@
     <Content Include="Views\ModuloTrabajador\Trabajador.cshtml" />
     <Content Include="Views\ModuloTrabajador\VerTicketsAsignados.cshtml" />
     <Content Include="Views\ModuloTrabajador\SolicitarRecurso.cshtml" />
-    <Content Include="Views\ModuloAdministrador\VerTicketsClientes.cshtml" />
-    <Content Include="Views\Shared\_Layout_Administrador.cshtml" />
+    <Content Include="Views\ModuloTrabajador\SolicitarFinalizacion.cshtml" />
+    <Content Include="Views\ModuloTrabajador\Enviar_Mensaje.cshtml" />
     <Content Include="Views\ModuloAdministrador\Administrador.cshtml" />
+    <Content Include="Views\ModuloAdministrador\VerTicketsClientes.cshtml" />
     <Content Include="Views\ModuloAdministrador\Editar_Tickets.cshtml" />
+    <Content Include="Views\Shared\_Layout_Administrador.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

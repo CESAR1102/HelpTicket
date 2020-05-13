@@ -1,0 +1,132 @@
+﻿@model Business.Util.FinalizarTicket
+
+@{
+    Layout = "~/Views/Shared/_Layout_Trabajador.cshtml";
+    ViewBag.Title = "Login_";
+
+    var tks = ViewBag.Tickets as List<SelectListItem>;
+}
+
+
+<div class="col-lg-12">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-dark">ENVIAR MENSAJE</h6>
+        </div>
+        <div class="card-body card-block border-bottom-light">
+            @if (ViewBag.Exito != null)
+            {
+                <div class="container">
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Éxito!</strong> @ViewBag.Exito
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="container">
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> @ViewBag.Error
+                    </div>
+                </div>
+            }
+            <div class="container">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Solicitar Finalizar Ticket</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <h5 class="col-md-10">Ticket</h5>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.ticket, tks, new { @class = "form-control", id = "ticket_referencia" })
+                            @Html.ValidationMessageFor(d => d.ticket, "", new { @class = "text-danger", @font_size = "1" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 class="col-md-10">Solicitante</h5>
+                        <div class="col-md-10" >
+                            <p id="textSolicitante" style="background-color:palegoldenrod">Solicitante...</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 class="col-md-10">Topico</h5>
+                        <div class="col-md-10">
+                            <p id="textTopico" style="background-color:palegoldenrod">Topico...</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5 class="col-md-10">Descripcion del Ticket</h5>
+                        <div class="col-md-10">
+                            <p id="textDescripcion" style="background-color:palegoldenrod">Descripcion...</p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <h5 class="col-md-10">Mensaje</h5>
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(d => d.Contenido, new { @class = "form-control form-control-user", @placeholder = "Escriba el mensaje ...", id = "descripcionMensaje", rows = "7" })
+                            <p style="text-align:right" id="textContador">0/1000</p>
+                            @Html.ValidationMessageFor(d => d.Contenido, "", new { @class = "text-danger", @font_size = "1" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Enviar" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    const ticket = document.getElementById("ticket_referencia");
+    const testAreaMensaje = document.getElementById("descripcionMensaje");
+    const contador = document.getElementById("textContador");
+    const solicitante = document.getElementById("textSolicitante");
+    const topico = document.getElementById("textTopico");
+    const descripcion = document.getElementById("textDescripcion");
+
+
+    ticket.addEventListener("change", (event) => {
+        let url = '/ModuloTrabajador/ObtenerDatosTicket1/' + ticket.value;
+        fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                if (out['response'] == "Error") {
+                    solicitante.innerHTML = "Solicitante...";
+                    topico.innerHTML = "Topico...";
+                    descripcion.innerHTML = "Descripcion...";
+                } else {
+                    solicitante.innerHTML = out['solicitante'];
+                    topico.innerHTML = out['topico'];
+                    descripcion.innerHTML = out['descripcion'];
+                }
+            })
+            .catch(err => { throw err });
+    });
+
+    testAreaMensaje.addEventListener("input", (event) => {
+        contador.innerText = testAreaMensaje.value.length + "/1000";
+    });</script>

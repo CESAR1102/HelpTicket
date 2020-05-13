@@ -16,5 +16,6 @@ namespace Data
         string VerificarToken(string token);
         bool ActualizarContraseña(string codigo, string contra);
         string ObtenerCorreo(string codigo);
+        string ObtenerAdministrador(string codigo);
     }
 }

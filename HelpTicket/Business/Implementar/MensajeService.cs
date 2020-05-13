@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Util;
 using Data;
 using Data.Implementar;
 using Entity;
@@ -27,9 +28,8 @@ namespace Business.Implementar
             {
                 if (mensa.Insert(msm))
                 {
-                    MailMessage mail = new MailMessage();
-                    string user = System.Configuration.ConfigurationSettings.AppSettings["EmailUser"];
-                    string password = System.Configuration.ConfigurationSettings.AppSettings["EMailPassword"];
+                    Correo mail = new Correo();
+
                     StringBuilder mensaje = new StringBuilder();
 
                     mensaje.Append("<html><head></head><body>");
@@ -43,21 +43,14 @@ namespace Business.Implementar
                     mensaje.Append("<p>Para seguir con el hilo de consersación, utilizar la aplicación.</p>");
                     mensaje.Append("</body></html>");
 
-                    mail.Priority = MailPriority.High;
-                    mail.Subject = msm.asunto;
-
-                    mail.IsBodyHtml = true;
-                    mail.Body = mensaje.ToString();
-                    mail.From = new MailAddress(user);
-                    mail.To.Add(usuario.ObtenerCorreo(msm.destinatario_id));
-
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "eas.outlook.com";
-                    smtp.Port = 587;
-                    smtp.EnableSsl = true;
-                    smtp.Credentials = new NetworkCredential(user, password);
-                    smtp.Send(mail);
-                    return true;
+                    if (mail.EnviarMensaje(msm, usuario.ObtenerCorreo(msm.destinatario_id), mensaje.ToString()))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
@@ -84,6 +77,39 @@ namespace Business.Implementar
         public bool Insert(Mensaje t)
         {
             throw new NotImplementedException();
+        }
+
+        public bool MensajeSolFinTicket(string de,  string contenido, string cod_Atencion)
+        {
+            try
+            {
+                Correo mail = new Correo();
+                StringBuilder mensaje = new StringBuilder();
+                var aprobador = usuario.ObtenerAdministrador(cod_Atencion);
+                mensaje.Append("<html><head></head><body>");
+                mensaje.Append("<p>");
+                mensaje.Append("Mensaje enviado por el usuario: " + de);
+                mensaje.Append("</p> <br/>");
+                mensaje.Append("<p>");
+                mensaje.Append(contenido);
+                mensaje.Append("</p>");
+                mensaje.Append("<br/>");
+                mensaje.Append("</body></html>");
+
+                if (mail.CorreoSolicitarFinalizar(usuario.ObtenerCorreo(aprobador), mensaje.ToString(), cod_Atencion))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+                return false;
+            }
         }
 
         public bool Update(Mensaje t)

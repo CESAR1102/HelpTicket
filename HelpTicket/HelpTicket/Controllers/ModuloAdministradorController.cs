@@ -49,7 +49,7 @@ namespace HelpTicket.Controllers
 
 		}
 
-	
+
 
 
 
@@ -64,7 +64,7 @@ namespace HelpTicket.Controllers
 
 			return View(ticketservice.FindId(id));
 
-		
+
 
 		}
 		[HttpPost]
@@ -72,7 +72,7 @@ namespace HelpTicket.Controllers
 		{
 			ViewBag.topicos = topicoservice.FindAll();
 			bool ed = ticketservice.Update(t);
-			if ( ed)
+			if (ed)
 			{
 				return RedirectToAction("VerTicketsClientes");
 			}
