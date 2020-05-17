@@ -370,6 +370,42 @@ namespace Data.Implementar
 			return ticketsolicitados;
 		}
 
+        public string TicketsXtrabajadorXestado(string codigo, string estado)
+        {
+            string resultado = "0";
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+
+                    conexion.Open();
+
+                    sql.Append("Select count(*) cantidad from ticket t, usuario_modulo_rol urm ");
+                    sql.Append("where t.asignado_id = urm.id and t.estado = '");
+                    sql.Append(estado);
+                    sql.Append("' and urm.usuario_id = '");
+                    sql.Append(codigo);
+                    sql.Append("'");
+
+                    var query = new SqlCommand(sql.ToString(), conexion);
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            resultado = dr["cantidad"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
+            return resultado;
+        }
+
         public bool Update(Ticket t)
         {
 

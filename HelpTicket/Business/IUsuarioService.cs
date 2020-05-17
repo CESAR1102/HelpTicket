@@ -16,5 +16,6 @@ namespace Business
         bool ActualizarContraseña(string codigo, string contra, out string msm);
         string ObtenerCorreo(string codigo);
         string ObtenerAdministrador(string codigo);
+        List<Usuario> ObtenerTrabajadores();
     }
 }

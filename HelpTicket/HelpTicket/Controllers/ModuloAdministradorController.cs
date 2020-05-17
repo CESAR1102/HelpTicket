@@ -3,6 +3,7 @@ using Business.Implementar;
 using Entity;
 using HelpTicket.Autorizacion;
 using HelpTicket.Models;
+using HelpTicket.PartialClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,7 +83,18 @@ namespace HelpTicket.Controllers
 			return View();
 
 		}
-		
 
-	}
+        [HttpGet]
+        public ActionResult VerTrabajadores()
+        {
+            ManagerInfoTrabajador manager = new ManagerInfoTrabajador();
+            List<InfoTrabajador> trabajadores = manager.LlenarDatos();
+            if (trabajadores.Count == 0)
+            {
+                ViewBag.mensajeInformativo = "Aun no se ha registrado ningun trabajador";
+            }
+            return View(trabajadores);
+        }
+
+    }
 }

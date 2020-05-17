@@ -198,5 +198,10 @@ namespace Business.Implementar
 		{
 			return ticket_1.FindId(id);
 		}
-	}
+
+        public string TicketsXtrabajadorXestado(string codigo, string estado)
+        {
+            return ticket_1.TicketsXtrabajadorXestado(codigo, estado);
+        }
+    }
 }

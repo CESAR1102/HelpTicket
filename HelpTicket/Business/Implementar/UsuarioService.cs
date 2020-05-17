@@ -185,5 +185,10 @@ namespace Business.Implementar
         {
             return usuario.ObtenerAdministrador(codigo);
         }
+
+        public List<Usuario> ObtenerTrabajadores()
+        {
+            return usuario.ObtenerTrabajadores();
+        }
     }
 }

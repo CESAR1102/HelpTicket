@@ -14,5 +14,6 @@ namespace Data
         List<Ticket> TicketsAsignados(string codigo_trabajador);
         string DestinatarioPara(string codigo_atencion);
 		Ticket FindId(string id);
+        string TicketsXtrabajadorXestado(string codigo, string estado);
 	}
 }

@@ -17,5 +17,6 @@ namespace Data
         bool ActualizarContraseña(string codigo, string contra);
         string ObtenerCorreo(string codigo);
         string ObtenerAdministrador(string codigo);
+        List<Usuario> ObtenerTrabajadores();
     }
 }

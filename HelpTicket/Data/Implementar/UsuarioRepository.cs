@@ -322,5 +322,47 @@ namespace Data.Implementar
             }
             return cod;
         }
+
+        public List<Usuario> ObtenerTrabajadores()
+        {
+            var usuarios = new List<Usuario>();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    StringBuilder cadena = new StringBuilder();
+                    //var query = new SqlCommand("Select u.nombres, u.correo, u.codigo from usuario u ", conexion);
+                    cadena.Append("Select u.nombres, u.correo, u.codigo from usuario u, usuario_modulo_rol urm, modulo_rol mr, modulo m ");
+                    cadena.Append("where urm.usuario_id = u.codigo and urm.modulo_rol_id = mr.id and mr.modulo_id = m.id ");
+                    cadena.Append("and urm.estado = 'S' and mr.estado = 'S' and m.estado = 'S' and m.modulo = 'ModuloTrabajador'");
+
+                    var query = new SqlCommand(cadena.ToString(), conexion);
+                    using (var dr = query.ExecuteReader())
+                    {
+
+                        while (dr.Read())
+                        {
+                            var usuario = new Usuario();
+
+                            usuario.nombres = dr["nombres"].ToString();
+                            usuario.correo = dr["correo"].ToString();
+                            usuario.codigo = dr["codigo"].ToString();
+
+
+                            usuarios.Add(usuario);
+                        }
+
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+            return usuarios;
+        }
     }
 }

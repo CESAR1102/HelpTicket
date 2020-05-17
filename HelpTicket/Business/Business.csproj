@@ -48,10 +48,12 @@
     <Compile Include="Implementar\DepartamentoService.cs" />
     <Compile Include="Implementar\MensajeService.cs" />
     <Compile Include="Implementar\ModuloService.cs" />
+    <Compile Include="Implementar\SkillService.cs" />
     <Compile Include="Implementar\TicketService.cs" />
     <Compile Include="Implementar\TopicoService.cs" />
     <Compile Include="Implementar\UsuarioModuloRolService.cs" />
     <Compile Include="Implementar\UsuarioService.cs" />
+    <Compile Include="ISkillService.cs" />
     <Compile Include="ITicketService.cs" />
     <Compile Include="ITopicoService.cs" />
     <Compile Include="IUsuarioModuloRolService.cs" />
