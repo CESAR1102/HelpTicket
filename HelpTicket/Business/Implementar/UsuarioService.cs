@@ -31,8 +31,8 @@ namespace Business.Implementar
 		
 		public Usuario FindById(int? id)
 		{
-			throw new NotImplementedException();
-		}
+            throw new NotImplementedException();
+        }
 
 		public bool Insert(Usuario t)
 		{
@@ -189,6 +189,11 @@ namespace Business.Implementar
         public List<Usuario> ObtenerTrabajadores()
         {
             return usuario.ObtenerTrabajadores();
+        }
+
+        public Usuario FindByCodigo(string codigo)
+        {
+            return usuario.FindByCodigo(codigo);
         }
     }
 }

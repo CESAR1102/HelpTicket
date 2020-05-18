@@ -18,5 +18,6 @@ namespace Data
         string ObtenerCorreo(string codigo);
         string ObtenerAdministrador(string codigo);
         List<Usuario> ObtenerTrabajadores();
+        Usuario FindByCodigo(string codigo);
     }
 }

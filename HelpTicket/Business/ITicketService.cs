@@ -18,5 +18,6 @@ namespace Business
         string DestinatarioPara(string codigo_atencion);
 		Ticket FindId(string id);
         string TicketsXtrabajadorXestado(string codigo, string estado);
+        bool AsignarTicket(Ticket t);
     }
 }

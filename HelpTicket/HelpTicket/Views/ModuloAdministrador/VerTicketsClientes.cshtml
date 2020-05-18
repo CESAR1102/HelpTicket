@@ -64,7 +64,11 @@
 								<td>@item.descripcion</td>
 								<td>@item.estado</td>
 								<td>@item.importancia</td>
-								<td>@Html.ActionLink("Editar", "Editar_Tickets", new { id = item.codigo_atencion }) | @Html.ActionLink("Asignar", "#", new { id = item.codigo_atencion })</td>
+								<td>@Html.ActionLink("Editar", "Editar_Tickets", new { id = item.codigo_atencion }) | 
+                                @if(item.estado == 'I'){
+                                    @Html.ActionLink("Asignar", "AsignarTicket", new { id = item.codigo_atencion })
+                                }
+                                </td>
 							</tr>
 						}
 					</tbody>

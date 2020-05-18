@@ -11,6 +11,44 @@ namespace Data.Implementar
 {
     public class TicketRepository : ITicketRepository
     {
+        public bool AsignarTicket(Ticket t)
+        {
+            bool actualizado = false;
+            try
+            {
+                int filas;
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query = new SqlCommand("begin transaction", conexion);
+                    query.ExecuteNonQuery();
+                    query = new SqlCommand("Update ticket set asignado_id = '" + t.asignado_id + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                    filas = query.ExecuteNonQuery();
+                    if (filas > 0)
+                    {
+                        query = new SqlCommand("Update ticket set estado = 'A' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                        filas = query.ExecuteNonQuery();
+                        if (filas > 0)
+                        {
+                            query = new SqlCommand("commit", conexion);
+                            query.ExecuteNonQuery();
+                            actualizado = true;
+                        }
+                        else
+                        {
+                            query = new SqlCommand("rollback", conexion);
+                            query.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return actualizado;
+        }
+
         public bool Delete(int id)
         {
             throw new NotImplementedException();

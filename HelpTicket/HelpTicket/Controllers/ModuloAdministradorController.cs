@@ -45,6 +45,10 @@ namespace HelpTicket.Controllers
 			{
 				ViewBag.mensajeInformativo = "Aun no se ha ingresado ningun ticket";
 			}
+            if (TempData["Agregado"] != null)
+            {
+                ViewBag.Agregado = TempData["Agregado"];
+            }
 			return View(tickets);
 		}
 
@@ -96,5 +100,49 @@ namespace HelpTicket.Controllers
             return View(trabajadores);
         }
 
+        [HttpGet]
+        public ActionResult AsignarTicket(string id)
+        {
+            var t = ticketservice.FindId(id);
+            if (TempData["Error"] != null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
+            ViewBag.umr = umrservice.ObtenerTrabajadoresXskill(t.topico_id.ToString());
+            return View(t);
+        }
+
+        [HttpPost]
+        public ActionResult AsignarTicket(Ticket t)
+        {
+            if(t.codigo_atencion == null || t.asignado_id == null)
+            {
+                TempData["Error"] = "No se pudo asignar. Intente otra vez!";
+                return RedirectToAction("AsignarTicket");
+            }
+            else
+            {
+                if (ticketservice.AsignarTicket(t))
+                {
+                    TempData["Agregado"] = "Se asigno el ticket: " + t.codigo_atencion;
+                    return RedirectToAction("VerTicketsClientes");
+                }
+                else
+                {
+                    TempData["Error"] = "No se pudo asignar. Intente otra vez!";
+                    return RedirectToAction("AsignarTicket");
+                }
+            }
+        }
+
+        [ActionName("ObtenerNombreTrabajador")]
+        public ActionResult ObtenerNombreTrabajador(string id)
+        {
+            var usuario = usuarioservice.FindByCodigo(id);
+            var user = new Usuario();
+            user.codigo = usuario.codigo;
+            user.nombres = usuario.nombres;
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -55,10 +55,41 @@ namespace Data.Implementar
 		
 		public Usuario FindById(int? id)
 		{
-			throw new NotImplementedException();
-		}
+            throw new NotImplementedException();
+        }
 
-		public bool Insert(Usuario t)
+        public Usuario FindByCodigo(string codigo)
+        {
+            var usuario = new Usuario();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query = new SqlCommand("Select * from usuario as u where codigo = '" + codigo + "'", conexion);
+                    using (var dr = query.ExecuteReader())
+                    {
+
+                        while (dr.Read())
+                        {
+                            usuario.nombres = dr["nombres"].ToString();
+                            usuario.correo = dr["correo"].ToString();
+                            usuario.codigo = dr["codigo"].ToString();
+                        }
+
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+            return usuario;
+        }
+
+        public bool Insert(Usuario t)
 		{
 			throw new NotImplementedException();
 		}

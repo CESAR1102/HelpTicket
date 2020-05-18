@@ -2000,6 +2000,7 @@
     <Content Include="Views\ModuloAdministrador\Editar_Tickets.cshtml" />
     <Content Include="Views\Shared\_Layout_Administrador.cshtml" />
     <Content Include="Views\ModuloAdministrador\VerTrabajadores.cshtml" />
+    <Content Include="Views\ModuloAdministrador\AsignarTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
