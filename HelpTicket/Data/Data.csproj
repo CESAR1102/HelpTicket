@@ -49,10 +49,12 @@
     <Compile Include="Implementar\DepartamentoRepository.cs" />
     <Compile Include="Implementar\MensajeRepository.cs" />
     <Compile Include="Implementar\ModuloRepository.cs" />
+    <Compile Include="Implementar\SkillRepository.cs" />
     <Compile Include="Implementar\TicketRepository.cs" />
     <Compile Include="Implementar\TopicoRepository.cs" />
     <Compile Include="Implementar\UsuarioModuloRolRepository.cs" />
     <Compile Include="Implementar\UsuarioRepository.cs" />
+    <Compile Include="ISkillRepository.cs" />
     <Compile Include="ITicketRepository.cs" />
     <Compile Include="ITopicoRepository.cs" />
     <Compile Include="IUsuarioModuloRolRepository.cs" />

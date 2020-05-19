@@ -3,6 +3,7 @@ using Business.Implementar;
 using Entity;
 using HelpTicket.Autorizacion;
 using HelpTicket.Models;
+using HelpTicket.PartialClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,18 +38,18 @@ namespace HelpTicket.Controllers
 		[HttpGet]
 		public ActionResult VerTicketsClientes()
 		{
-			var usuario = (Entity.Usuario)(Session["usuario"]);
+			//var usuario = (Entity.Usuario)(Session["usuario"]);
 
-			List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
-			if (ticketsAsignados is null)
+			List<Ticket> tickets = ticketservice.FindAll();
+            if (tickets.Count == 0)
 			{
-				ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
+				ViewBag.mensajeInformativo = "Aun no se ha ingresado ningun ticket";
 			}
-			if (TempData["Agregado"] != null)
-				ViewBag.Agregado = TempData["Agregado"].ToString();
-			//ViewBag.ListaTicketsAsignados = tPersonalizados.ConvertToTicketsPersonalizados(ticketsAsignados);
-			return View(ticketsAsignados);
-
+            if (TempData["Agregado"] != null)
+            {
+                ViewBag.Agregado = TempData["Agregado"];
+            }
+			return View(tickets);
 		}
 
 
@@ -86,7 +87,83 @@ namespace HelpTicket.Controllers
 			return View();
 
 		}
+
+        [HttpGet]
+        public ActionResult VerTrabajadores()
+        {
+            ManagerInfoTrabajador manager = new ManagerInfoTrabajador();
+            List<InfoTrabajador> trabajadores = manager.LlenarDatos();
+            if (trabajadores.Count == 0)
+            {
+                ViewBag.mensajeInformativo = "Aun no se ha registrado ningun trabajador";
+            }
+            return View(trabajadores);
+        }
+
+        [HttpGet]
+        public ActionResult AsignarTicket(string id)
+        {
+            var t = ticketservice.FindId(id);
+            if (TempData["Error"] != null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
+            ViewBag.umr = umrservice.ObtenerTrabajadoresXskill(t.topico_id.ToString());
+            return View(t);
+        }
+
+		[HttpGet]
+		public ActionResult CrearUsuarios()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult CrearUsuarios(Usuario us)
+		{
+			DateTime mifecha = DateTime.Now;
+			us.fecha_creacion = mifecha;
+		
+			bool inserto = usuarioservice.Insert(us);
+			if (inserto)
+				return RedirectToAction("CrearUsuarios");
+			return View();
+		}
 		
 
-	}
+
+
+		[HttpPost]
+        public ActionResult AsignarTicket(Ticket t)
+        {
+            if(t.codigo_atencion == null || t.asignado_id == null)
+            {
+                TempData["Error"] = "No se pudo asignar. Intente otra vez!";
+                return RedirectToAction("AsignarTicket");
+            }
+            else
+            {
+                if (ticketservice.AsignarTicket(t))
+                {
+                    TempData["Agregado"] = "Se asigno el ticket: " + t.codigo_atencion;
+                    return RedirectToAction("VerTicketsClientes");
+                }
+                else
+                {
+                    TempData["Error"] = "No se pudo asignar. Intente otra vez!";
+                    return RedirectToAction("AsignarTicket");
+                }
+            }
+        }
+
+        [ActionName("ObtenerNombreTrabajador")]
+        public ActionResult ObtenerNombreTrabajador(string id)
+        {
+            var usuario = usuarioservice.FindByCodigo(id);
+            var user = new Usuario();
+            user.codigo = usuario.codigo;
+            user.nombres = usuario.nombres;
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

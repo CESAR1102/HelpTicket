@@ -11,6 +11,44 @@ namespace Data.Implementar
 {
     public class TicketRepository : ITicketRepository
     {
+        public bool AsignarTicket(Ticket t)
+        {
+            bool actualizado = false;
+            try
+            {
+                int filas;
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    var query = new SqlCommand("begin transaction", conexion);
+                    query.ExecuteNonQuery();
+                    query = new SqlCommand("Update ticket set asignado_id = '" + t.asignado_id + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                    filas = query.ExecuteNonQuery();
+                    if (filas > 0)
+                    {
+                        query = new SqlCommand("Update ticket set estado = 'A' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                        filas = query.ExecuteNonQuery();
+                        if (filas > 0)
+                        {
+                            query = new SqlCommand("commit", conexion);
+                            query.ExecuteNonQuery();
+                            actualizado = true;
+                        }
+                        else
+                        {
+                            query = new SqlCommand("rollback", conexion);
+                            query.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return actualizado;
+        }
+
         public bool Delete(int id)
         {
             throw new NotImplementedException();
@@ -50,7 +88,50 @@ namespace Data.Implementar
 
         public List<Ticket> FindAll()
         {
-            throw new NotImplementedException();
+            List<Ticket> t = new List<Ticket>(); ;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+
+                    conexion.Open();
+                    var query = new SqlCommand("select * from ticket t inner join topico o on t.topico_id =o.id" +
+                      " inner join usuario_modulo_rol umr on t.solicitante_id = umr.id " +
+                     " where t.solicitante_id = umr.id order by t.fecha_solicitado desc", conexion);
+
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            var ticket = new Ticket();
+                            var topico = new Topico();
+                            var umr = new Usuario_Modulo_Rol();
+                            ticket.codigo_atencion = dr["codigo_atencion"].ToString();
+                            ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
+
+                            ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
+                            ticket.descripcion = dr["descripcion"].ToString();
+                            ticket.estado = Convert.ToChar(dr["estado"].ToString());
+                            ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
+
+                            topico.topico = dr["topico"].ToString();
+                            umr.id = Convert.ToInt32(dr["solicitante_id"].ToString());
+                            umr.usuario_id = dr["usuario_id"].ToString();
+                            ticket.Topico = topico;
+                            ticket.Usuario_Modulo_Rol = umr;
+
+                            t.Add(ticket);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
+            return t;
         }
 
         public Ticket FindByCodAtencion(string cod_atencion)
@@ -326,6 +407,42 @@ namespace Data.Implementar
 			}
 			return ticketsolicitados;
 		}
+
+        public string TicketsXtrabajadorXestado(string codigo, string estado)
+        {
+            string resultado = "0";
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+
+                    conexion.Open();
+
+                    sql.Append("Select count(*) cantidad from ticket t, usuario_modulo_rol urm ");
+                    sql.Append("where t.asignado_id = urm.id and t.estado = '");
+                    sql.Append(estado);
+                    sql.Append("' and urm.usuario_id = '");
+                    sql.Append(codigo);
+                    sql.Append("'");
+
+                    var query = new SqlCommand(sql.ToString(), conexion);
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            resultado = dr["cantidad"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
+            return resultado;
+        }
 
         public bool Update(Ticket t)
         {

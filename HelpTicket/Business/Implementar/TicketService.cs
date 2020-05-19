@@ -22,7 +22,7 @@ namespace Business.Implementar
 
         public List<Ticket> FindAll()
         {
-            throw new NotImplementedException();
+            return ticket_1.FindAll();
         }
 
         public bool Insert(Ticket t)
@@ -198,5 +198,24 @@ namespace Business.Implementar
 		{
 			return ticket_1.FindId(id);
 		}
-	}
+
+        public string TicketsXtrabajadorXestado(string codigo, string estado)
+        {
+            return ticket_1.TicketsXtrabajadorXestado(codigo, estado);
+        }
+
+        public bool AsignarTicket(Ticket t)
+        {
+
+            if (t.asignado_id == 0 || t.asignado_id == null)
+            {
+                return false;
+            }
+            if (!ticket_1.AsignarTicket(t))
+            {
+                return false;
+            }
+            return true;
+        }
+    }
 }

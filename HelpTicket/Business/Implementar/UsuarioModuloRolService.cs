@@ -38,6 +38,11 @@ namespace Business.Implementar
             return usuarioModuloRol.obtenerIDUserModRol(codigo_usuario, modulo, rol);
         }
 
+        public List<Usuario_Modulo_Rol> ObtenerTrabajadoresXskill(string topicoID)
+        {
+            return usuarioModuloRol.ObtenerTrabajadoresXskill(topicoID);
+        }
+
         public bool Update(Usuario_Modulo_Rol t)
         {
             throw new NotImplementedException();

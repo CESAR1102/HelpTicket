@@ -10,5 +10,6 @@ namespace Data
     public interface IUsuarioModuloRolRepository:ICrudRepository<Usuario_Modulo_Rol>
     {
         int obtenerIDUserModRol(string codigo_usuario, string modulo, string rol);
+        List<Usuario_Modulo_Rol> ObtenerTrabajadoresXskill(string topicoID);
     }
 }

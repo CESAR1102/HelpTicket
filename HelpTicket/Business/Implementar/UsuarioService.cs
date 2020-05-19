@@ -31,12 +31,12 @@ namespace Business.Implementar
 		
 		public Usuario FindById(int? id)
 		{
-			throw new NotImplementedException();
-		}
+            throw new NotImplementedException();
+        }
 
 		public bool Insert(Usuario t)
 		{
-			throw new NotImplementedException();
+			return usuario.Insert(t);
 		}
 
 		public bool Update(Usuario t)
@@ -184,6 +184,16 @@ namespace Business.Implementar
         public string ObtenerAdministrador(string codigo)
         {
             return usuario.ObtenerAdministrador(codigo);
+        }
+
+        public List<Usuario> ObtenerTrabajadores()
+        {
+            return usuario.ObtenerTrabajadores();
+        }
+
+        public Usuario FindByCodigo(string codigo)
+        {
+            return usuario.FindByCodigo(codigo);
         }
     }
 }
