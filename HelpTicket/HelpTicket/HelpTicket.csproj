@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Models\SesionData.cs" />
     <Compile Include="PartialClass\DatosCompartidos.cs" />
+    <Compile Include="PartialClass\Eliminar_Usuario.cs" />
     <Compile Include="PartialClass\FinalizarTicket.cs" />
     <Compile Include="PartialClass\InfoTrabajador.cs" />
     <Compile Include="PartialClass\InputFields_ForgotPassword.cs" />
@@ -2002,6 +2003,9 @@
     <Content Include="Views\ModuloAdministrador\VerTrabajadores.cshtml" />
     <Content Include="Views\ModuloAdministrador\AsignarTicket.cshtml" />
     <Content Include="Views\ModuloAdministrador\CrearUsuarios.cshtml" />
+    <Content Include="Views\ModuloAdministrador\Usuarios.cshtml" />
+    <Content Include="Views\ModuloAdministrador\EliminarUsuario.cshtml" />
+    <Content Include="Views\ModuloAdministrador\EditarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

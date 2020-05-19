@@ -113,6 +113,22 @@ namespace HelpTicket.Controllers
         }
 
 		[HttpGet]
+		public ActionResult Usuarios()
+		{
+			List<Usuario> usuarios = usuarioservice.FindAll();
+			if (usuarios.Count == 0)
+			{
+				ViewBag.mensajeInformativo = "Aun no se ha ingresado ningun usuario";
+			}
+			if (TempData["Agregado"] != null)
+			{
+				ViewBag.Agregado = TempData["Agregado"];
+			}
+			return View(usuarios);
+
+		}
+
+		[HttpGet]
 		public ActionResult CrearUsuarios()
 		{
 			return View();
@@ -129,7 +145,37 @@ namespace HelpTicket.Controllers
 				return RedirectToAction("CrearUsuarios");
 			return View();
 		}
-		
+
+		public ActionResult EliminarUsuario(string id)
+		{
+			var user = usuarioservice.FindAll().Where(p => p.codigo == id).FirstOrDefault();
+			return View(user);
+		}
+
+		[HttpPost]
+		public ActionResult EliminarUsuario(Usuario user)
+		{
+			bool elimino = usuarioservice.DeleteUser(user.codigo);
+			if (elimino)
+				return RedirectToAction("Usuarios");
+			return View();
+		}
+
+		public ActionResult EditarUsuario(string id)
+		{
+			var pa = usuarioservice.FindAll().Where(p => p.codigo == id).FirstOrDefault();
+			return View(pa);
+		}
+
+		[HttpPost]
+		public ActionResult EditarUsuario(Usuario usuario)
+		{
+			bool actualizo = usuarioservice.Update(usuario);
+			if (actualizo)
+				return RedirectToAction("Usuarios");
+			return View();
+		}
+
 
 
 

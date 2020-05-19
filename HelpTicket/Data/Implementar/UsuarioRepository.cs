@@ -31,8 +31,8 @@ namespace Data.Implementar
 							usuario.correo = dr["correo"].ToString();
 							usuario.codigo = dr["codigo"].ToString();
 							usuario.contraseña = dr["contraseña"].ToString();
-							
-
+							usuario.fecha_creacion= Convert.ToDateTime(dr["fecha_creacion"]);
+							usuario.rol_creacion = dr["rol_creacion"].ToString();
 							usuarios.Add(usuario);
 						}
 
@@ -120,7 +120,30 @@ namespace Data.Implementar
 
 		public bool Update(Usuario t)
 		{
-			throw new NotImplementedException();
+			bool seActualizo = false;
+			try
+			{
+				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conn.Open();
+					var query = new SqlCommand("UPDATE usuario SET nombres = @nombres,correo= @correo,contraseña= @contraseña,rol_creacion=@rol_creacion,fecha_creacion=@fecha_creacion WHERE codigo=@codigo", conn);
+
+					query.Parameters.AddWithValue("@codigo", t.codigo);
+					query.Parameters.AddWithValue("@nombres", t.nombres);
+					query.Parameters.AddWithValue("@correo", t.correo);
+					query.Parameters.AddWithValue("@contraseña", t.contraseña);
+					query.Parameters.AddWithValue("@rol_creacion", t.rol_creacion);
+					query.Parameters.AddWithValue("@fecha_creacion", t.fecha_creacion);
+					query.ExecuteNonQuery();
+					seActualizo = true;
+				}
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+			return seActualizo;
 		}
 
 		
@@ -419,5 +442,27 @@ namespace Data.Implementar
             }
             return usuarios;
         }
-    }
+
+		public bool DeleteUser(string id)
+		{
+			bool seElimino = false;
+			try
+			{
+				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conn.Open();
+					var query = new SqlCommand("DELETE FROM usuario WHERE codigo='" + id + "'", conn);
+
+					query.ExecuteNonQuery();
+					seElimino = true;
+				}
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+			return seElimino;
+		}
+	}
 }
