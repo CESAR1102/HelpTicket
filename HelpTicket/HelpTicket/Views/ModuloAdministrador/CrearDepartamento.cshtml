@@ -1,0 +1,117 @@
+﻿
+@model Entity.Departamento
+@{
+	ViewBag.Title = "Editar_Tickets";
+	Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+}
+
+<body>
+
+	<div class="col-lg-12">
+		<div class="card shadow mb-4">
+			<div class="card-header">
+				<h6 class="m-0 font-weight-bold text-dark">ASIGNAR TICKET</h6>
+			</div>
+            <div class="card-body card-block border-bottom-light">
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="container">
+                        <div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Error!</strong> @ViewBag.Error
+                        </div>
+                    </div>
+                }
+
+                <div class="container">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group row">
+                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Nombre: </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.departamento, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.departamento, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group row">
+                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Fecha de Creacion: </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.fecha_creacion, new { htmlAttributes = new { @class = "form-control", style = "cursor: not-allowed;color:black;" ,disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.fecha_creacion, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group row">
+                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Fecha de ultima modificcion: </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.fecha_modificacion, new { htmlAttributes = new { @class = "form-control", style = "cursor: not-allowed;color:black;", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.fecha_modificacion, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group row">
+                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Usuario de ultima modificacion: </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.usuario_modificacion, new { htmlAttributes = new { @class = "form-control", style = "cursor: not-allowed;color:black;", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.usuario_modificacion, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Estado: </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.estado, new { htmlAttributes = new { @class = "form-control", style = "cursor: not-allowed;color:black;", disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+
+                        <div class="form-group text-center">
+                            <input type="submit" value="Guardar" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen" />
+                            <a href="@Url.Action("VerDepartamento","ModuloAdministrador")" class="btn btn-secondary" id="btnReturn">Retornar</a>
+
+                        </div>
+
+                    </div>
+                    }
+                </div>
+            </div>
+		</div>
+	</div>
+
+</body>
+
+<script>
+    const idTrabajador = document.getElementById("trabajador");
+    const nombreTrabajador = document.getElementById("nombreTrabajador");
+    var id = "";
+    idTrabajador.addEventListener("change", (event) => {
+        id = idTrabajador.options[idTrabajador.selectedIndex].text;
+        let url = '/ModuloAdministrador/ObtenerNombreTrabajador/' + id;
+        fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                if (out['codigo'] == "") {
+                    nombreTrabajador.innerText = "";
+                } else {
+                    nombreTrabajador.textContent = out['nombres'];
+                }
+            })
+            .catch(err => { throw err });
+    });
+</script>

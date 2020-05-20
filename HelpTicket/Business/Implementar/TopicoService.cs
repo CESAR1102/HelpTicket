@@ -18,6 +18,11 @@ namespace Business.Implementar
             throw new NotImplementedException();
         }
 
+        public bool ExistByDepartamento(int departamento_id, string identificador)
+        {
+            return topico.ExistByDepartamento(departamento_id, identificador);
+        }
+
         public List<Topico> FindAll()
         {
 			return topico.FindAll();

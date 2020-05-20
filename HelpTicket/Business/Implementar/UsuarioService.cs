@@ -36,7 +36,7 @@ namespace Business.Implementar
 
 		public bool Insert(Usuario t)
 		{
-			throw new NotImplementedException();
+			return usuario.Insert(t);
 		}
 
 		public bool Update(Usuario t)

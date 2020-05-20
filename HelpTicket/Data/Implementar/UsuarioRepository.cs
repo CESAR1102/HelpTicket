@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -91,7 +92,30 @@ namespace Data.Implementar
 
         public bool Insert(Usuario t)
 		{
-			throw new NotImplementedException();
+			bool seInserto = false;
+			try
+			{
+				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conn.Open();
+					var query = new SqlCommand("INSERT INTO usuario VALUES(@codigo,@nombres,@correo,@contraseña,@rol_creacion,@fecha_creacion,NULL)", conn);
+					query.Parameters.AddWithValue("@codigo", t.codigo);
+					query.Parameters.AddWithValue("@nombres", t.nombres);
+					query.Parameters.AddWithValue("@correo", t.correo);
+					query.Parameters.AddWithValue("@contraseña", t.contraseña);
+					query.Parameters.AddWithValue("@rol_creacion", t.rol_creacion);
+					query.Parameters.AddWithValue("@fecha_creacion", t.fecha_creacion);
+					//query.Parameters.AddWithValue("@token", t.token);
+					query.ExecuteNonQuery();
+					seInserto = true;
+				}
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+			return seInserto;
 		}
 
 		public bool Update(Usuario t)

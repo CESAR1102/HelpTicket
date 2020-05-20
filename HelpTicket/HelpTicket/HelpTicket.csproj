@@ -2001,6 +2001,9 @@
     <Content Include="Views\Shared\_Layout_Administrador.cshtml" />
     <Content Include="Views\ModuloAdministrador\VerTrabajadores.cshtml" />
     <Content Include="Views\ModuloAdministrador\AsignarTicket.cshtml" />
+    <Content Include="Views\ModuloAdministrador\CrearUsuarios.cshtml" />
+    <Content Include="Views\ModuloAdministrador\CrearDepartamento.cshtml" />
+    <Content Include="Views\ModuloAdministrador\VerDepartamento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

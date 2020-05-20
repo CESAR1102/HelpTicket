@@ -15,7 +15,7 @@ namespace Business.Implementar
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            return departamento.Delete(id);
         }
 
         public List<Departamento> FindAll()
@@ -30,7 +30,7 @@ namespace Business.Implementar
 
         public bool Insert(Departamento t)
         {
-            throw new NotImplementedException();
+            return departamento.Insert(t);
         }
 
         public bool Update(Departamento t)
