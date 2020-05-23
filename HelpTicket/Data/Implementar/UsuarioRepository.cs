@@ -118,14 +118,37 @@ namespace Data.Implementar
 			return seInserto;
 		}
 
-		public bool Update(Usuario t)
-		{
-			throw new NotImplementedException();
-		}
+        public bool Update(Usuario t)
+        {
+            bool seActualizo = false;
+            try
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conn.Open();
+                    var query = new SqlCommand("UPDATE usuario SET nombres = @nombres,correo= @correo,contraseña= @contraseña,rol_creacion=@rol_creacion,fecha_creacion=@fecha_creacion WHERE codigo=@codigo", conn);
 
-		
+                    query.Parameters.AddWithValue("@codigo", t.codigo);
+                    query.Parameters.AddWithValue("@nombres", t.nombres);
+                    query.Parameters.AddWithValue("@correo", t.correo);
+                    query.Parameters.AddWithValue("@contraseña", t.contraseña);
+                    query.Parameters.AddWithValue("@rol_creacion", t.rol_creacion);
+                    query.Parameters.AddWithValue("@fecha_creacion", t.fecha_creacion);
+                    query.ExecuteNonQuery();
+                    seActualizo = true;
+                }
+            }
+            catch (Exception)
+            {
 
-		public string ValidarCorreo(string correo, out string msm)
+                throw;
+            }
+            return seActualizo;
+        }
+
+
+
+        public string ValidarCorreo(string correo, out string msm)
         {
             string usuario = string.Empty;
             msm = string.Empty;
@@ -418,6 +441,28 @@ namespace Data.Implementar
                 //throw;
             }
             return usuarios;
+        }
+
+        public bool DeleteUser(string id)
+        {
+            bool seElimino = false;
+            try
+            {
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conn.Open();
+                    var query = new SqlCommand("DELETE FROM usuario WHERE codigo='" + id + "'", conn);
+
+                    query.ExecuteNonQuery();
+                    seElimino = true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return seElimino;
         }
     }
 }

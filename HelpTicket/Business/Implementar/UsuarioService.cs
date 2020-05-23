@@ -41,8 +41,8 @@ namespace Business.Implementar
 
 		public bool Update(Usuario t)
 		{
-			throw new NotImplementedException();
-		}
+            return usuario.Update(t);
+        }
 		
 		public Usuario logeo(string codigo,string contraseña)
 		{
@@ -194,6 +194,11 @@ namespace Business.Implementar
         public Usuario FindByCodigo(string codigo)
         {
             return usuario.FindByCodigo(codigo);
+        }
+
+        public bool DeleteUser(string id)
+        {
+            return usuario.DeleteUser(id);
         }
     }
 }
