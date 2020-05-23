@@ -10,5 +10,6 @@ namespace Data
     public interface ITopicoRepository:ICrudRepository<Topico>
     {
         List<Topico> FindByDepartamento(int departamento_id, string identificador);
+        bool ExistByDepartamento(int departamento_id, string identificador);
     }
 }

@@ -1,0 +1,112 @@
+﻿
+
+@model IEnumerable<Entity.Departamento>
+@{
+	Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+	ViewBag.Title = "VerTicketsClientes";
+}
+
+<style>
+    a.enlace:link, a:visited {
+        background-color: white;
+        color: black;
+        border: 2px solid green;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    a.enlace:hover, a:active {
+        background-color: green;
+        color: white;
+    }
+</style>
+
+<div class="col-lg-12">
+	<div class="card shadow mb-4">
+		<div class="card-header">
+			<h6 class="m-0 font-weight-bold text-dark">Ver Departamentos</h6>
+		</div>
+		<div class="card-body card-block border-bottom-light">
+			@if (ViewBag.Agregado != null)
+			{
+				<div class="container">
+					<div class="alert alert-success alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Éxito!</strong> @ViewBag.Agregado
+					</div>
+				</div>
+			}
+			@if (ViewBag.mensajeInformativo != null)
+			{
+				<div class="container">
+					<div class="alert alert-warning alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Atención!</strong> @ViewBag.mensajeInformativo
+					</div>
+				</div>
+			}
+			@if (ViewBag.Error != null)
+			{
+				<div class="container">
+					<div class="alert alert-danger alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Error!</strong> @ViewBag.Error
+					</div>
+				</div>
+			}
+                <div class="container">
+                    <h2>Ver Departamentos</h2>
+                    <p>Todos los departamentos registrados</p>
+                    <a href="@Url.Action("CrearDepartamento", "ModuloAdministrador")" class="enlace" target="_blank">
+                        Crear Nuevo Departamento
+                    </a>
+                    <br />
+                    <br />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre de Departamento</th>
+                                <th>Fecha de Creacion</th>
+                                <th>Fecha de Modificacion</th>
+                                <th>Usuario Modificacion</th>
+                                <th>Estado</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.departamento</td>
+                                    <td>@item.fecha_creacion</td>
+                                    <td>@item.fecha_modificacion</td>
+                                    <td>@item.usuario_modificacion</td>
+                                    <td>@item.estado</td>
+                                    <td>@Html.ActionLink("Eliminar", "EliminarDepartamentos", new { id = item.id })
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-xl">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							<div id="resultado"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

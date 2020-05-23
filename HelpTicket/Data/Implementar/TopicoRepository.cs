@@ -93,6 +93,40 @@ namespace Data.Implementar
             return topicos;
         }
 
+        public bool ExistByDepartamento(int departamento_id, string identificador)
+        {
+            bool respuesta = false;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    sql.Append("Select 1 from topico where estado = '");
+                    sql.Append("S");
+                    sql.Append("' and departamento_id =");
+                    sql.Append(departamento_id.ToString());
+                    sql.Append(" and acceso_usuario like '%");
+                    sql.Append(identificador + "%'");
+                    var query = new SqlCommand(sql.ToString(), conexion);
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            respuesta = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return respuesta;
+        }
+
         public Topico FindById(int? id)
         {
             throw new NotImplementedException();

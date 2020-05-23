@@ -19,6 +19,6 @@ namespace Data
         string ObtenerAdministrador(string codigo);
         List<Usuario> ObtenerTrabajadores();
         Usuario FindByCodigo(string codigo);
-		bool DeleteUser(string id);
-	}
+        bool DeleteUser(string id);
+    }
 }

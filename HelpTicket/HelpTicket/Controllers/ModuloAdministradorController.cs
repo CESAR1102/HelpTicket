@@ -23,6 +23,7 @@ namespace HelpTicket.Controllers
 		private IUsuarioModuloRolService umrservice = new UsuarioModuloRolService();
 		private IUsuarioService usuarioservice = new UsuarioService();
 		private IMensajeService mensajeservice = new MensajeService();
+        private SesionData sesion = new SesionData();
 		string identificador = "c";
 		//private TicketsPersonalizados tPersonalizados = new TicketsPersonalizados();
 		SesionData session = new SesionData();
@@ -112,74 +113,111 @@ namespace HelpTicket.Controllers
             return View(t);
         }
 
-		[HttpGet]
-		public ActionResult Usuarios()
-		{
-			List<Usuario> usuarios = usuarioservice.FindAll();
-			if (usuarios.Count == 0)
-			{
-				ViewBag.mensajeInformativo = "Aun no se ha ingresado ningun usuario";
-			}
-			if (TempData["Agregado"] != null)
-			{
-				ViewBag.Agregado = TempData["Agregado"];
-			}
-			return View(usuarios);
+        [HttpGet]
+        public ActionResult Usuarios()
+        {
+            List<Usuario> usuarios = usuarioservice.FindAll();
+            if (usuarios.Count == 0)
+            {
+                ViewBag.mensajeInformativo = "Aun no se ha ingresado ningun usuario";
+            }
+            if (TempData["Agregado"] != null)
+            {
+                ViewBag.Agregado = TempData["Agregado"];
+            }
+            return View(usuarios);
 
-		}
+        }
 
-		[HttpGet]
+        [HttpGet]
 		public ActionResult CrearUsuarios()
 		{
+		
+			if (TempData["Error"] != null)
+			{
+				ViewBag.Error = TempData["Error"];
+			}
 			return View();
+
+
 		}
 
 		[HttpPost]
 		public ActionResult CrearUsuarios(Usuario us)
 		{
+			
+
+			if (us.codigo == null || us.codigo == string.Empty || us.nombres == null || us.nombres == string.Empty ||us.contraseña==null ||us.contraseña==string.Empty||us.correo==null||us.correo==string.Empty||us.rol_creacion==null||us.rol_creacion==string.Empty||us.fecha_creacion==null)
+			{
+				TempData["Error"] = "No se pudo crear el usuario.LLenar todos los campos.";
+				return RedirectToAction("CrearUsuarios");
+			}
+
 			DateTime mifecha = DateTime.Now;
 			us.fecha_creacion = mifecha;
-		
 			bool inserto = usuarioservice.Insert(us);
 			if (inserto)
+			{
+				TempData["Agregado"] = "Se registro el usuario: " + us.codigo + " exitosamente";
 				return RedirectToAction("CrearUsuarios");
-			return View();
+			}
+			else
+			{
+				TempData["Error"] = "No se pudo crear el usuario. Intente nuevamente.";
+				return RedirectToAction("CrearUsuarios");
+			}
+
+			
+
+
 		}
 
+		[HttpGet]
 		public ActionResult EliminarUsuario(string id)
 		{
-			var user = usuarioservice.FindAll().Where(p => p.codigo == id).FirstOrDefault();
-			return View(user);
-		}
-
-		[HttpPost]
-		public ActionResult EliminarUsuario(Usuario user)
-		{
-			bool elimino = usuarioservice.DeleteUser(user.codigo);
-			if (elimino)
+			
+			if (usuarioservice.DeleteUser(id))
+			{
+				TempData["Agregado"] = "Se elimino exitosamente el usuario";
 				return RedirectToAction("Usuarios");
-			return View();
+			}
+			else
+			{
+				TempData["Error"] = "No se pudo eliminar el usuario. Intente nuevamente.";
+				return RedirectToAction("VerDepartamento");
+			}
 		}
+		//public ActionResult EliminarUsuario(string id)
+  //      {
+  //          var user = usuarioservice.FindAll().Where(p => p.codigo == id).FirstOrDefault();
+  //          return View(user);
+  //      }
 
-		public ActionResult EditarUsuario(string id)
-		{
-			var pa = usuarioservice.FindAll().Where(p => p.codigo == id).FirstOrDefault();
-			return View(pa);
-		}
+  //      [HttpPost]
+  //      public ActionResult EliminarUsuario(Usuario user)
+  //      {
+  //          bool elimino = usuarioservice.DeleteUser(user.codigo);
+  //          if (elimino)
+  //              return RedirectToAction("Usuarios");
+  //          return View();
+  //      }
 
-		[HttpPost]
-		public ActionResult EditarUsuario(Usuario usuario)
-		{
-			bool actualizo = usuarioservice.Update(usuario);
-			if (actualizo)
-				return RedirectToAction("Usuarios");
-			return View();
-		}
+        public ActionResult EditarUsuario(string id)
+        {
+            var pa = usuarioservice.FindAll().Where(p => p.codigo == id).FirstOrDefault();
+            return View(pa);
+        }
 
+        [HttpPost]
+        public ActionResult EditarUsuario(Usuario usuario)
+        {
+            bool actualizo = usuarioservice.Update(usuario);
+            if (actualizo)
+                return RedirectToAction("Usuarios");
+            return View();
+        }
 
-
-
-		[HttpPost]
+        [HttpPost]
         public ActionResult AsignarTicket(Ticket t)
         {
             if(t.codigo_atencion == null || t.asignado_id == null)
@@ -199,6 +237,85 @@ namespace HelpTicket.Controllers
                     TempData["Error"] = "No se pudo asignar. Intente otra vez!";
                     return RedirectToAction("AsignarTicket");
                 }
+            }
+        }
+
+        [HttpGet]
+        public ActionResult VerDepartamento()
+        {
+            var departamentos = departamentoservice.FindAll();
+            if (TempData["Agregado"] != null)
+            {
+                ViewBag.Agregado = TempData["Agregado"];
+            }
+            if (TempData["Error"] != null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
+            return View(departamentos);
+        }
+
+        [HttpGet]
+        public ActionResult CrearDepartamento()
+        {
+            var departamento = new Departamento();
+            departamento.estado = 'S';
+            departamento.fecha_creacion = DateTime.Now;
+            departamento.fecha_modificacion = DateTime.Now;
+            departamento.usuario_modificacion = sesion.getSession("usuario").codigo;
+            if (TempData["Error"] != null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
+            return View(departamento);
+        }
+
+        [HttpPost]
+        public ActionResult CrearDepartamento(Departamento d)
+        {
+            if(d.departamento==null || d.departamento == string.Empty)
+            {
+                TempData["Error"] = "No se pudo crear el departamento. El nombre esta vacio.";
+                return RedirectToAction("CrearDepartamento");
+            }
+            if (d.departamento.Length >= 50)
+            {
+                TempData["Error"] = "El nombre debe contener como maximo 50 caracteres";
+                return RedirectToAction("CrearDepartamento");
+            }
+            d.estado = 'S';
+            d.fecha_creacion = DateTime.Now;
+            d.fecha_modificacion = DateTime.Now;
+            d.usuario_modificacion = sesion.getSession("usuario").codigo;
+            if (departamentoservice.Insert(d))
+            {
+                TempData["Agregado"] = "Se registro el departamento: " + d.departamento + " exitosamente";
+                return RedirectToAction("VerDepartamento");
+            }
+            else
+            {
+                TempData["Error"] = "No se pudo crear el departamento. Intente nuevamente.";
+                return RedirectToAction("CrearDepartamento");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EliminarDepartamentos(string id)
+        {
+            if(topicoservice.ExistByDepartamento(Convert.ToInt32(id), ""))
+            {
+                TempData["Error"] = "No se pudo eliminar el departamento. Existen Topicos asociados a este departamento. Revisar.";
+                return RedirectToAction("VerDepartamento");
+            }
+            if (departamentoservice.Delete(Convert.ToInt32(id)))
+            {
+                TempData["Agregado"] = "Se elimino exitosamente el departamento";
+                return RedirectToAction("VerDepartamento");
+            }
+            else
+            {
+                TempData["Error"] = "No se pudo eliminar el departamento. Intente nuevamente.";
+                return RedirectToAction("VerDepartamento");
             }
         }
 

@@ -1,103 +1,103 @@
 ﻿@model IEnumerable<Entity.Usuario>
 
 @{
-	Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
-	ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+    ViewBag.Title = "Usuarios";
 }
 
 
 
 <div class="col-lg-12">
-	<div class="card shadow mb-4">
-		<div class="card-header">
-			<h6 class="m-0 font-weight-bold text-dark">USUARIOS</h6>
-		</div>
-		<div class="card-body card-block border-bottom-light">
-			@if (ViewBag.Agregado != null)
-			{
-				<div class="container">
-					<div class="alert alert-success alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Éxito!</strong> @ViewBag.Agregado
-					</div>
-				</div>
-			}
-			@if (ViewBag.mensajeInformativo != null)
-			{
-				<div class="container">
-					<div class="alert alert-warning alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atención!</strong> @ViewBag.mensajeInformativo
-					</div>
-				</div>
-			}
-			@if (ViewBag.Error != null)
-			{
-				<div class="container">
-					<div class="alert alert-danger alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Error!</strong> @ViewBag.Error
-					</div>
-				</div>
-			}
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-dark">USUARIOS</h6>
+        </div>
+        <div class="card-body card-block border-bottom-light">
+            @if (ViewBag.Agregado != null)
+            {
+                <div class="container">
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Éxito!</strong> @ViewBag.Agregado
+                    </div>
+                </div>
+            }
+            @if (ViewBag.mensajeInformativo != null)
+            {
+                <div class="container">
+                    <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Atención!</strong> @ViewBag.mensajeInformativo
+                    </div>
+                </div>
+            }
+            @if (ViewBag.Error != null)
+            {
+                <div class="container">
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> @ViewBag.Error
+                    </div>
+                </div>
+            }
 
-			<p>
-				@Html.ActionLink("Create New", "CrearUsuarios")
-			</p>
-			<table class="table">
-				<tr>
-					<th>
-						@Html.DisplayNameFor(model => model.codigo)
-					</th>
-					<th>
-						@Html.DisplayNameFor(model => model.nombres)
-					</th>
-					<th>
-						@Html.DisplayNameFor(model => model.correo)
-					</th>
-					<th>
-						@Html.DisplayNameFor(model => model.contraseña)
-					</th>
-					<th>
-						@Html.DisplayNameFor(model => model.rol_creacion)
-					</th>
-					<th>
-						@Html.DisplayNameFor(model => model.fecha_creacion)
-					</th>
+            <p>
+                @Html.ActionLink("Create New", "CrearUsuarios")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.codigo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombres)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.correo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.contraseña)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.rol_creacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fecha_creacion)
+                    </th>
 
-					<th></th>
-				</tr>
+                    <th></th>
+                </tr>
 
-				@foreach (var item in Model)
-				{
-					<tr>
-						<td>
-							@Html.DisplayFor(modelItem => item.codigo)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.nombres)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.correo)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.contraseña)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.rol_creacion)
-						</td>
-						<td>
-							@Html.DisplayFor(modelItem => item.fecha_creacion)
-						</td>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.codigo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombres)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.correo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.contraseña)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.rol_creacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fecha_creacion)
+                        </td>
 
-						<td>
-							@Html.ActionLink("Edit", "EditarUsuario", new { id = item.codigo }) |
-							@Html.ActionLink("Delete", "EliminarUsuario", new {  id=item.codigo })
-						</td>
-					</tr>
-				}
+                        <td>
+                            @Html.ActionLink("Edit", "EditarUsuario", new { id = item.codigo }) |
+                            @Html.ActionLink("Delete", "EliminarUsuario", new { id = item.codigo })
+                        </td>
+                    </tr>
+                }
 
-			</table>
-		</div>
-	</div>
+            </table>
+        </div>
+    </div>
 </div>
