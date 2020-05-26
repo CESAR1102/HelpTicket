@@ -40,7 +40,7 @@ namespace Business.Implementar
 
         public bool Insert(Topico t)
         {
-            throw new NotImplementedException();
+			return topico.Insert(t);
         }
 
         public bool Update(Topico t)

@@ -328,5 +328,84 @@ namespace HelpTicket.Controllers
             user.nombres = usuario.nombres;
             return Json(user, JsonRequestBehavior.AllowGet);
         }
-    }
+
+		[HttpGet]
+		public ActionResult Topicos()
+		{
+			
+			List<Topico> topicos = topicoservice.FindAll();
+			if (topicos.Count == 0)
+			{
+				ViewBag.mensajeInformativo = "Aun no se ha ingresado ningun topico";
+			}
+			if (TempData["Agregado"] != null)
+			{
+				ViewBag.Agregado = TempData["Agregado"];
+			}
+			return View(topicos);
+
+		}
+		[HttpGet]
+		public ActionResult CrearTopico()
+		{
+			ViewBag.departamentos = Departamentos();
+			var topico = new Topico();
+			topico.estado = 'S';
+			topico.fecha_creacion = DateTime.Now;
+			topico.fecha_modificacion = DateTime.Now;
+			topico.usuario_modificacion = sesion.getSession("usuario").codigo;
+			if (TempData["Error"] != null)
+			{
+				ViewBag.Error = TempData["Error"];
+			}
+			return View(topico);
+		}
+
+		[HttpPost]
+		public ActionResult CrearTopico(Topico t)
+		{
+			if (t.topico== null || t.topico == string.Empty)
+			{
+				TempData["Error"] = "No se pudo crear el topico. El nombre esta vacio.";
+				return RedirectToAction("Topicos");
+			}
+			if (t.topico.Length >= 50)
+			{
+				TempData["Error"] = "El nombre debe contener como maximo 50 caracteres";
+				return RedirectToAction("Topicos");
+			}
+			ViewBag.departamentos = Departamentos();
+			t.estado = 'S';
+			t.fecha_creacion = DateTime.Now;
+			t.fecha_modificacion = DateTime.Now;
+		
+			t.usuario_modificacion = sesion.getSession("usuario").codigo;
+			if (topicoservice.Insert(t))
+			{
+				TempData["Agregado"] = "Se registro el topico: " + t.topico + " exitosamente";
+				return RedirectToAction("Topicos");
+			}
+			else
+			{
+				TempData["Error"] = "No se pudo crear el topico. Intente nuevamente.";
+				return RedirectToAction("CrearTopico");
+			}
+		}
+		private List<SelectListItem> Departamentos()
+		{
+			List<SelectListItem> depas = new List<SelectListItem>();
+
+			List<Departamento> departamentos = departamentoservice.FindAll();
+			if (!(departamentos is null))
+			{
+				depas.Add(new SelectListItem { Text = "Seleccione un Departamento...", Value = "0" });
+				foreach (var d in departamentos)
+				{
+					depas.Add(new SelectListItem { Text = d.departamento, Value = d.id.ToString() });
+				}
+			}
+			return depas;
+		}
+
+	}
 }

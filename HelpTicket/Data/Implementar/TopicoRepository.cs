@@ -36,10 +36,13 @@ namespace Data.Implementar
 							topico.topico = dr["topico"].ToString();
 							topico.usuario_modificacion = dr["usuario_modificacion"].ToString();
 							//topico.estado = Convert.ToChar("estado");
+							topico.fecha_creacion = Convert.ToDateTime(dr["fecha_creacion"].ToString());
+							topico.fecha_modificacion = Convert.ToDateTime(dr["fecha_modificacion"].ToString());
+							topico.estado= Convert.ToChar(dr["estado"].ToString());
 
-						
 
 							departamento.id = Convert.ToInt32(dr["departamento_id"]);
+							departamento.departamento= dr["departamento"].ToString();
 							topico.Departamento = departamento;
 
 
@@ -134,8 +137,30 @@ namespace Data.Implementar
 
         public bool Insert(Topico t)
         {
-            throw new NotImplementedException();
-        }
+			bool seInserto = false;
+			try
+			{
+				using (var conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conn.Open();
+					var query = new SqlCommand("INSERT INTO topico VALUES(@topico,@departamento_id,@fecha_creacion,@fecha_modificacion,@usuario_modificacion,@estado)", conn);
+					query.Parameters.AddWithValue("@topico", t.topico);
+					query.Parameters.AddWithValue("@departamento_id", t.Departamento.id);
+					query.Parameters.AddWithValue("@fecha_creacion", t.fecha_creacion);
+					query.Parameters.AddWithValue("@fecha_modificacion", t.fecha_modificacion);
+					query.Parameters.AddWithValue("@usuario_modificacion", t.usuario_modificacion);
+					query.Parameters.AddWithValue("@estado", t.estado);
+					query.ExecuteNonQuery();
+					seInserto = true;
+				}
+			}
+			catch (Exception e)
+			{
+
+				var a = e.Message;
+			}
+			return seInserto;
+		}
 
         public bool Update(Topico t)
         {
