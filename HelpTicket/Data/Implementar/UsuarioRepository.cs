@@ -30,10 +30,12 @@ namespace Data.Implementar
 							usuario.nombres = dr["nombres"].ToString();
 							usuario.correo = dr["correo"].ToString();
 							usuario.codigo = dr["codigo"].ToString();
-							usuario.contraseña = dr["contraseña"].ToString();
-							
-
+							usuario.contraseña = dr["contraseña"].ToString(); usuario.contraseña = dr["contraseña"].ToString();
+							usuario.fecha_creacion = Convert.ToDateTime(dr["fecha_creacion"]);
+							usuario.rol_creacion = dr["rol_creacion"].ToString();
 							usuarios.Add(usuario);
+
+
 						}
 
 

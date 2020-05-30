@@ -20,64 +20,73 @@
 
 
 		<div class="card-body card-block border-bottom-light">
+
+
+			@if (ViewBag.Error != null)
+			{
+				<div class="container">
+					<div class="alert alert-danger alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Error!</strong> @ViewBag.Error
+					</div>
+				</div>
+			}
 			<div class="container">
 				@using (Html.BeginForm())
 				{
 					@Html.AntiForgeryToken()
 
-				<div class="form-horizontal">
-					@*<h6 class="m-0 font-weight-bold text-dark">EDITAR</h6>*@
-					<hr />
-					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-					<div class="form-group row">
-						<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Código: </label>
-						<div class="col-md-10">
-							@Html.EditorFor(model => model.codigo, new { htmlAttributes = new { @class = "form-control" } })
-							@Html.ValidationMessageFor(model => model.codigo, "", new { @class = "text-danger" })
-
+					<div class="form-horizontal">
+						@*<h6 class="m-0 font-weight-bold text-dark">EDITAR</h6>*@
+						<hr />
+						@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+						<div class="form-group row">
+							<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Código: </label>
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.codigo, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.codigo, "", new { @class = "text-danger" })
+							</div>
 						</div>
-					</div>
-					<br>
-					<div class="form-group row">
-						<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Nombres: </label>
-						<div class="col-md-10">
-							@Html.EditorFor(model => model.nombres, new { htmlAttributes = new { @class = "form-control" } })
-							@Html.ValidationMessageFor(model => model.nombres, "", new { @class = "text-danger" })
+						<br>
+						<div class="form-group row">
+							<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Nombres: </label>
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.nombres, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.nombres, "", new { @class = "text-danger" })
+							</div>
 						</div>
-					</div>
-					<br>
-					<div class="form-group row">
-						<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Correo: </label>
-						<div class="col-md-10">
-							@Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control" } })
-							@Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+						<br>
+						<div class="form-group row">
+							<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Correo: </label>
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+							</div>
 						</div>
-					</div>
-					<br>
-					<div class="form-group row">
-						<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Contraseña: </label>
-						<div class="col-md-10">
-							@Html.EditorFor(model => model.contraseña, new { htmlAttributes = new { @class = "form-control" } })
-							@Html.ValidationMessageFor(model => model.contraseña, "", new { @class = "text-danger" })
+						<br>
+						<div class="form-group row">
+							<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Contraseña: </label>
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.contraseña, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.contraseña, "", new { @class = "text-danger" })
+							</div>
 						</div>
-					</div>
-					<br>
-					<div class="form-group row">
-						<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Rol: </label>
-						<div class="col-md-10">
-							@Html.EditorFor(model => model.rol_creacion, new { htmlAttributes = new { @class = "form-control" } })
-							@Html.ValidationMessageFor(model => model.rol_creacion, "", new { @class = "text-danger" })
+						<br>
+						<div class="form-group row">
+							<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Rol: </label>
+							<div class="col-md-10">
+								@Html.EditorFor(model => model.rol_creacion, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.rol_creacion, "", new { @class = "text-danger" })
+							</div>
 						</div>
-					</div>
-				
 
 
-					<br>
-					<div class="form-group text-center">
-						<input type="submit" value="Guardar" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen" />
-						<a href="@Url.Action("VerTicketsClientes","ModuloAdministrador")" class="btn btn-secondary" id="btnReturn">Retornar</a>
+						<br>
+						<div class="form-group text-center">
+							<input type="submit" value="Guardar" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen" />
+							<a href="@Url.Action("Usuarios","ModuloAdministrador")" class="btn btn-secondary" id="btnReturn">Retornar</a>
+						</div>
 					</div>
-				</div>
 				}
 			</div>
 		</div>

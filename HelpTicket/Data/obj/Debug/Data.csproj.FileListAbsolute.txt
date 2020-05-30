@@ -79,3 +79,12 @@ C:\Users\ALVARO\Desktop\HelpTicket\Data\obj\Debug\Data.csproj.CoreCompileInputs.
 C:\Users\ALVARO\Desktop\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
 C:\Users\ALVARO\Desktop\HelpTicket\Data\obj\Debug\Data.dll
 C:\Users\ALVARO\Desktop\HelpTicket\Data\obj\Debug\Data.pdb
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\bin\Debug\Data.dll
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\bin\Debug\Data.pdb
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\bin\Debug\Entity.dll
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\bin\Debug\Entity.pdb
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\obj\Debug\Data.csprojAssemblyReference.cache
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
+D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER11\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb

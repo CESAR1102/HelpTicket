@@ -94,7 +94,43 @@ namespace Data.Implementar
 
         public Departamento FindById(int? id)
         {
-            throw new NotImplementedException();
+            Departamento departamento = null;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+
+                    sql.Append("Select * from departamento where estado = '");
+                    sql.Append("S");
+                    sql.Append("' ");
+                    sql.Append("and id =");
+                    sql.Append(id.ToString());
+
+                    var query = new SqlCommand(sql.ToString(), conexion);
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        departamento = new Departamento();
+                        while (dr.Read())
+                        {
+                            departamento.id = Convert.ToInt32(dr["id"].ToString());
+                            departamento.departamento = dr["departamento"].ToString();
+                            departamento.fecha_creacion = Convert.ToDateTime(dr["fecha_creacion"]);
+                            departamento.fecha_modificacion = Convert.ToDateTime(dr["fecha_modificacion"]);
+                            departamento.fecha_modificacion = Convert.ToDateTime(dr["fecha_modificacion"]);
+                            departamento.usuario_modificacion = dr["usuario_modificacion"].ToString();
+                            departamento.estado = Convert.ToChar(dr["estado"]);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return departamento;
         }
 
         public bool Insert(Departamento t)
@@ -125,7 +161,27 @@ namespace Data.Implementar
 
         public bool Update(Departamento t)
         {
-            throw new NotImplementedException();
+            bool seActualizo = false;
+            try
+            {
+                using (var conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conn.Open();
+                    var query = new SqlCommand("Update departamento set  departamento = @departamento, fecha_modificacion = @fecha_modificacion, usuario_modificacion = @usuario_modificacion where id = @id", conn);
+                    query.Parameters.AddWithValue("@departamento", t.departamento);
+                    query.Parameters.AddWithValue("@fecha_modificacion", t.fecha_modificacion);
+                    query.Parameters.AddWithValue("@usuario_modificacion", t.usuario_modificacion);
+                    query.Parameters.AddWithValue("@id", t.id);
+                    query.ExecuteNonQuery();
+                    seActualizo = true;
+                }
+            }
+            catch (Exception e)
+            {
+
+                var a = e.Message;
+            }
+            return seActualizo;
         }
     }
 }
