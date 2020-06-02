@@ -10,5 +10,6 @@ namespace Business
     public interface ISkillService: ICrudService<Skill>
     {
         List<string> SkillXtrabajadorSimple(string codigo);
-    }
+		bool ExistByTopico(int topico_id, string identificador);
+	}
 }

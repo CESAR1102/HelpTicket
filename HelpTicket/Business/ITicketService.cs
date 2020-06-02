@@ -19,5 +19,6 @@ namespace Business
 		Ticket FindId(string id);
         string TicketsXtrabajadorXestado(string codigo, string estado);
         bool AsignarTicket(Ticket t);
-    }
+		bool ExistByTopico(int topico_id, string identificador);
+	}
 }

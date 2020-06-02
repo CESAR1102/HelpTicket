@@ -217,5 +217,10 @@ namespace Business.Implementar
             }
             return true;
         }
-    }
+
+		public bool ExistByTopico(int topico_id, string identificador)
+		{
+			return ticket_1.ExistByTopico(topico_id, identificador);
+		}
+	}
 }

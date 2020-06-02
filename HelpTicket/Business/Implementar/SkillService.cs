@@ -12,13 +12,19 @@ namespace Business.Implementar
     public class SkillService : ISkillService
     {
         private ISkillRepository skill = new SkillRepository();
+		
 
         public bool Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Skill> FindAll()
+		public bool ExistByTopico(int topico_id, string identificador)
+		{
+			return skill.ExistByTopico(topico_id, identificador);
+		}
+
+		public List<Skill> FindAll()
         {
             throw new NotImplementedException();
         }

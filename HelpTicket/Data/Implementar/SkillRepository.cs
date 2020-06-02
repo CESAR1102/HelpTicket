@@ -15,7 +15,41 @@ namespace Data.Implementar
             throw new NotImplementedException();
         }
 
-        public List<Skill> FindAll()
+		public bool ExistByTopico(int topico_id, string identificador)
+		{
+			bool respuesta = false;
+			StringBuilder sql = new StringBuilder();
+			try
+			{
+				using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					conexion.Open();
+					sql.Append("Select 1 from skill where estado = '");
+					sql.Append("S");
+					sql.Append("' and topico_id =");
+					sql.Append(topico_id.ToString());
+					sql.Append(" and acceso_usuario like '%");
+					sql.Append(identificador + "%'");
+					var query = new SqlCommand(sql.ToString(), conexion);
+
+					using (var dr = query.ExecuteReader())
+					{
+						while (dr.Read())
+						{
+							respuesta = true;
+							break;
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+
+			}
+			return respuesta;
+		}
+
+		public List<Skill> FindAll()
         {
             throw new NotImplementedException();
         }

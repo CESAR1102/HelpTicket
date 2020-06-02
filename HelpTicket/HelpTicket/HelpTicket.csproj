@@ -2011,6 +2011,8 @@
     <Content Include="Views\ModuloAdministrador\Topicos.cshtml" />
     <Content Include="Views\ModuloAdministrador\CrearTopico.cshtml" />
     <Content Include="Views\ModuloAdministrador\EditarDepartamentos.cshtml" />
+    <Content Include="Views\ModuloAdministrador\EditarTopicos.cshtml" />
+    <Content Include="Views\ModuloAdministrador\EliminarTopicos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
