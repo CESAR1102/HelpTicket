@@ -84,8 +84,9 @@
                                     <td>@item.fecha_modificacion</td>
                                     <td>@item.usuario_modificacion</td>
                                     <td>@item.estado</td>
-                                    <td>@Html.ActionLink("Eliminar", "EliminarDepartamentos", new { id = item.id })
-                                </tr>
+                                    <td>@Html.ActionLink("Editar", "EditarDepartamentos", new { id = item.id }) |
+                                        @Html.ActionLink("Eliminar", "EliminarDepartamentos", new { id = item.id })
+</tr>
                             }
                         </tbody>
                     </table>

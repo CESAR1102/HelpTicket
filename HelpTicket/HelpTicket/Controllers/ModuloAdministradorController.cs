@@ -309,7 +309,7 @@ namespace HelpTicket.Controllers
             }
             if (departamentoservice.Delete(Convert.ToInt32(id)))
             {
-                TempData["Agregado"] = "Se elimino exitosamente el departamento";
+                TempData["Agregado"] = "Se agrego exitosamente el departamento";
                 return RedirectToAction("VerDepartamento");
             }
             else
@@ -317,6 +317,36 @@ namespace HelpTicket.Controllers
                 TempData["Error"] = "No se pudo eliminar el departamento. Intente nuevamente.";
                 return RedirectToAction("VerDepartamento");
             }
+        }
+
+        [HttpGet]
+        public ActionResult EditarDepartamentos(string id)
+        {
+            Departamento dep = departamentoservice.FindById(Convert.ToInt32(id));
+            dep.fecha_modificacion = DateTime.Now;
+            dep.usuario_modificacion = sesion.getSession("usuario").codigo;
+            if (dep is null)
+            {
+                TempData["Error"] = "No se pudo obtener los datos del departamento.";
+                return RedirectToAction("VerDepartamento");
+            }
+            return View(dep);
+        }
+
+        [HttpPost]
+        public ActionResult EditarDepartamentos(Departamento d)
+        {
+            d.fecha_modificacion = DateTime.Now;
+            d.usuario_modificacion = sesion.getSession("usuario").codigo;
+            if (departamentoservice.Update(d))
+            {
+                TempData["Agregado"] = "Se actualizo exitosamente el departamento";
+            }
+            else
+            {
+                TempData["Error"] = "No se pudo actualizar los datos del departamento. Intente nuevamente";
+            }
+            return RedirectToAction("VerDepartamento");
         }
 
         [ActionName("ObtenerNombreTrabajador")]

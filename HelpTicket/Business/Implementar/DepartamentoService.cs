@@ -25,7 +25,7 @@ namespace Business.Implementar
 
         public Departamento FindById(int? id)
         {
-            throw new NotImplementedException();
+            return departamento.FindById(id);
         }
 
         public bool Insert(Departamento t)
@@ -35,7 +35,7 @@ namespace Business.Implementar
 
         public bool Update(Departamento t)
         {
-            throw new NotImplementedException();
+            return departamento.Update(t);
         }
     }
 }

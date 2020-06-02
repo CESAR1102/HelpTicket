@@ -2010,6 +2010,7 @@
     <Content Include="Views\ModuloAdministrador\Usuarios.cshtml" />
     <Content Include="Views\ModuloAdministrador\Topicos.cshtml" />
     <Content Include="Views\ModuloAdministrador\CrearTopico.cshtml" />
+    <Content Include="Views\ModuloAdministrador\EditarDepartamentos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
