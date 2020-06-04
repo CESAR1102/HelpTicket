@@ -23,7 +23,8 @@ namespace HelpTicket.Controllers
 		private IUsuarioModuloRolService umrservice = new UsuarioModuloRolService();
 		private IUsuarioService usuarioservice = new UsuarioService();
 		private IMensajeService mensajeservice = new MensajeService();
-        private SesionData sesion = new SesionData();
+		private ISkillService skillservice = new SkillService();
+		private SesionData sesion = new SesionData();
 		string identificador = "c";
 		//private TicketsPersonalizados tPersonalizados = new TicketsPersonalizados();
 		SesionData session = new SesionData();
@@ -368,9 +369,9 @@ namespace HelpTicket.Controllers
 			{
 				ViewBag.mensajeInformativo = "Aun no se ha ingresado ningun topico";
 			}
-			if (TempData["Agregado"] != null)
+			if (TempData["Agregado1"] != null)
 			{
-				ViewBag.Agregado = TempData["Agregado"];
+				ViewBag.Agregado = TempData["Agregado1"];
 			}
 			return View(topicos);
 
@@ -384,9 +385,9 @@ namespace HelpTicket.Controllers
 			topico.fecha_creacion = DateTime.Now;
 			topico.fecha_modificacion = DateTime.Now;
 			topico.usuario_modificacion = sesion.getSession("usuario").codigo;
-			if (TempData["Error"] != null)
+			if (TempData["Error1"] != null)
 			{
-				ViewBag.Error = TempData["Error"];
+				ViewBag.Error = TempData["Error1"];
 			}
 			return View(topico);
 		}
@@ -396,12 +397,12 @@ namespace HelpTicket.Controllers
 		{
 			if (t.topico== null || t.topico == string.Empty)
 			{
-				TempData["Error"] = "No se pudo crear el topico. El nombre esta vacio.";
+				TempData["Error1"] = "No se pudo crear el topico. El nombre esta vacio.";
 				return RedirectToAction("Topicos");
 			}
 			if (t.topico.Length >= 50)
 			{
-				TempData["Error"] = "El nombre debe contener como maximo 50 caracteres";
+				TempData["Error1"] = "El nombre debe contener como maximo 50 caracteres";
 				return RedirectToAction("Topicos");
 			}
 			ViewBag.departamentos = Departamentos();
@@ -412,16 +413,131 @@ namespace HelpTicket.Controllers
 			t.usuario_modificacion = sesion.getSession("usuario").codigo;
 			if (topicoservice.Insert(t))
 			{
-				TempData["Agregado"] = "Se registro el topico: " + t.topico + " exitosamente";
+				TempData["Agregado1"] = "Se registro el topico: " + t.topico + " exitosamente";
 				return RedirectToAction("Topicos");
 			}
 			else
 			{
-				TempData["Error"] = "No se pudo crear el topico. Intente nuevamente.";
+				TempData["Error1"] = "No se pudo crear el topico. Intente nuevamente.";
 				return RedirectToAction("CrearTopico");
 			}
 		}
-		private List<SelectListItem> Departamentos()
+
+
+		[HttpGet]
+		public ActionResult EliminarTopicos(string id)
+		{
+			if (skillservice.ExistByTopico(Convert.ToInt32(id), ""))
+			{
+				TempData["Error1"] = "No se pudo eliminar el topico. Existen Skills asociados a este topico. Revisar.";
+				return RedirectToAction("Topicos");
+			}
+			if (ticketservice.ExistByTopico(Convert.ToInt32(id), ""))
+			{
+				TempData["Error1"] = "No se pudo eliminar el departamento. Existen Tickets asociados a este topico. Revisar.";
+				return RedirectToAction("Topicos");
+			}
+			if (topicoservice.Delete(Convert.ToInt32(id)))
+			{
+				TempData["Agregado1"] = "Se agrego exitosamente el topico";
+				return RedirectToAction("Topicos");
+			}
+			else
+			{
+				TempData["Error1"] = "No se pudo eliminar el topico. Intente nuevamente.";
+				return RedirectToAction("Topicos");
+			}
+		}
+
+		[HttpGet]
+		public ActionResult EditarTopicos(string id)
+		{
+			Topico top = topicoservice.FindById(Convert.ToInt32(id));
+	
+			top.fecha_modificacion = DateTime.Now;
+			top.usuario_modificacion = sesion.getSession("usuario").codigo;
+			if (top is null)
+			{
+				TempData["Error"] = "No se pudo obtener los datos del topico.";
+				return RedirectToAction("Topicos");
+			}
+			return View(top);
+		}
+
+		[HttpPost]
+		public ActionResult EditarTopicos(Topico t)
+		{
+			t.fecha_modificacion = DateTime.Now;
+			t.usuario_modificacion = sesion.getSession("usuario").codigo;
+			if (topicoservice.Update(t))
+			{
+				TempData["Agregado"] = "Se actualizo exitosamente el topico";
+			}
+			else
+			{
+				TempData["Error"] = "No se pudo actualizar los datos del topico. Intente nuevamente";
+			}
+			return RedirectToAction("Topicos");
+		}
+
+
+        [HttpGet]
+        public ActionResult AsignarTopicos()
+        {
+            if (TempData["Exito"] != null)
+            {
+                ViewBag.Exito = TempData["Exito"];
+            }
+            if (TempData["Error"] != null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
+
+            ViewBag.Trabajadores = usuarioservice.ObtenerTrabajadores();
+            ViewBag.Departamentos = Departamentos();
+            ViewBag.Topicos = new List<SelectListItem>();
+            return View(new Skill());
+        }
+
+        [HttpPost]
+        public ActionResult AsignarTopicos(Skill item)
+        {
+            if (ModelState.IsValid)
+            {
+                if (skillservice.ExistByTrabajador(item.topico_id, item.usuario_id))
+                {
+                    TempData["Error"] = "El usuario seleccionado ya esta asignado a ese topico";
+                    return RedirectToAction("AsignarTopicos");
+                }
+                if (skillservice.Insert(item))
+                {
+                    TempData["Exito"] = "Se asigno el skill al trabajador " + item.usuario_id;
+                    //ViewBag.Exito = "Se asigno el skill al trabajador " + item.usuario_id;
+                    return RedirectToAction("AsignarTopicos");
+                }
+                else
+                {
+                   TempData["Error"] = "No se pudo asignar el skill. Intente nuevamente";
+                    return RedirectToAction("AsignarTopicos");
+                    //ViewBag.Error = "No se pudo asignar el skill. Intente nuevamente";
+                }
+                //ViewBag.Trabajadores = usuarioservice.ObtenerTrabajadores();
+                //ViewBag.Departamentos = Departamentos();
+                //ViewBag.Topicos = new List<SelectListItem>();
+                //return View(new Skill());
+            }
+            else
+            {
+                ViewBag.Trabajadores = usuarioservice.ObtenerTrabajadores();
+                ViewBag.Departamentos = Departamentos();
+                ViewBag.Topicos = new List<SelectListItem>();
+                
+                //return RedirectToAction("AsignarTopicos");
+                return View(item);
+            }
+        }
+
+        private List<SelectListItem> Departamentos()
 		{
 			List<SelectListItem> depas = new List<SelectListItem>();
 
@@ -437,5 +553,27 @@ namespace HelpTicket.Controllers
 			return depas;
 		}
 
-	}
+        private List<SelectListItem> Topicos(int departamentoID)
+        {
+            List<SelectListItem> tops = new List<SelectListItem>();
+
+            List<Topico> topicos = topicoservice.FindByDepartamento(departamentoID, "");
+            if (!(topicos is null))
+            {
+                tops.Add(new SelectListItem { Text = "Seleccione un Tópico...", Value = "" });
+                foreach (var t in topicos)
+                {
+                    tops.Add(new SelectListItem { Text = t.topico, Value = t.id.ToString() });
+                }
+            }
+            return tops;
+        }
+
+        [ActionName("ObtenerTopicosDisponibles")]
+        public ActionResult ObtenerTopicosDisponibles(string id)
+        {
+            var topicos = Topicos(Convert.ToInt32(id));
+            return Json(topicos, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

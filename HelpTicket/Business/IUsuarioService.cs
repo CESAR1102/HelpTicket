@@ -19,5 +19,6 @@ namespace Business
         List<Usuario> ObtenerTrabajadores();
         Usuario FindByCodigo(string codigo);
         bool DeleteUser(string id);
-    }
+	
+	}
 }

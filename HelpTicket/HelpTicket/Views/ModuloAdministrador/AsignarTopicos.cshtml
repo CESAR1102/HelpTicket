@@ -1,0 +1,142 @@
+﻿
+@model Entity.Skill
+
+
+@{
+    Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+    ViewBag.Title = "AsignarTopicos";
+    var topicos = ViewBag.Topicos as List<SelectListItem>;
+}
+
+<div class="col-lg-12">
+	<div class="card shadow mb-4">
+		<div class="card-header">
+			<h6 class="m-0 font-weight-bold text-dark">HISTORIAL DE TICKETS</h6>
+		</div>
+        <div class="card-body card-block border-bottom-light">
+            @if (ViewBag.Exito != null)
+            {
+                <div class="container">
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Éxito!</strong> @ViewBag.Exito
+                    </div>
+                </div>
+            }
+            @if (ViewBag.Error != null)
+            {
+                <div class="container">
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> @ViewBag.Error
+                    </div>
+                </div>
+            }
+                <div class="container">
+                    <h2>Asignar Topicos</h2>
+                    <p>Todos los topicos disponibles</p>
+
+                    <div class="container">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group row">
+                                <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Trabajador: </label>
+                                <div class="col-md-4" style="display:inline-block">
+                                    @Html.DropDownListFor(model => model.usuario_id,
+                                                  new SelectList(ViewBag.Trabajadores, "codigo", "codigo", "")
+                                                  , "---Selecciona un trabajador---", new {@class = "form-control", @id = "trabajador" })
+                                    @Html.ValidationMessageFor(model => model.usuario_id, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-6" style="display:inline-block">
+                                    <p class="form-control" style="cursor: not-allowed;color:black;" id="nombreTrabajador">
+
+                                    </p>
+                                </div>
+                                <br /><br /><br />
+
+                                <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Departamento: </label>
+                                <div class="col-md-10" style="display:inline-block">
+                                    <select id="select_departamentos" class="form-control">
+                                        @foreach (var i in ViewBag.Departamentos)
+                                        {
+                                            <option value=@i.Value>@i.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                                <br /><br /><br />
+
+                                <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Topico: </label>
+                                <div class="col-md-10" style="display:inline-block">
+                                    @Html.DropDownListFor(model => model.topico_id, topicos, new { @class = "form-control", id = "select_topico" })
+                                    @Html.ValidationMessageFor(model => model.topico_id, "", new { @class = "text-danger", @font_size = "1" })
+                                </div>
+                                <br /><br /><br />
+                                <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Nivel: </label>
+                                <div class="col-md-10" style="display:inline-block">
+                                    @Html.TextBoxFor(model => model.nivel, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.nivel, "", new { @class = "text-danger", @font_size = "1" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+
+                            <div class="form-group text-center">
+                                <input type="submit" value="Guardar" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen" />
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+     </div>
+</div>
+
+    <script>
+        const origen = document.getElementById("select_departamentos");
+        const dependiente = document.getElementById("select_topico");
+
+        const idTrabajador = document.getElementById("trabajador");
+        const nombreTrabajador = document.getElementById("nombreTrabajador");
+        var id = "";
+        idTrabajador.addEventListener("change", (event) => {
+            id = idTrabajador.options[idTrabajador.selectedIndex].text;
+            let url = '/ModuloAdministrador/ObtenerNombreTrabajador/' + id;
+            fetch(url)
+                .then(res => res.json())
+                .then((out) => {
+                    if (out['codigo'] == "") {
+                        nombreTrabajador.innerText = "";
+                    } else {
+                        nombreTrabajador.textContent = out['nombres'];
+                    }
+                })
+                .catch(err => { throw err });
+        });
+
+        origen.addEventListener("change", (event) => {
+            let url = '/ModuloAdministrador/ObtenerTopicosDisponibles/' + origen.value;
+            fetch(url)
+                .then(res => res.json())
+                .then((out) => {
+                    removerTodo();
+                    for (var i = 0; i < out.length; i++) {
+                        var option = document.createElement("option");
+                        option.value = out[i]['Value']
+                        option.innerHTML = out[i]['Text'];
+                        dependiente.appendChild(option);
+                    }
+                })
+                .catch(err => { throw err });
+        });
+
+        function removerTodo() {
+            for (let i = dependiente.options.length; i >= 0; i--) {
+                dependiente.remove(i);
+            }
+        }
+    </script>

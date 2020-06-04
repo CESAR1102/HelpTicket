@@ -12,34 +12,33 @@
 			<h6 class="m-0 font-weight-bold text-dark">TÓPICOS</h6>
 		</div>
 		<div class="card-body card-block border-bottom-light">
-			@if (ViewBag.Agregado != null)
+			@if (ViewBag.Agregado1 != null)
 			{
 				<div class="container">
 					<div class="alert alert-success alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Éxito!</strong> @ViewBag.Agregado
+						<strong>Éxito!</strong> @ViewBag.Agregado1
 					</div>
 				</div>
 			}
-			@if (ViewBag.mensajeInformativo != null)
+			@if (ViewBag.mensajeInformativo1 != null)
 			{
 				<div class="container">
 					<div class="alert alert-warning alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atención!</strong> @ViewBag.mensajeInformativo
+						<strong>Atención!</strong> @ViewBag.mensajeInformativo1
 					</div>
 				</div>
 			}
-			@if (ViewBag.Error != null)
+			@if (ViewBag.Error1 != null)
 			{
 				<div class="container">
 					<div class="alert alert-danger alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Error!</strong> @ViewBag.Error
+						<strong>Error!</strong> @ViewBag.Error1
 					</div>
 				</div>
 			}
-
 			<p>
 				@Html.ActionLink("Create New", "CrearTopico")
 			</p>
@@ -65,7 +64,6 @@
 					</th>
 					<th></th>
 				</tr>
-
 				@foreach (var item in Model)
 				{
 					<tr>
@@ -88,13 +86,12 @@
 							@Html.DisplayFor(modelItem => item.estado)
 						</td>
 						<td>
-							@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+							@Html.ActionLink("Edit", "EditarTopicos", new { id = item.id }) |
 							@Html.ActionLink("Details", "Details", new { id = item.id }) |
-							@Html.ActionLink("Delete", "Delete", new { id = item.id })
+							@Html.ActionLink("Delete", "EliminarTopicos", new { id = item.id })
 						</td>
 					</tr>
 				}
-
 			</table>
 		</div>
 	</div>

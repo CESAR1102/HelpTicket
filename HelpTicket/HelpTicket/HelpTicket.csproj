@@ -148,10 +148,13 @@
     <Compile Include="PartialClass\InputFields_ForgotPassword.cs" />
     <Compile Include="PartialClass\InputFields_Loguin.cs" />
     <Compile Include="PartialClass\InputFields_Recovery.cs" />
+    <Compile Include="PartialClass\ListadoDepbyTop.cs" />
+    <Compile Include="PartialClass\ManageDepByTop.cs" />
     <Compile Include="PartialClass\ManagerInfoTrabajador.cs" />
     <Compile Include="PartialClass\ResponseDestinatarios.cs" />
     <Compile Include="PartialClass\ResponseTicket1.cs" />
     <Compile Include="PartialClass\TicketsPersonalizados.cs" />
+    <Compile Include="PartialClass\TopicoSelected.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2011,6 +2014,9 @@
     <Content Include="Views\ModuloAdministrador\Topicos.cshtml" />
     <Content Include="Views\ModuloAdministrador\CrearTopico.cshtml" />
     <Content Include="Views\ModuloAdministrador\EditarDepartamentos.cshtml" />
+    <Content Include="Views\ModuloAdministrador\EditarTopicos.cshtml" />
+    <Content Include="Views\ModuloAdministrador\EliminarTopicos.cshtml" />
+    <Content Include="Views\ModuloAdministrador\AsignarTopicos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

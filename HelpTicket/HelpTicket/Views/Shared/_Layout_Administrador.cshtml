@@ -60,6 +60,20 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link " href="@Url.Action("Topicos", "ModuloAdministrador")">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Topicos</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link " href="@Url.Action("AsignarTopicos", "ModuloAdministrador")">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Asignar Topicos</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link " href="#">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Reportes</span>
@@ -67,17 +81,12 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link " href="@Url.Action("Topicos", "ModuloAdministrador")">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Topicos</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index", "Home")">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Salir</span>
                 </a>
             </li>
+
             <hr class="sidebar-divider d-none d-md-block">
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>

@@ -15,8 +15,8 @@ namespace Business.Implementar
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
-        }
+			return topico.Delete(id);
+		}
 
         public bool ExistByDepartamento(int departamento_id, string identificador)
         {
@@ -35,8 +35,8 @@ namespace Business.Implementar
 
         public Topico FindById(int? id)
         {
-            throw new NotImplementedException();
-        }
+			return topico.FindById(id);
+		}
 
         public bool Insert(Topico t)
         {
@@ -45,7 +45,7 @@ namespace Business.Implementar
 
         public bool Update(Topico t)
         {
-            throw new NotImplementedException();
-        }
+			return topico.Update(t);
+		}
     }
 }

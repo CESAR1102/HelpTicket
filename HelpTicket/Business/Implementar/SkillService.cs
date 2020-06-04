@@ -12,10 +12,21 @@ namespace Business.Implementar
     public class SkillService : ISkillService
     {
         private ISkillRepository skill = new SkillRepository();
+		
 
         public bool Delete(int id)
         {
             throw new NotImplementedException();
+        }
+
+		public bool ExistByTopico(int topico_id, string identificador)
+		{
+			return skill.ExistByTopico(topico_id, identificador);
+		}
+
+        public bool ExistByTrabajador(int topico_id, string usuario)
+        {
+            return skill.ExistByTrabajador(topico_id, usuario);
         }
 
         public List<Skill> FindAll()
@@ -30,7 +41,7 @@ namespace Business.Implementar
 
         public bool Insert(Skill t)
         {
-            throw new NotImplementedException();
+            return skill.Insert(t);
         }
 
         public List<string> SkillXtrabajadorSimple(string codigo)
