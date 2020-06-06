@@ -11,5 +11,6 @@ namespace Business
     {
         List<string> SkillXtrabajadorSimple(string codigo);
 		bool ExistByTopico(int topico_id, string identificador);
-	}
+        bool ExistByTrabajador(int topico_id, string usuario);
+    }
 }

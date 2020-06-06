@@ -49,7 +49,40 @@ namespace Data.Implementar
 			return respuesta;
 		}
 
-		public List<Skill> FindAll()
+        public bool ExistByTrabajador(int topico_id, string usuario)
+        {
+            bool respuesta = false;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+                    sql.Append("Select 1 from skill ");
+                    sql.Append("where topico_id =");
+                    sql.Append(topico_id.ToString());
+                    sql.Append(" and usuario_id = '");
+                    sql.Append(usuario + "'");
+                    var query = new SqlCommand(sql.ToString(), conexion);
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            respuesta = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
+            return respuesta;
+        }
+
+        public List<Skill> FindAll()
         {
             throw new NotImplementedException();
         }
@@ -61,7 +94,43 @@ namespace Data.Implementar
 
         public bool Insert(Skill t)
         {
-            throw new NotImplementedException();
+            int filas;
+            bool resultado = false;
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+
+                    var query1 = new SqlCommand("begin transaction", conexion);
+                    query1.ExecuteNonQuery();
+
+                    sql.Append("Insert Into Skill (usuario_id, topico_id, nivel)");
+                    sql.Append("Values ('" + t.usuario_id + "', " + t.topico_id + ", " + t.nivel + ")");
+                    
+                    query1 = new SqlCommand(sql.ToString(), conexion);
+
+                    filas = query1.ExecuteNonQuery();
+
+                    if (filas > 0)
+                    {
+                        query1 = new SqlCommand("commit", conexion);
+                        query1.ExecuteNonQuery();
+                        resultado = true;
+                    }
+                    else
+                    {
+                        query1 = new SqlCommand("rollback", conexion);
+                        query1.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return resultado;
         }
 
         public List<string> SkillXtrabajadorSimple(string codigo)

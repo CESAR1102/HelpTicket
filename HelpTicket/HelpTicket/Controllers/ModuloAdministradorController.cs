@@ -379,7 +379,7 @@ namespace HelpTicket.Controllers
 		[HttpGet]
 		public ActionResult CrearTopico()
 		{
-			ViewBag.departamentos = Departamentos();
+			ViewBag.departamentos2 = departamentoservice.FindAll();
 			var topico = new Topico();
 			topico.estado = 'S';
 			topico.fecha_creacion = DateTime.Now;
@@ -405,7 +405,7 @@ namespace HelpTicket.Controllers
 				TempData["Error1"] = "El nombre debe contener como maximo 50 caracteres";
 				return RedirectToAction("Topicos");
 			}
-			ViewBag.departamentos = Departamentos();
+			ViewBag.departamentos2 = departamentoservice.FindAll();
 			t.estado = 'S';
 			t.fecha_creacion = DateTime.Now;
 			t.fecha_modificacion = DateTime.Now;
@@ -418,6 +418,7 @@ namespace HelpTicket.Controllers
 			}
 			else
 			{
+				
 				TempData["Error1"] = "No se pudo crear el topico. Intente nuevamente.";
 				return RedirectToAction("CrearTopico");
 			}
@@ -481,9 +482,63 @@ namespace HelpTicket.Controllers
 		}
 
 
+        [HttpGet]
+        public ActionResult AsignarTopicos()
+        {
+            if (TempData["Exito"] != null)
+            {
+                ViewBag.Exito = TempData["Exito"];
+            }
+            if (TempData["Error"] != null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
 
+            ViewBag.Trabajadores = usuarioservice.ObtenerTrabajadores();
+            ViewBag.Departamentos = Departamentos();
+            ViewBag.Topicos = new List<SelectListItem>();
+            return View(new Skill());
+        }
 
-		private List<SelectListItem> Departamentos()
+        [HttpPost]
+        public ActionResult AsignarTopicos(Skill item)
+        {
+            if (ModelState.IsValid)
+            {
+                if (skillservice.ExistByTrabajador(item.topico_id, item.usuario_id))
+                {
+                    TempData["Error"] = "El usuario seleccionado ya esta asignado a ese topico";
+                    return RedirectToAction("AsignarTopicos");
+                }
+                if (skillservice.Insert(item))
+                {
+                    TempData["Exito"] = "Se asigno el skill al trabajador " + item.usuario_id;
+                    //ViewBag.Exito = "Se asigno el skill al trabajador " + item.usuario_id;
+                    return RedirectToAction("AsignarTopicos");
+                }
+                else
+                {
+                   TempData["Error"] = "No se pudo asignar el skill. Intente nuevamente";
+                    return RedirectToAction("AsignarTopicos");
+                    //ViewBag.Error = "No se pudo asignar el skill. Intente nuevamente";
+                }
+                //ViewBag.Trabajadores = usuarioservice.ObtenerTrabajadores();
+                //ViewBag.Departamentos = Departamentos();
+                //ViewBag.Topicos = new List<SelectListItem>();
+                //return View(new Skill());
+            }
+            else
+            {
+                ViewBag.Trabajadores = usuarioservice.ObtenerTrabajadores();
+                ViewBag.Departamentos = Departamentos();
+                ViewBag.Topicos = new List<SelectListItem>();
+                
+                //return RedirectToAction("AsignarTopicos");
+                return View(item);
+            }
+        }
+
+        private List<SelectListItem> Departamentos()
 		{
 			List<SelectListItem> depas = new List<SelectListItem>();
 
@@ -499,5 +554,27 @@ namespace HelpTicket.Controllers
 			return depas;
 		}
 
-	}
+        private List<SelectListItem> Topicos(int departamentoID)
+        {
+            List<SelectListItem> tops = new List<SelectListItem>();
+
+            List<Topico> topicos = topicoservice.FindByDepartamento(departamentoID, "");
+            if (!(topicos is null))
+            {
+                tops.Add(new SelectListItem { Text = "Seleccione un Tópico...", Value = "" });
+                foreach (var t in topicos)
+                {
+                    tops.Add(new SelectListItem { Text = t.topico, Value = t.id.ToString() });
+                }
+            }
+            return tops;
+        }
+
+        [ActionName("ObtenerTopicosDisponibles")]
+        public ActionResult ObtenerTopicosDisponibles(string id)
+        {
+            var topicos = Topicos(Convert.ToInt32(id));
+            return Json(topicos, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

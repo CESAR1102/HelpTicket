@@ -199,7 +199,7 @@ namespace Data.Implementar
 					conn.Open();
 					var query = new SqlCommand("INSERT INTO topico VALUES(@topico,@departamento_id,@fecha_creacion,@fecha_modificacion,@usuario_modificacion,@estado)", conn);
 					query.Parameters.AddWithValue("@topico", t.topico);
-					query.Parameters.AddWithValue("@departamento_id", t.Departamento.id);
+					query.Parameters.AddWithValue("@departamento_id", t.departamento_id);
 					query.Parameters.AddWithValue("@fecha_creacion", t.fecha_creacion);
 					query.Parameters.AddWithValue("@fecha_modificacion", t.fecha_modificacion);
 					query.Parameters.AddWithValue("@usuario_modificacion", t.usuario_modificacion);

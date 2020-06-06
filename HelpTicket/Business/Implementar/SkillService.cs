@@ -24,7 +24,12 @@ namespace Business.Implementar
 			return skill.ExistByTopico(topico_id, identificador);
 		}
 
-		public List<Skill> FindAll()
+        public bool ExistByTrabajador(int topico_id, string usuario)
+        {
+            return skill.ExistByTrabajador(topico_id, usuario);
+        }
+
+        public List<Skill> FindAll()
         {
             throw new NotImplementedException();
         }
@@ -36,7 +41,7 @@ namespace Business.Implementar
 
         public bool Insert(Skill t)
         {
-            throw new NotImplementedException();
+            return skill.Insert(t);
         }
 
         public List<string> SkillXtrabajadorSimple(string codigo)
