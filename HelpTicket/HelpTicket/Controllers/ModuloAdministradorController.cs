@@ -379,7 +379,7 @@ namespace HelpTicket.Controllers
 		[HttpGet]
 		public ActionResult CrearTopico()
 		{
-			ViewBag.departamentos = Departamentos();
+			ViewBag.departamentos2 = departamentoservice.FindAll();
 			var topico = new Topico();
 			topico.estado = 'S';
 			topico.fecha_creacion = DateTime.Now;
@@ -405,7 +405,7 @@ namespace HelpTicket.Controllers
 				TempData["Error1"] = "El nombre debe contener como maximo 50 caracteres";
 				return RedirectToAction("Topicos");
 			}
-			ViewBag.departamentos = Departamentos();
+			ViewBag.departamentos2 = departamentoservice.FindAll();
 			t.estado = 'S';
 			t.fecha_creacion = DateTime.Now;
 			t.fecha_modificacion = DateTime.Now;
@@ -418,6 +418,7 @@ namespace HelpTicket.Controllers
 			}
 			else
 			{
+				
 				TempData["Error1"] = "No se pudo crear el topico. Intente nuevamente.";
 				return RedirectToAction("CrearTopico");
 			}
@@ -535,6 +536,30 @@ namespace HelpTicket.Controllers
                 //return RedirectToAction("AsignarTopicos");
                 return View(item);
             }
+        }
+
+        [HttpGet]
+        public ActionResult Reportes()
+        {
+            ViewBag.Reporte1 = Datos_Rep01();
+            return View();
+        }
+
+        private List<Data_Reporte01> Datos_Rep01()
+        {
+            var datos = new List<Data_Reporte01>();
+            var trabajadores = usuarioservice.ObtenerTrabajadores();
+            foreach (var item in trabajadores)
+            {
+                datos.Add(new Data_Reporte01()
+                {
+                    codigo = item.codigo,
+                    nombre = item.nombres,
+                    tkAsignados = ticketservice.TicketsXtrabajadorXestado(item.codigo, "A"),
+                    tkFinalizados = ticketservice.TicketsXtrabajadorXestado(item.codigo, "F")
+                });
+            }
+            return datos;
         }
 
         private List<SelectListItem> Departamentos()
