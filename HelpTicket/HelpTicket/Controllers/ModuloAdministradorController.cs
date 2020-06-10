@@ -600,5 +600,15 @@ namespace HelpTicket.Controllers
             var topicos = Topicos(Convert.ToInt32(id));
             return Json(topicos, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ObtenerDatosRep2(string id)
+        {
+            var inicio = id.Substring(0, 10);
+            var fin = id.Substring(11, 10);
+
+            var datos = ticketservice.DatosReporte02(inicio, fin);
+
+            return Json(datos, JsonRequestBehavior.AllowGet);
+        }
     }
 }

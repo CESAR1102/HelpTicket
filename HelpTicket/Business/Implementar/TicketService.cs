@@ -222,5 +222,10 @@ namespace Business.Implementar
 		{
 			return ticket_1.ExistByTopico(topico_id, identificador);
 		}
-	}
+
+        public List<Tuple<string, int, int>> DatosReporte02 (string fecha_ini, string fecha_fin)
+        {
+            return ticket_1.DatosReporte02(fecha_ini, fecha_fin);
+        }
+    }
 }

@@ -30,15 +30,34 @@ namespace Data.Implementar
                         filas = query.ExecuteNonQuery();
                         if (filas > 0)
                         {
-                            query = new SqlCommand("commit", conexion);
-                            query.ExecuteNonQuery();
-                            actualizado = true;
+                            string fec = DateTime.Now.Year.ToString() + " - " + DateTime.Now.Month.ToString() + "-" 
+                                + DateTime.Now.Day.ToString();
+
+                            query = new SqlCommand("Update ticket set fecha_asignado = @fecha where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                            query.Parameters.AddWithValue("@fecha", fec);
+                            filas = query.ExecuteNonQuery();
+                            if (filas > 0)
+                            {
+                                query = new SqlCommand("commit", conexion);
+                                query.ExecuteNonQuery();
+                                actualizado = true;
+                            }
+                            else
+                            {
+                                query = new SqlCommand("rollback", conexion);
+                                query.ExecuteNonQuery();
+                            }
                         }
                         else
                         {
                             query = new SqlCommand("rollback", conexion);
                             query.ExecuteNonQuery();
                         }
+                    }
+                    else
+                    {
+                        query = new SqlCommand("rollback", conexion);
+                        query.ExecuteNonQuery();
                     }
                 }
             }
@@ -47,6 +66,49 @@ namespace Data.Implementar
 
             }
             return actualizado;
+        }
+
+        public List<Tuple<string, int, int>> DatosReporte02(string fecha_ini, string fecha_fin)
+        {
+            List<Tuple<string, int, int>> datos = new List<Tuple<string, int, int>>();
+            StringBuilder sql = new StringBuilder();
+            try
+            {
+                using (var conexion = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+                {
+                    conexion.Open();
+
+                    sql.Append("select datos.fecha, sum(datos.solicitado) as solicitados,  sum(datos.asignado) as asignados ");
+                    sql.Append("from ( ");
+                    sql.Append("(select fecha_solicitado as fecha, count (*) as solicitado, 0 as asignado from ticket where estado = 'I' and fecha_solicitado >= '" +
+                        fecha_ini + "' and fecha_solicitado <= '" + fecha_fin + "' group by fecha_solicitado) ");
+                    sql.Append("union all ");
+                    sql.Append("(select fecha_asignado as fecha, 0 as solicitado, count (*) as asignado from ticket where estado = 'A' and fecha_asignado >= '" +
+                        fecha_ini + "' and fecha_asignado <= '" + fecha_fin + "' group by fecha_asignado) ");
+                    sql.Append(") as datos ");
+                    sql.Append("group by datos.fecha order by datos.fecha asc");
+
+                    var query = new SqlCommand(sql.ToString(), conexion);
+
+                    using (var dr = query.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            var fec = dr["fecha"].ToString();
+                            fec = fec.Substring(0, 10);
+                            var sol = Convert.ToInt32(dr["solicitados"].ToString());
+                            var asig = Convert.ToInt32(dr["asignados"].ToString());
+
+                            datos.Add(new Tuple<string, int, int>(fec, sol, asig));
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
+            }
+            return datos;
         }
 
         public bool Delete(int id)
