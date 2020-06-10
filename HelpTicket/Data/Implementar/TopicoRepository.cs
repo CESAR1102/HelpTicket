@@ -240,5 +240,46 @@ namespace Data.Implementar
 			}
 			return seActualizo;
 		}
-    }
+
+		public List<Topico> Departamento_x_tickets()
+		{
+
+			var topicos = new List<Topico>();
+			try
+			{
+				using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					con.Open();
+
+					var query = new SqlCommand("select d.departamento,count(t.topico) tickets from departamento d inner join topico t on t.departamento_id=d.id inner join ticket ti on ti.topico_id = t.id group by d.departamento", con);
+					using (var dr = query.ExecuteReader())
+					{
+						while (dr.Read())
+						{
+							var topico = new Topico();
+							var departamento = new Departamento();
+							var ticket = new Ticket();
+
+							topico.topico = dr["tickets"].ToString();
+
+
+							departamento.departamento = dr["departamento"].ToString();
+							topico.Departamento = departamento;
+
+
+							topicos.Add(topico);
+
+
+
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			return topicos;
+		}
+	}
 }

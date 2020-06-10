@@ -18,5 +18,6 @@ namespace Data
         bool AsignarTicket(Ticket t);
 		bool ExistByTopico(int topico_id, string identificador);
         List<Tuple<string, int, int>> DatosReporte02(string fecha_ini, string fecha_fin);
-    }
+        List<Ticket> Topico_x_tickets();
+	}
 }

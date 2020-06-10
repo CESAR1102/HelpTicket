@@ -1,6 +1,4 @@
 ﻿
-<p>reporte 02</p>
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <div id="chart_div" style="width: 100%; height: 500px;"></div>
@@ -18,7 +16,7 @@
         <button type="button" id="actualizar_datos">Actualizar</button>
     </div>
     <div class="text-danger" style="margin:25px;" id="mensaje_error">
-        
+
     </div>
 </div>
 
@@ -49,13 +47,13 @@
         if (!error) {
             var fecha1 = new Date(inicio.value);
             var fecha2 = new Date(fin.value);
-            
+
             if (fecha1 < fecha2) {
                 mensaje.innerHTML = "";
                 //Actualizar los datos del Chart
                 actualizarDatos();
                 //Dibujar el Chart
-               // drawChart();
+                // drawChart();
             } else {
                 mensaje.innerHTML = "<p>La fecha 'Hasta' debe ser mayor a la fecha 'Desde'</p>";
             }

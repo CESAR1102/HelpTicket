@@ -223,7 +223,12 @@ namespace Business.Implementar
 			return ticket_1.ExistByTopico(topico_id, identificador);
 		}
 
-        public List<Tuple<string, int, int>> DatosReporte02 (string fecha_ini, string fecha_fin)
+		public List<Ticket> Topico_x_tickets()
+		{
+			return ticket_1.Topico_x_tickets();
+		}
+
+        public List<Tuple<string, int, int>> DatosReporte02(string fecha_ini, string fecha_fin)
         {
             return ticket_1.DatosReporte02(fecha_ini, fecha_fin);
         }

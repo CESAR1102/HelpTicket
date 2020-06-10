@@ -140,11 +140,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Contenedor_Modelos.cs" />
     <Compile Include="Models\SesionData.cs" />
     <Compile Include="PartialClass\Data_Reporte01.cs" />
     <Compile Include="PartialClass\DatosCompartidos.cs" />
     <Compile Include="PartialClass\Eliminar_Usuario.cs" />
     <Compile Include="PartialClass\FinalizarTicket.cs" />
+    <Compile Include="PartialClass\Grafica_Reporte.cs" />
+    <Compile Include="PartialClass\Grafica_Reporte2.cs" />
     <Compile Include="PartialClass\InfoTrabajador.cs" />
     <Compile Include="PartialClass\InputFields_ForgotPassword.cs" />
     <Compile Include="PartialClass\InputFields_Loguin.cs" />
@@ -2021,6 +2024,7 @@
     <Content Include="Views\ModuloAdministrador\Reportes.cshtml" />
     <Content Include="Views\ModuloAdministrador\Reporte01.cshtml" />
     <Content Include="Views\ModuloAdministrador\Reporte02.cshtml" />
+    <Content Include="Views\ModuloAdministrador\Reportes2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

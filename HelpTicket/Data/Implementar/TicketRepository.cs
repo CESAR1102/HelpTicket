@@ -30,34 +30,15 @@ namespace Data.Implementar
                         filas = query.ExecuteNonQuery();
                         if (filas > 0)
                         {
-                            string fec = DateTime.Now.Year.ToString() + " - " + DateTime.Now.Month.ToString() + "-" 
-                                + DateTime.Now.Day.ToString();
-
-                            query = new SqlCommand("Update ticket set fecha_asignado = @fecha where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
-                            query.Parameters.AddWithValue("@fecha", fec);
-                            filas = query.ExecuteNonQuery();
-                            if (filas > 0)
-                            {
-                                query = new SqlCommand("commit", conexion);
-                                query.ExecuteNonQuery();
-                                actualizado = true;
-                            }
-                            else
-                            {
-                                query = new SqlCommand("rollback", conexion);
-                                query.ExecuteNonQuery();
-                            }
+                            query = new SqlCommand("commit", conexion);
+                            query.ExecuteNonQuery();
+                            actualizado = true;
                         }
                         else
                         {
                             query = new SqlCommand("rollback", conexion);
                             query.ExecuteNonQuery();
                         }
-                    }
-                    else
-                    {
-                        query = new SqlCommand("rollback", conexion);
-                        query.ExecuteNonQuery();
                     }
                 }
             }
@@ -538,7 +519,52 @@ namespace Data.Implementar
             return resultado;
         }
 
-        public bool Update(Ticket t)
+		public List<Ticket> Topico_x_tickets()
+		{
+			var tickets = new List<Ticket>();
+			try
+			{
+				using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					con.Open();
+
+					var query = new SqlCommand("select t.topico,isnull(count(ti.codigo_atencion) ,0)tickets from departamento d inner join topico t on t.departamento_id=d.id inner join ticket ti on ti.topico_id = t.id group by t.topico", con);
+					using (var dr = query.ExecuteReader())
+					{
+						while (dr.Read())
+						{
+							var topico = new Topico();
+							var departamento = new Departamento();
+							var ticket = new Ticket();
+							ticket.codigo_atencion = dr["tickets"].ToString();
+
+
+
+
+							topico.topico = dr["topico"].ToString();
+							ticket.Topico = topico;
+
+
+
+
+
+							tickets.Add(ticket);
+
+
+
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			return tickets;
+
+		}
+
+		public bool Update(Ticket t)
         {
 
 			bool seActualizo = false;
