@@ -1,0 +1,179 @@
+﻿@model HelpTicket.Models.Contenedor_Modelos
+@{
+	Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+	ViewBag.Title = "Reportes2";
+}
+
+
+<html>
+<head>
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChartPie5);
+    function drawChartPie5() {
+        var dataJson;
+        $.ajax({
+            url: '@Url.Action("JsonGRAFTicketsXTopico")', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            contentType: 'application/json; charset=utf-8', //define a contentType of your request
+            cache: false, //avoid caching results
+            data: {}, // here you can pass arguments to your request if you need
+            success: function (dataJson) {
+                var arrOutside = new Array();
+                var heading = ["topico", "tickets"];
+                arrOutside[0] = heading;
+                if (dataJson.length > 0) {
+                for (var i = 0; i < dataJson.length; i++) {
+					var arr = [dataJson[i].topico, dataJson[i].tickets];
+                    arrOutside[i + 1] = arr;
+                }
+                var gdata = new google.visualization.arrayToDataTable(arrOutside);
+					var options = {
+					title: 'Distribución de tickets generados por Tópico ',
+                    legend: 'right',
+                    width: '100%', height: '300', chartArea: { left: 5, top: 5, width: '100%', height: '300', },
+                    animation: {
+                        "startup": true,
+                        duration: 2000,
+                        easing: 'out'
+                    },
+                    pieHole: 0.4,
+						colors: ['#FFBF00', '#04B45F', '#0174DF', '#e74a3b','#572364'],
+                    vAxis: {
+                    title: 'Promedio',
+                    maxValue :5,
+                }
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+                chart.draw(gdata, options);
+                $(window).resize(function () {
+                    drawChartPie5();
+                });
+                }
+            },
+            error: function (xhr) {
+                //alert('error' + xhr[0]);
+            }
+        });
+    };
+	</script>
+
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChartPie5);
+    function drawChartPie5() {
+        var dataJson;
+        $.ajax({
+            url: '@Url.Action("JsonGRAFTicketsXDepartamento")', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            contentType: 'application/json; charset=utf-8', //define a contentType of your request
+            cache: false, //avoid caching results
+            data: {}, // here you can pass arguments to your request if you need
+            success: function (dataJson) {
+                var arrOutside = new Array();
+                var heading = ["departamento" ,"tickets"];
+                arrOutside[0] = heading;
+                if (dataJson.length > 0) {
+                for (var i = 0; i < dataJson.length; i++) {
+					var arr = [dataJson[i].departamento,dataJson[i].tickets];
+                    arrOutside[i + 1] = arr;
+                }
+					var gdata = new google.visualization.arrayToDataTable(arrOutside);
+					var options = {
+						title: 'Distribución de tickets generados por departamento ',
+						animation: {
+                        "startup": true,
+                        duration: 2000,
+                        easing: 'out'
+						},
+
+						chartArea: { width: '50%' },
+						hAxis: {
+							title: 'Total Tickets',
+							minValue: 0
+						},
+						vAxis: {
+							title: 'Departamentos'
+						}
+					};
+
+                //var options = {
+                //    legend: 'right',
+                //    width: '100%', height: '300', chartArea: { left: 5, top: 5, width: '100%', height: '300', },
+                //    animation: {
+                //        "startup": true,
+                //        duration: 2000,
+                //        easing: 'out'
+                //    },
+                //    pieHole: 0.4,
+                //    colors: ['#FFBF00', '#04B45F', '#0174DF','#e74a3b'],
+                //    vAxis: {
+                //    title: 'Promedio',
+                //    maxValue :5,
+                //}
+                //};
+					var chart = new google.visualization.BarChart(document.getElementById('piechart4'));
+                chart.draw(gdata, options);
+                $(window).resize(function () {
+                    drawChartPie5();
+                });
+                }
+            },
+            error: function (xhr) {
+                //alert('error' + xhr[0]);
+            }
+        });
+    };
+	</script>
+
+
+
+
+
+
+
+</head>
+@*<body>
+	<div id="piechart3" style="width: 900px; height: 500px;"></div>
+	<div id="piechart4" style="width: 900px; height: 500px;"></div>
+</body>*@
+
+
+
+<body>
+	<div class="col-lg-12">
+		
+		<div class="card shadow mb-4">
+			<div class="card-header">
+				<h6 class="m-0 font-weight-bold text-dark">Reporte 03</h6>
+			</div>
+			<div class="card-body card-block border-bottom-light">
+				<div class="container">
+					<div class="form-horizontal text-center">
+						<div id="piechart3" style="width: 900px; height: 500px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card shadow mb-4">
+			<div class="card-header">
+				<h6 class="m-0 font-weight-bold text-dark">Reporte 04</h6>
+			</div>
+			<div class="card-body card-block border-bottom-light">
+				<div class="container">
+					<div class="form-horizontal text-center">
+						<div id="piechart4" style="width: 900px; height: 500px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

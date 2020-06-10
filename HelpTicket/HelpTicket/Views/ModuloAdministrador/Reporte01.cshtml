@@ -1,0 +1,22 @@
+﻿
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Total tickets asignados</th>
+            <th>Total tickets finalizados</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Reporte1)
+        {
+        <tr>
+            <td>@item.codigo</td>
+            <td>@item.nombre</td>
+            <td>@item.tkAsignados</td>
+            <td>@item.tkFinalizados</td>
+        </tr>
+        }
+    </tbody>
+</table>

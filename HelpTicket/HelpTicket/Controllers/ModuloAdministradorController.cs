@@ -538,7 +538,60 @@ namespace HelpTicket.Controllers
             }
         }
 
-        private List<SelectListItem> Departamentos()
+        [HttpGet]
+        public ActionResult Reportes()
+        {
+            ViewBag.Reporte1 = Datos_Rep01();
+            return View();
+        }
+
+        private List<Data_Reporte01> Datos_Rep01()
+        {
+            var datos = new List<Data_Reporte01>();
+            var trabajadores = usuarioservice.ObtenerTrabajadores();
+            foreach (var item in trabajadores)
+            {
+                datos.Add(new Data_Reporte01()
+                {
+                    codigo = item.codigo,
+                    nombre = item.nombres,
+                    tkAsignados = ticketservice.TicketsXtrabajadorXestado(item.codigo, "A"),
+                    tkFinalizados = ticketservice.TicketsXtrabajadorXestado(item.codigo, "F")
+                });
+            }
+            return datos;
+        }
+
+		/**/
+		[HttpGet]
+		public ActionResult Reportes2()
+		{
+			var tickets = ticketservice.Topico_x_tickets();
+			return View();
+		}
+		public JsonResult JsonGRAFTicketsXTopico()
+		{
+			List<Grafica_Reporte> items = new List<Grafica_Reporte>();
+			foreach (var item in (ticketservice.Topico_x_tickets()))
+			{
+				items.Add(new Grafica_Reporte() { topico = item.Topico.topico, tickets = Int32.Parse(item.codigo_atencion) });
+			}
+			return (Json(items, JsonRequestBehavior.AllowGet));
+		}
+		public JsonResult JsonGRAFTicketsXDepartamento()
+		{
+			List<Grafica_Reporte2> items = new List<Grafica_Reporte2>();
+			foreach (var item in (topicoservice.Departamento_x_tickets()))
+			{
+				items.Add(new Grafica_Reporte2() { departamento = item.Departamento.departamento, tickets = Int32.Parse(item.topico) });
+			}
+			return (Json(items, JsonRequestBehavior.AllowGet));
+		}
+
+		/**/
+
+
+		private List<SelectListItem> Departamentos()
 		{
 			List<SelectListItem> depas = new List<SelectListItem>();
 

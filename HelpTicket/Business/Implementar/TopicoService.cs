@@ -18,7 +18,12 @@ namespace Business.Implementar
 			return topico.Delete(id);
 		}
 
-        public bool ExistByDepartamento(int departamento_id, string identificador)
+		public List<Topico> Departamento_x_tickets()
+		{
+			return topico.Departamento_x_tickets();
+		}
+
+		public bool ExistByDepartamento(int departamento_id, string identificador)
         {
             return topico.ExistByDepartamento(departamento_id, identificador);
         }

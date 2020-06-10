@@ -476,7 +476,52 @@ namespace Data.Implementar
             return resultado;
         }
 
-        public bool Update(Ticket t)
+		public List<Ticket> Topico_x_tickets()
+		{
+			var tickets = new List<Ticket>();
+			try
+			{
+				using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					con.Open();
+
+					var query = new SqlCommand("select t.topico,isnull(count(ti.codigo_atencion) ,0)tickets from departamento d inner join topico t on t.departamento_id=d.id inner join ticket ti on ti.topico_id = t.id group by t.topico", con);
+					using (var dr = query.ExecuteReader())
+					{
+						while (dr.Read())
+						{
+							var topico = new Topico();
+							var departamento = new Departamento();
+							var ticket = new Ticket();
+							ticket.codigo_atencion = dr["tickets"].ToString();
+
+
+
+
+							topico.topico = dr["topico"].ToString();
+							ticket.Topico = topico;
+
+
+
+
+
+							tickets.Add(ticket);
+
+
+
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			return tickets;
+
+		}
+
+		public bool Update(Ticket t)
         {
 
 			bool seActualizo = false;

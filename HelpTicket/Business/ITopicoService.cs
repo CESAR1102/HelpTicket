@@ -11,5 +11,6 @@ namespace Business
     {
         List<Topico> FindByDepartamento(int departamento_id, string identificador);
         bool ExistByDepartamento(int departamento_id, string identificador);
-    }
+		List<Topico> Departamento_x_tickets();
+	}
 }

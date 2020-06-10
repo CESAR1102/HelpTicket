@@ -222,5 +222,10 @@ namespace Business.Implementar
 		{
 			return ticket_1.ExistByTopico(topico_id, identificador);
 		}
+
+		public List<Ticket> Topico_x_tickets()
+		{
+			return ticket_1.Topico_x_tickets();
+		}
 	}
 }

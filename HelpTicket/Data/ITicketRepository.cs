@@ -17,5 +17,6 @@ namespace Data
         string TicketsXtrabajadorXestado(string codigo, string estado);
         bool AsignarTicket(Ticket t);
 		bool ExistByTopico(int topico_id, string identificador);
+		List<Ticket> Topico_x_tickets();
 	}
 }

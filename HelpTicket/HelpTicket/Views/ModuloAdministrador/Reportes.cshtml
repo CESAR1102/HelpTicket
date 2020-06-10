@@ -1,0 +1,62 @@
+﻿
+@{
+	ViewBag.Title = "Reportes";
+	Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
+}
+
+<body>
+    <div class="col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-dark">Reporte de Tickets Finalizados y Asignados</h6>
+            </div>
+            <div class="card-body card-block border-bottom-light">
+                <div class="container">
+                    <div class="form-horizontal">
+                        @Html.Partial("Reporte01")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-dark">Reporte de Tickets Solicitados por Fecha</h6>
+            </div>
+            <div class="card-body card-block border-bottom-light">
+                <div class="container">
+                    <div class="form-horizontal">
+                        @Html.Partial("Reporte02")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-dark">Reporte 03</h6>
+            </div>
+            <div class="card-body card-block border-bottom-light">
+                <div class="container">
+                    <div class="form-horizontal">
+                        <p>Ingresar aqui el contenido del reporte</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-dark">Reporte 04</h6>
+            </div>
+            <div class="card-body card-block border-bottom-light">
+                <div class="container">
+                    <div class="form-horizontal">
+                        <p>Ingresar aqui el contenido del reporte</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
