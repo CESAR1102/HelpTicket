@@ -542,7 +542,8 @@ namespace HelpTicket.Controllers
         public ActionResult Reportes()
         {
             ViewBag.Reporte1 = Datos_Rep01();
-            return View();
+			var tickets = ticketservice.Topico_x_tickets();
+			return View();
         }
 
         private List<Data_Reporte01> Datos_Rep01()
@@ -563,12 +564,7 @@ namespace HelpTicket.Controllers
         }
 
 		/**/
-		[HttpGet]
-		public ActionResult Reportes2()
-		{
-			var tickets = ticketservice.Topico_x_tickets();
-			return View();
-		}
+		
 		public JsonResult JsonGRAFTicketsXTopico()
 		{
 			List<Grafica_Reporte> items = new List<Grafica_Reporte>();
@@ -628,6 +624,16 @@ namespace HelpTicket.Controllers
         {
             var topicos = Topicos(Convert.ToInt32(id));
             return Json(topicos, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ObtenerDatosRep2(string id)
+        {
+            var inicio = id.Substring(0, 10);
+            var fin = id.Substring(11, 10);
+
+            var datos = ticketservice.DatosReporte02(inicio, fin);
+
+            return Json(datos, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,2 +1,94 @@
 ﻿
-<p>reporte 02</p>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div id="chart_div" style="width: 100%; height: 500px;"></div>
+
+<div style="text-align:right; margin-right:20px;">
+    <div style="margin-left:15px;margin-right:15px; display:inline-block">
+        @Html.Label("Desde: ")
+        <input type="date" id="comienzo" />
+    </div>
+    <div style="margin-left:15px;margin-right:15px; display:inline-block">
+        @Html.Label("Hasta: ")
+        <input type="date" id="hasta" />
+    </div>
+    <div style="margin-left:25px;margin-right:25px; display:inline-block">
+        <button type="button" id="actualizar_datos">Actualizar</button>
+    </div>
+    <div class="text-danger" style="margin:25px;" id="mensaje_error">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    //Variables y constantes
+    const inicio = document.getElementById("comienzo");
+    const fin = document.getElementById("hasta");
+    const botonActualizar = document.getElementById("actualizar_datos");
+    const mensaje = document.getElementById("mensaje_error");
+    var error = false;
+    var Datos = [['Dia', 'Solicitado', 'Asignado'],
+    ['dia', 0, 0]];
+
+    inicio.value = Date.today;
+    fin.value = Date.today;
+    //Validar fechas
+    actualizar_datos.addEventListener("click", (event) => {
+        mensaje.innerHTML = "";
+        error = false;
+        if (inicio.value == "") {
+            mensaje.innerHTML = "<p>Debe seleccionar una fecha inicial</p>";
+            error = true;
+        }
+        if (fin.value == "") {
+            mensaje.innerHTML += "<p>Debe seleccionar una fecha final</p>";
+            error = true;
+        }
+        if (!error) {
+            var fecha1 = new Date(inicio.value);
+            var fecha2 = new Date(fin.value);
+
+            if (fecha1 < fecha2) {
+                mensaje.innerHTML = "";
+                //Actualizar los datos del Chart
+                actualizarDatos();
+                //Dibujar el Chart
+                // drawChart();
+            } else {
+                mensaje.innerHTML = "<p>La fecha 'Hasta' debe ser mayor a la fecha 'Desde'</p>";
+            }
+        }
+    });
+
+    //Obtener Datos del Chart
+    function actualizarDatos() {
+        let url = '/ModuloAdministrador/ObtenerDatosRep2/' + inicio.value + "-" + fin.value;
+        fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                Datos = [];
+                Datos.push(['dia', 'solicitado', 'asignado']);
+                for (var i = 0; i < out.length; i++) {
+                    Datos.push([out[i]['Item1'], out[i]['Item2'], out[i]['Item3']]);
+                }
+                drawChart();
+            })
+            .catch(err => { throw err });
+    }
+
+    //Cargar el Chart
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(Datos);
+        var options = {
+            title: 'Progresion por tiempo',
+            hAxis: { title: 'Reporte de tickets Solicitados y Finalizados entre un rango de fecha', titleTextStyle: { color: '#333' } },
+            vAxis: { minValue: 0 }
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
