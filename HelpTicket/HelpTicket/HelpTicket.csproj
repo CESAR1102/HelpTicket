@@ -2024,7 +2024,6 @@
     <Content Include="Views\ModuloAdministrador\Reportes.cshtml" />
     <Content Include="Views\ModuloAdministrador\Reporte01.cshtml" />
     <Content Include="Views\ModuloAdministrador\Reporte02.cshtml" />
-    <Content Include="Views\ModuloAdministrador\Reportes2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

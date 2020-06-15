@@ -462,7 +462,7 @@ namespace Data.Implementar
             catch (Exception)
             {
 
-                throw;
+                //throw;
             }
             return seElimino;
         }

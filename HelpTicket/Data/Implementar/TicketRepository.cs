@@ -26,10 +26,11 @@ namespace Data.Implementar
                     filas = query.ExecuteNonQuery();
                     if (filas > 0)
                     {
-                        query = new SqlCommand("Update ticket set estado = 'A' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                        query = new SqlCommand("Update ticket set estado = 'A', aprobador_id = '" + t.aprobador_id + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
                         filas = query.ExecuteNonQuery();
                         if (filas > 0)
                         {
+
                             query = new SqlCommand("commit", conexion);
                             query.ExecuteNonQuery();
                             actualizado = true;
@@ -573,13 +574,14 @@ namespace Data.Implementar
 				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 				{
 					conn.Open();
-					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id  WHERE codigo_atencion=@codigo_atencion", conn);
+					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id, estado = @estado  WHERE codigo_atencion=@codigo_atencion", conn);
 
 					query.Parameters.AddWithValue("@codigo_atencion", t.codigo_atencion);
 			
 					query.Parameters.AddWithValue("@topico_id", t.topico_id);
+                    query.Parameters.AddWithValue("@estado", t.estado);
 
-					query.ExecuteNonQuery();
+                    query.ExecuteNonQuery();
 					seActualizo = true;
 				}
 			}

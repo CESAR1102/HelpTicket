@@ -64,7 +64,8 @@ namespace HelpTicket.Controllers
 			ViewBag.umr = umrservice.FindAll();
 			ViewBag.usuarios = usuarioservice.FindAll();
 			ViewBag.topicos = topicoservice.FindAll();
-			if (id == null)
+            ViewBag.estados = CambiosEstadoTickets();
+            if (id == null)
 			{
 				return HttpNotFound();
 			}
@@ -80,7 +81,8 @@ namespace HelpTicket.Controllers
 			ViewBag.umr = umrservice.FindAll();
 			ViewBag.usuarios = usuarioservice.FindAll();
 			ViewBag.topicos = topicoservice.FindAll();
-			bool ed = ticketservice.Update(t);
+            ViewBag.estados = CambiosEstadoTickets();
+            bool ed = ticketservice.Update(t);
 			if (ed)
 			{
 				return RedirectToAction("VerTicketsClientes");
@@ -126,6 +128,10 @@ namespace HelpTicket.Controllers
             {
                 ViewBag.Agregado = TempData["Agregado"];
             }
+            if (TempData["Error"] != null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
             return View(usuarios);
 
         }
@@ -148,19 +154,21 @@ namespace HelpTicket.Controllers
 		{
 			
 
-			if (us.codigo == null || us.codigo == string.Empty || us.nombres == null || us.nombres == string.Empty ||us.contraseña==null ||us.contraseña==string.Empty||us.correo==null||us.correo==string.Empty||us.rol_creacion==null||us.rol_creacion==string.Empty||us.fecha_creacion==null)
+			//if (us.codigo == null || us.codigo == string.Empty || us.nombres == null || us.nombres == string.Empty ||us.contraseña==null ||us.contraseña==string.Empty||us.correo==null||us.correo==string.Empty||us.rol_creacion==null||us.rol_creacion==string.Empty||us.fecha_creacion==null)
+			if (us.codigo == null || us.codigo == string.Empty || us.nombres == null || us.nombres == string.Empty ||us.contraseña==null ||us.contraseña==string.Empty||us.correo==null||us.correo==string.Empty||us.fecha_creacion==null)
 			{
-				TempData["Error"] = "No se pudo crear el usuario.LLenar todos los campos.";
+				TempData["Error"] = "No se pudo crear el usuario. LLenar todos los campos.";
 				return RedirectToAction("CrearUsuarios");
 			}
 
 			DateTime mifecha = DateTime.Now;
 			us.fecha_creacion = mifecha;
+            us.rol_creacion = sesion.getSession("usuario").codigo;
 			bool inserto = usuarioservice.Insert(us);
 			if (inserto)
 			{
 				TempData["Agregado"] = "Se registro el usuario: " + us.codigo + " exitosamente";
-				return RedirectToAction("CrearUsuarios");
+				return RedirectToAction("Usuarios");
 			}
 			else
 			{
@@ -185,7 +193,7 @@ namespace HelpTicket.Controllers
 			else
 			{
 				TempData["Error"] = "No se pudo eliminar el usuario. Intente nuevamente.";
-				return RedirectToAction("VerDepartamento");
+				return RedirectToAction("Usuarios");
 			}
 		}
 		//public ActionResult EliminarUsuario(string id)
@@ -310,7 +318,7 @@ namespace HelpTicket.Controllers
             }
             if (departamentoservice.Delete(Convert.ToInt32(id)))
             {
-                TempData["Agregado"] = "Se agrego exitosamente el departamento";
+                TempData["Agregado"] = "Se elimino exitosamente el departamento";
                 return RedirectToAction("VerDepartamento");
             }
             else
@@ -542,7 +550,8 @@ namespace HelpTicket.Controllers
         public ActionResult Reportes()
         {
             ViewBag.Reporte1 = Datos_Rep01();
-            return View();
+			var tickets = ticketservice.Topico_x_tickets();
+			return View();
         }
 
         private List<Data_Reporte01> Datos_Rep01()
@@ -563,12 +572,7 @@ namespace HelpTicket.Controllers
         }
 
 		/**/
-		[HttpGet]
-		public ActionResult Reportes2()
-		{
-			var tickets = ticketservice.Topico_x_tickets();
-			return View();
-		}
+		
 		public JsonResult JsonGRAFTicketsXTopico()
 		{
 			List<Grafica_Reporte> items = new List<Grafica_Reporte>();
@@ -638,6 +642,16 @@ namespace HelpTicket.Controllers
             var datos = ticketservice.DatosReporte02(inicio, fin);
 
             return Json(datos, JsonRequestBehavior.AllowGet);
+        }
+
+        private List<SelectListItem> CambiosEstadoTickets()
+        {
+            List<SelectListItem> item = new List<SelectListItem>();
+
+            item.Add(new SelectListItem { Text = "Finalizado", Value = "F" });
+            item.Add(new SelectListItem { Text = "Ingresado", Value = "I" });
+            item.Add(new SelectListItem { Text = "Anulado", Value = "A" });
+            return item;
         }
     }
 }

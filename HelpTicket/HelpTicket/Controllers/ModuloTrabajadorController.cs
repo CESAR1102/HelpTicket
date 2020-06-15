@@ -38,7 +38,8 @@ namespace HelpTicket.Controllers
 			List<Ticket> ticketsAsignados = ticketservice.TicketsAsignados(usuario.codigo);
 			if (ticketsAsignados is null)
 			{
-				ViewBag.mensajeInformativo = "Aun no tienes tickets asignados";
+                ticketsAsignados = new List<Ticket>();
+                ViewBag.mensajeInformativo = "Aun no tienes tickets asignados";
 			}
 			if (TempData["Agregado"] != null)
 				ViewBag.Agregado = TempData["Agregado"].ToString();
