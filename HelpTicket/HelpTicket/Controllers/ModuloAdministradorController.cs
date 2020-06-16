@@ -229,7 +229,10 @@ namespace HelpTicket.Controllers
         [HttpPost]
         public ActionResult AsignarTicket(Ticket t)
         {
-            if(t.codigo_atencion == null || t.asignado_id == null)
+            var modulo = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Administrador"];
+            var rol = System.Configuration.ConfigurationSettings.AppSettings["Rol_Administrador"];
+            t.aprobador_id = umrservice.obtenerIDUserModRol(sesion.getSession("usuario").codigo, modulo, rol);
+            if (t.codigo_atencion == null || t.asignado_id == null)
             {
                 TempData["Error"] = "No se pudo asignar. Intente otra vez!";
                 return RedirectToAction("AsignarTicket");
