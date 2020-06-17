@@ -68,8 +68,12 @@
             .then((out) => {
                 Datos = [];
                 Datos.push(['dia', 'solicitado', 'asignado']);
-                for (var i = 0; i < out.length; i++) {
-                    Datos.push([out[i]['Item1'], out[i]['Item2'], out[i]['Item3']]);
+                if (out.length == 0) {
+                    Datos.push(['dia', 0, 0]);
+                } else {
+                    for (var i = 0; i < out.length; i++) {
+                        Datos.push([out[i]['Item1'], out[i]['Item2'], out[i]['Item3']]);
+                    }
                 }
                 drawChart();
             })

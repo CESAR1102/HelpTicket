@@ -20,5 +20,11 @@ namespace Entity
         public int topico_id { get; set; }
 
         public short nivel { get; set; }
-    }
+
+		public Topico Topico { get; set; }
+
+
+
+		public Usuario Usuario { get; set; }
+	}
 }

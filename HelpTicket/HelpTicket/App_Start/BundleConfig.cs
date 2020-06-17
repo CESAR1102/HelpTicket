@@ -46,11 +46,18 @@ namespace HelpTicket
              "~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js",
              "~/Content/vendor/jquery-easing/jquery.easing.min.js",
              "~/Content/js/sb-admin-2.min.js",
-             "~/ContentHome/js/scripts.js"
-
-              ));
+             "~/ContentHome/js/scripts.js",
 
 
-        }
+			 "~/Content/vendor/chart.js/Chart.min.js",
+				"~/Content/js/demo/chart-area-demo.js",
+				"~/Content/js/demo/chart-pie-demo.js",
+				"~/Content/js/jqBootstrapValidation.js", "~/Content/js/contact_me.js", "~/Content/js/agency.min.js"
+
+			  ));
+
+			
+
+		}
     }
 }

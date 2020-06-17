@@ -9,6 +9,6 @@ namespace HelpTicket.Models
 	{
 		public IEnumerable<HelpTicket.PartialClass.Grafica_Reporte> Grafica_Reporte { get; set; }
 		public IEnumerable<HelpTicket.PartialClass.Grafica_Reporte2> Grafica_Reporte2 { get; set; }
-
+		public IEnumerable<HelpTicket.PartialClass.Grafica_Reporte3> Grafica_Reporte3 { get; set; }
 	}
 }

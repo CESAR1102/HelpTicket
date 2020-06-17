@@ -79,7 +79,8 @@ namespace HelpTicket.Controllers
 			List<Ticket> ticketsAsignados = ticketservice.TicketsSolicitados(usuario.codigo);
 			if (ticketsAsignados is null)
 			{
-				ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
+                ticketsAsignados = new List<Ticket>();
+                ViewBag.mensajeInformativo = "Aun no has solicitado ningun ticket";
 			}
 			if (TempData["Agregado"] != null)
 				ViewBag.Agregado = TempData["Agregado"].ToString();
