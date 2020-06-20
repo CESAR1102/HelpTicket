@@ -39,17 +39,17 @@
                             </div>
                         </div>
                         <br>
-                       @* <div class="form-group row">
-                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Solicitante: </label>
-                            <div class="col-md-10">
-                                <select class="form-control" style="cursor: not-allowed;color:black;" disabled="disabled">
+                        @* <div class="form-group row">
+            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Solicitante: </label>
+            <div class="col-md-10">
+                <select class="form-control" style="cursor: not-allowed;color:black;" disabled="disabled">
 
-                                    <option>@Model.solicitante_id</option>
+                    <option>@Model.solicitante_id</option>
 
-                                </select>
-                            </div>
-                        </div>
-                        <br>
+                </select>
+            </div>
+        </div>
+        <br>
                         *@
                         <div class="form-group row">
                             <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Estado: </label>
@@ -72,6 +72,14 @@
                         </div>
                         <br>
 
+                        <div class="form-group row">
+                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Fecha Limite: </label>
+                            <div class="col-md-10 ">
+                                @Html.EditorFor(model => model.fecha_limite, new { htmlAttributes = new { @class = "datepicker form-control" } })
+                                @Html.ValidationMessageFor(model => model.fecha_limite,"", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br>
 
 
                         <br>
@@ -91,7 +99,10 @@
 
 </body>
 
+<<script>
+    
 
+ </script>
 
 @*@using (Html.BeginForm())
     {

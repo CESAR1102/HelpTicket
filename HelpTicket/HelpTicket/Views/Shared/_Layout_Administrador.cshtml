@@ -12,12 +12,18 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<title>HELPTICKET - Administrador</title>
+
+
+
+
+
 	@Styles.Render("~/bundles/css")
+
+
 	<!-- Custom fonts for this template-->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-	<!-- Custom styles for this template-->
-	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	@*<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">*@
+	@*<link href="css/sb-admin-2.min.css" rel="stylesheet">*@
 </head>
 <body id="page-top">
 	<!-- Page Wrapper -->
@@ -74,11 +80,11 @@
 				</a>
 			</li>
 			@*<li class="nav-item">
-				<a class="nav-link " href="@Url.Action("Reportes2", "ModuloAdministrador")">
-					<i class="fas fa-fw fa-cog"></i>
-					<span>Reportes2</span>
-				</a>
-			</li>*@
+			<a class="nav-link " href="@Url.Action("Reportes2", "ModuloAdministrador")">
+				<i class="fas fa-fw fa-cog"></i>
+				<span>Reportes2</span>
+			</a>
+		</li>*@
 			<li class="nav-item">
 				<a class="nav-link" href="@Url.Action("Index", "Home")">
 					<i class="fas fa-fw fa-chart-area"></i>
@@ -89,6 +95,11 @@
 			<div class="text-center d-none d-md-inline">
 				<button class="rounded-circle border-0" id="sidebarToggle"></button>
 			</div>
+
+
+
+
+			@Scripts.Render("~/bundles/js")
 		</ul>
 		<!-- End of Sidebar -->
 		<!-- Content Wrapper -->
@@ -102,6 +113,8 @@
 					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 						<i class="fa fa-bars"></i>
 					</button>
+
+
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
 						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -121,15 +134,15 @@
 				<div class="container-fluid">
 					<!-- Page Heading -->
 					@*<div class="d-sm-flex align-items-center justify-content-between mb-4">
-							<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+						<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
-						</div>*@
+					</div>*@
 					<div class="content mt-3">
 						@RenderBody()
 					</div> <!-- .content -->
 					<!--
-						GRAFICOS AQUI
-					-->
+					GRAFICOS AQUI
+				-->
 					<!-- Nav Item - Dashboard -->
 					<!-- /.container-fluid -->
 				</div>
@@ -151,6 +164,11 @@
 		<a class="scroll-to-top rounded" href="#page-top">
 			<i class="fas fa-angle-up"></i>
 		</a>
+
+
+
+
+
 		<!-- Logout Modal-->
 		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -169,7 +187,7 @@
 				</div>
 			</div>
 		</div>
-		@Scripts.Render("~/bundles/js")
+
 	</div>
 </body>
 </html>

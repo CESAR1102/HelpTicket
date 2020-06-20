@@ -25,15 +25,6 @@ D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\Hel
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER3\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.dll
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.pdb
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.dll
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.pdb
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csprojAssemblyReference.cache
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
-C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER7\HelpTicket\HelpTicket\Data\bin\Debug\Data.dll
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER7\HelpTicket\HelpTicket\Data\bin\Debug\Data.pdb
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER7\HelpTicket\HelpTicket\Data\bin\Debug\Entity.dll
@@ -97,3 +88,12 @@ D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER12\He
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER12\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER12\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
 D:\2. TALLER DE DESEMPEÑO PROFESIONAL\PROYECTO-HELPTICKET-\HELP-TICKET-VER12\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Data.pdb
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\bin\Debug\Entity.pdb
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csprojAssemblyReference.cache
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.csproj.CopyComplete
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.dll
+C:\Users\ALVARO\Desktop\TDP- Proyecto\HelpTicket\HelpTicket\Data\obj\Debug\Data.pdb

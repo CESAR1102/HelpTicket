@@ -594,6 +594,16 @@ namespace HelpTicket.Controllers
 			}
 			return (Json(items, JsonRequestBehavior.AllowGet));
 		}
+		public JsonResult JsonGRAFUsuariosXTopico()
+		{
+			List<Grafica_Reporte3> items = new List<Grafica_Reporte3>();
+			foreach (var item in (skillservice.Usuarios_X_Topico()))
+			{
+				items.Add(new Grafica_Reporte3() { topico = item.Topico.topico, cantidad = Int32.Parse(item.usuario_id) });
+			}
+			return (Json(items, JsonRequestBehavior.AllowGet));
+		}
+
 
 		/**/
 

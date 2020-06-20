@@ -316,6 +316,7 @@ namespace Data.Implementar
                             umr.usuario_id = dr["usuario_id"].ToString();
                             ticket.Topico = topico;
                             ticket.Usuario_Modulo_Rol = umr;
+                            ticket.fecha_limite = Convert.ToDateTime(dr["fecha_limite"].ToString());
 
                             //t.Add(ticket);
                         }
@@ -344,11 +345,11 @@ namespace Data.Implementar
                     var query1 = new SqlCommand("begin transaction", conexion);
                     query1.ExecuteNonQuery();
 
-                    sql.Append("Insert Into Ticket (codigo_atencion, solicitante_id, topico_id, importancia, descripcion, estado, fecha_solicitado )");
+                    sql.Append("Insert Into Ticket (codigo_atencion, solicitante_id, topico_id, importancia, descripcion, estado, fecha_solicitado, fecha_limite )");
                     sql.Append("Values ('" + t.codigo_atencion + "', " + t.solicitante_id + ", " + t.topico_id + ", " + t.importancia + ", '" + t.descripcion);
                     sql.Append("', '" + t.estado + "', '");
-                    sql.Append(DateTime.Now.Year + " - " + DateTime.Now.Month + "-" + DateTime.Now.Day + "')");
-
+                    sql.Append(DateTime.Now.Year + " - " + DateTime.Now.Month + "-" + DateTime.Now.Day + "', ");
+                    sql.Append("'" + t.fecha_limite.Year + " - " + t.fecha_limite.Month + "-" + t.fecha_limite.Day + "')");
                     query1 = new SqlCommand(sql.ToString(), conexion);
 
                     filas = query1.ExecuteNonQuery();
@@ -409,7 +410,7 @@ namespace Data.Implementar
                             umr.usuario_id = dr["usuario_id"].ToString();
                             ticket.Topico = topico;
                             ticket.Usuario_Modulo_Rol = umr;
-
+                            ticket.fecha_limite = Convert.ToDateTime(dr["fecha_limite"].ToString());
                             t.Add(ticket);
                         }
                     }
@@ -574,12 +575,13 @@ namespace Data.Implementar
 				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 				{
 					conn.Open();
-					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id, estado = @estado  WHERE codigo_atencion=@codigo_atencion", conn);
+					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id, estado = @estado, fecha_limite = @fecha_limite  WHERE codigo_atencion=@codigo_atencion", conn);
 
 					query.Parameters.AddWithValue("@codigo_atencion", t.codigo_atencion);
 			
 					query.Parameters.AddWithValue("@topico_id", t.topico_id);
                     query.Parameters.AddWithValue("@estado", t.estado);
+                    query.Parameters.AddWithValue("@fecha_limite", t.fecha_limite);
 
                     query.ExecuteNonQuery();
 					seActualizo = true;
@@ -588,7 +590,7 @@ namespace Data.Implementar
 			catch (Exception)
 			{
 
-				throw;
+				//throw;
 			}
 			return seActualizo;
 		}

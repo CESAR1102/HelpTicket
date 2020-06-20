@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -174,5 +175,50 @@ namespace Data.Implementar
         {
             throw new NotImplementedException();
         }
-    }
+
+		public List<Skill> Usuarios_X_Topico()
+		{
+			var skills = new List<Skill>();
+			try
+			{
+				using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
+				{
+					con.Open();
+
+					var query = new SqlCommand("select t.topico,(select isnull(count(u.usuario_id),0) from (select * from skill s where s.topico_id=t.id)as u) [Cantidad Trabajadores]  from topico t", con);
+					using (var dr = query.ExecuteReader())
+					{
+						while (dr.Read())
+						{
+							var topico = new Topico();
+							var usuario = new Usuario();
+							var skill = new Skill();
+
+							skill.usuario_id = dr["Cantidad Trabajadores"].ToString();
+							skill.Usuario = usuario;
+
+
+
+							topico.topico = dr["topico"].ToString();
+							skill.Topico = topico;
+
+
+
+
+
+							skills.Add(skill);
+
+
+
+						}
+					}
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			return skills;
+		}
+	}
 }
