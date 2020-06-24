@@ -21,12 +21,13 @@ namespace Data.Implementar
                 {
                     conexion.Open();
                     var query = new SqlCommand("begin transaction", conexion);
+                    var fecha_asignado = t.fecha_asignado.Value.Year + "-" + t.fecha_asignado.Value.Month + "-" + t.fecha_asignado.Value.Day;
                     query.ExecuteNonQuery();
-                    query = new SqlCommand("Update ticket set asignado_id = '" + t.asignado_id + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                    query = new SqlCommand("Update ticket set asignado_id = " + t.asignado_id + ", fecha_asignado = '" + fecha_asignado + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
                     filas = query.ExecuteNonQuery();
                     if (filas > 0)
                     {
-                        query = new SqlCommand("Update ticket set estado = 'A', aprobador_id = '" + t.aprobador_id + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                        query = new SqlCommand("Update ticket set estado = 'A', aprobador_id = " + t.aprobador_id + " where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
                         filas = query.ExecuteNonQuery();
                         if (filas > 0)
                         {
@@ -411,6 +412,7 @@ namespace Data.Implementar
                             ticket.Topico = topico;
                             ticket.Usuario_Modulo_Rol = umr;
                             ticket.fecha_limite = Convert.ToDateTime(dr["fecha_limite"].ToString());
+                            ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
                             t.Add(ticket);
                         }
                     }
@@ -575,7 +577,12 @@ namespace Data.Implementar
 				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 				{
 					conn.Open();
-					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id, estado = @estado, fecha_limite = @fecha_limite  WHERE codigo_atencion=@codigo_atencion", conn);
+                    var update_finalizar = "";
+                    if (t.estado == 'F')
+                    {
+                        update_finalizar = ", fecha_finalizado = '" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "'";
+                    }
+					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id, estado = @estado, fecha_limite = @fecha_limite "+ update_finalizar +" WHERE codigo_atencion=@codigo_atencion", conn);
 
 					query.Parameters.AddWithValue("@codigo_atencion", t.codigo_atencion);
 			

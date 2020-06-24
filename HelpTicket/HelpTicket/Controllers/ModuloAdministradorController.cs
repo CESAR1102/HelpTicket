@@ -51,7 +51,7 @@ namespace HelpTicket.Controllers
             {
                 ViewBag.Agregado = TempData["Agregado"];
             }
-			return View(tickets);
+            return View(tickets);
 		}
 
 
@@ -85,9 +85,10 @@ namespace HelpTicket.Controllers
             bool ed = ticketservice.Update(t);
 			if (ed)
 			{
+                TempData["Agregado"] = "Se modifico con exito el ticket " + t.codigo_atencion;
 				return RedirectToAction("VerTicketsClientes");
 			}
-
+            ViewBag.Error = "No se pudo Editar el ticket " + t.codigo_atencion;
 			return View();
 
 		}
@@ -222,7 +223,11 @@ namespace HelpTicket.Controllers
         {
             bool actualizo = usuarioservice.Update(usuario);
             if (actualizo)
+            {
+                TempData["Agregado"] = "Se modifico con exito el usuario " + usuario.codigo;
                 return RedirectToAction("Usuarios");
+            }
+            ViewBag.Error = "Ocurrio un error. No se pudo modificar el usuario " + usuario.codigo;
             return View();
         }
 
@@ -232,6 +237,7 @@ namespace HelpTicket.Controllers
             var modulo = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Administrador"];
             var rol = System.Configuration.ConfigurationSettings.AppSettings["Rol_Administrador"];
             t.aprobador_id = umrservice.obtenerIDUserModRol(sesion.getSession("usuario").codigo, modulo, rol);
+            t.fecha_asignado = DateTime.Now;
             if (t.codigo_atencion == null || t.asignado_id == null)
             {
                 TempData["Error"] = "No se pudo asignar. Intente otra vez!";
@@ -663,7 +669,7 @@ namespace HelpTicket.Controllers
 
             item.Add(new SelectListItem { Text = "Finalizado", Value = "F" });
             item.Add(new SelectListItem { Text = "Ingresado", Value = "I" });
-            item.Add(new SelectListItem { Text = "Anulado", Value = "A" });
+            item.Add(new SelectListItem { Text = "Anulado", Value = "N" });
             return item;
         }
     }

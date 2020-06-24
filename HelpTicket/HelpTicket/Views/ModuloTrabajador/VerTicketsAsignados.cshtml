@@ -50,9 +50,8 @@
                             <th>Asignado</th>
                             <th>Tópico</th>
                             <th>Estado</th>
-                            <th>Fecha solicictado</th>
+                            <th>Fecha asignado</th>
                             <th>Fecha Vencimiento</th>
-                            <th>Detalles</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +62,7 @@
                                 <td>@item.Usuario_Modulo_Rol.usuario_id</td>
                                 <td>@item.Topico.topico</td>
                                 <td>@item.estado</td>
-                                <td>@item.fecha_solicitado.ToString("dd/MM/yyyy")</td>
+                                <td>@item.fecha_asignado.Value.ToString("dd/MM/yyyy")</td>
                                 @if ((DateTime.Now - item.fecha_limite).Days >= -1 && (DateTime.Now - item.fecha_limite).Days <= 1)
                                 {
                                     <td style="background-color: orange">@item.fecha_limite.ToString("dd/MM/yyyy")</td>
@@ -77,7 +76,6 @@
                                     <td style="background-color: greenyellow">@item.fecha_limite.ToString("dd/MM/yyyy")</td>
                                 }
 
-                                <td>@Html.ActionLink("Detalle", "Detalle_Tickets", new { id = item.codigo_atencion })</td>
                             </tr>
                         }
                     </tbody>
