@@ -13,12 +13,12 @@
 			<h6 class="m-0 font-weight-bold text-dark">CREAR TOPICO</h6>
 		</div>
 		<div class="card-body card-block border-bottom-light">
-			@if (ViewBag.Error1 != null)
+			@if (ViewBag.Error!= null)
 			{
 				<div class="container">
 					<div class="alert alert-danger alert-dismissible">
 						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Error!</strong> @ViewBag.Error1
+						<strong>Error!</strong> @ViewBag.Error
 					</div>
 				</div>
 			}
@@ -29,9 +29,8 @@
 							{
 								@Html.AntiForgeryToken()
 
-							<div class="form-horizontal">
+				<div class="form-horizontal">
 					<hr />
-
 					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 					<div class="form-group">
 						@Html.LabelFor(model => model.topico, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,35 +40,31 @@
 						</div>
 					</div>
 
-
-					<div class="form-group row">
-						<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Departamento: </label>
+					<div class="form-group">
+						@Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label col-md-2" })
+						@*<label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Departamento: </label>*@
 						<div class="col-md-10 ">
-							
-								@Html.DropDownListFor(model => model.departamento_id,
-													new SelectList(ViewBag.departamentos2, "id","departamento", "")
-													, "---Select---", "")
-								@Html.ValidationMessageFor(model => model.departamento_id, "", new { @class = "text-danger" })
 
-							
+							@Html.DropDownListFor(model => model.departamento_id, new SelectList(ViewBag.departamentos2, "id", "departamento", ""), "---Select---", new { @class = "form-control" })
+
+							@Html.ValidationMessageFor(model => model.departamento_id, "", new { @class = "text-danger" })
+
 						</div>
-							
+
 					</div>
-					<br>
 
 
 					@*<div class="form-group">
-						@Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label col-md-2" })
-						<div class="col-md-10">
-							<select id="select_departamentos" class="form-control">
-								@foreach (var i in ViewBag.Departamentos)
-								{
-									<option value=@i.Value>@i.Text</option>
-								}
-							</select>
-						</div>
-					</div>*@
-
+			@Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				<select id="select_departamentos" class="form-control">
+					@foreach (var i in ViewBag.Departamentos)
+					{
+						<option value=@i.Value>@i.Text</option>
+					}
+				</select>
+			</div>
+		</div>*@
 					<div class="form-group">
 						@Html.LabelFor(model => model.fecha_creacion, htmlAttributes: new { @class = "control-label col-md-2" })
 						<div class="col-md-10">
@@ -98,13 +93,19 @@
 							@Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
 						</div>
 					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.acceso_usuario, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							@Html.EditorFor(model => model.acceso_usuario, new { htmlAttributes = new { @class = "form-control"} })
+							@Html.ValidationMessageFor(model => model.acceso_usuario, "", new { @class = "text-danger" })
+						</div>
+					</div>
 					<br>
 					<br>
 					<div class="form-group text-center">
 						<input type="submit" value="Guardar" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen" />
 						<a href="@Url.Action("Topicos","ModuloAdministrador")" class="btn btn-secondary" id="btnReturn">Retornar</a>
 					</div>
-
 
 				</div>
 				}

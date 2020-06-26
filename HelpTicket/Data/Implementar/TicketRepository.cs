@@ -21,12 +21,13 @@ namespace Data.Implementar
                 {
                     conexion.Open();
                     var query = new SqlCommand("begin transaction", conexion);
+                    var fecha_asignado = t.fecha_asignado.Value.Year + "-" + t.fecha_asignado.Value.Month + "-" + t.fecha_asignado.Value.Day;
                     query.ExecuteNonQuery();
-                    query = new SqlCommand("Update ticket set asignado_id = '" + t.asignado_id + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                    query = new SqlCommand("Update ticket set asignado_id = " + t.asignado_id + ", fecha_asignado = '" + fecha_asignado + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
                     filas = query.ExecuteNonQuery();
                     if (filas > 0)
                     {
-                        query = new SqlCommand("Update ticket set estado = 'A', aprobador_id = '" + t.aprobador_id + "' where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
+                        query = new SqlCommand("Update ticket set estado = 'A', aprobador_id = " + t.aprobador_id + " where codigo_atencion = '" + t.codigo_atencion + "'", conexion);
                         filas = query.ExecuteNonQuery();
                         if (filas > 0)
                         {
@@ -277,49 +278,50 @@ namespace Data.Implementar
                     //" where t.codigo_atencion = @id", conn);
                     //query.Parameters.AddWithValue("@id", id);
 
-                    var query = new SqlCommand("select t.*, o.*, umr.usuario_id from ticket t inner join topico o on t.topico_id =o.id" +
-                     " inner join usuario_modulo_rol umr on t.solicitante_id= umr.id" +
-                    " where t.codigo_atencion = @id", conn);
-                    query.Parameters.AddWithValue("@id", id);
+                    
+					var query = new SqlCommand("select t.codigo_atencion,o.topico,(select u.codigo from ticket t  inner" +
+				" join usuario_modulo_rol umr  on t.asignado_id = umr.id inner join usuario u on u.codigo = umr.usuario_id" +
+				" where t.codigo_atencion = @id) as asignado, t.descripcion, t.estado, t.fecha_asignado, t.fecha_finalizado, t.fecha_solicitado" +
+				" from ticket t inner join topico o on t.topico_id = o.id inner join usuario_modulo_rol umr on t.solicitante_id = umr.id INNER JOIN USUARIO u on u.codigo = umr.usuario_id" +
+				" where t.codigo_atencion = @id", conn);
+
+					
+					query.Parameters.AddWithValue("@id", id);
                     using (var dr = query.ExecuteReader())
 					{
 						while (dr.Read())
 						{
 
-							//ticket.Topico = new Topico();
-							//ticket.Usuario_Modulo_Rol = new Usuario_Modulo_Rol();
+							//topico.id = Convert.ToInt32(dr["id"].ToString());
+							//topico.topico = dr["topico"].ToString();
+							//topico.fecha_creacion = Convert.ToDateTime(dr["fecha_creacion"]);
+							//topico.fecha_modificacion = Convert.ToDateTime(dr["fecha_modificacion"]);
+							//topico.fecha_modificacion = Convert.ToDateTime(dr["fecha_modificacion"]);
+							//topico.usuario_modificacion = dr["usuario_modificacion"].ToString();
+							//topico.estado = Convert.ToChar(dr["estado"]);
+							//topico.Departamento.id = Convert.ToInt32(dr["departamento_id"].ToString());
 
 
-							//ticket.codigo_atencion = dr["codigo_atencion"].ToString();
-							//ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
-							//ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
-							//ticket.descripcion = dr["descripcion"].ToString();
-							//ticket.estado = Convert.ToChar(dr["estado"].ToString());
-							//ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
-							//ticket.Topico.topico = dr["topico"].ToString();
-							//ticket.Usuario_Modulo_Rol.id = Convert.ToInt32(dr["solicitante_id"].ToString());
-							//ticket.Usuario_Modulo_Rol.usuario_id = dr["usuario_id"].ToString();
 
-                            //var ticket = new Ticket();
-                            var topico = new Topico();
+							var topico = new Topico();
                             var umr = new Usuario_Modulo_Rol();
                             ticket.codigo_atencion = dr["codigo_atencion"].ToString();
-                            ticket.topico_id = Convert.ToInt32(dr["topico_id"].ToString());
 
-                            ticket.importancia = Convert.ToInt16(dr["importancia"].ToString());
-                            ticket.descripcion = dr["descripcion"].ToString();
+							umr.usuario_id = dr["asignado"].ToString();
+							ticket.descripcion = dr["descripcion"].ToString();
                             ticket.estado = Convert.ToChar(dr["estado"].ToString());
                             ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
+							ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
+							ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
 
-                            topico.topico = dr["topico"].ToString();
-                            umr.id = Convert.ToInt32(dr["solicitante_id"].ToString());
-                            umr.usuario_id = dr["usuario_id"].ToString();
+							topico.topico = dr["topico"].ToString();
+
                             ticket.Topico = topico;
                             ticket.Usuario_Modulo_Rol = umr;
-                            ticket.fecha_limite = Convert.ToDateTime(dr["fecha_limite"].ToString());
-
-                            //t.Add(ticket);
-                        }
+                  
+							
+					
+						}
 					}
 				}
 			}
@@ -411,6 +413,7 @@ namespace Data.Implementar
                             ticket.Topico = topico;
                             ticket.Usuario_Modulo_Rol = umr;
                             ticket.fecha_limite = Convert.ToDateTime(dr["fecha_limite"].ToString());
+                            ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
                             t.Add(ticket);
                         }
                     }
@@ -575,7 +578,12 @@ namespace Data.Implementar
 				using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["WebApp_Ticket"].ToString()))
 				{
 					conn.Open();
-					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id, estado = @estado, fecha_limite = @fecha_limite  WHERE codigo_atencion=@codigo_atencion", conn);
+                    var update_finalizar = "";
+                    if (t.estado == 'F')
+                    {
+                        update_finalizar = ", fecha_finalizado = '" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "'";
+                    }
+					var query = new SqlCommand("UPDATE Ticket SET  topico_id=@topico_id, estado = @estado, fecha_limite = @fecha_limite "+ update_finalizar +" WHERE codigo_atencion=@codigo_atencion", conn);
 
 					query.Parameters.AddWithValue("@codigo_atencion", t.codigo_atencion);
 			

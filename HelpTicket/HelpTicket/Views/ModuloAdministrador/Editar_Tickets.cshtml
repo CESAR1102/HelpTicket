@@ -14,83 +14,92 @@
             </div>
             <div class="card-body card-block border-bottom-light">
 
+                @if (ViewBag.Error != null)
+                {
+                    <div class="container">
+                        <div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Error!</strong> @ViewBag.Error
+                        </div>
+                    </div>
+                }
                 <div class="container">
                     @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()
 
-                    <div class="form-horizontal">
-                        <h6 class="m-0 font-weight-bold text-dark">EDITAR</h6>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-horizontal">
+                            <h6 class="m-0 font-weight-bold text-dark">EDITAR</h6>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        <div class="form-group row">
-                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Ticket: </label>
-                            <div class="col-md-10">
+                            <div class="form-group row">
+                                <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Ticket: </label>
+                                <div class="col-md-10">
 
-                                @Html.EditorFor(model => model.codigo_atencion, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.codigo_atencion, "", new { @class = "text-danger" })
-                                @*<select class="form-control" style="cursor: not-allowed;color:black;" disabled="disabled">
-                    <option>@Model.codigo_atencion</option>
-                </select>*@
-                                @* @Html.TextBox("userN", null, new { style = "text-transform:uppercase ", @class = "form-control", value = "userN", @disabled = "disabled" })*@
+                                    @Html.EditorFor(model => model.codigo_atencion, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.codigo_atencion, "", new { @class = "text-danger" })
+                                    @*<select class="form-control" style="cursor: not-allowed;color:black;" disabled="disabled">
+                                <option>@Model.codigo_atencion</option>
+                            </select>*@
+                                    @* @Html.TextBox("userN", null, new { style = "text-transform:uppercase ", @class = "form-control", value = "userN", @disabled = "disabled" })*@
 
 
+                                </div>
                             </div>
+                            <br>
+                            @* <div class="form-group row">
+                        <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Solicitante: </label>
+                        <div class="col-md-10">
+                            <select class="form-control" style="cursor: not-allowed;color:black;" disabled="disabled">
+
+                                <option>@Model.solicitante_id</option>
+
+                            </select>
                         </div>
-                        <br>
-                        @* <div class="form-group row">
-            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Solicitante: </label>
-            <div class="col-md-10">
-                <select class="form-control" style="cursor: not-allowed;color:black;" disabled="disabled">
-
-                    <option>@Model.solicitante_id</option>
-
-                </select>
-            </div>
-        </div>
-        <br>
-                        *@
-                        <div class="form-group row">
-                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Estado: </label>
-                            <div class="col-md-10 ">
-                                @Html.DropDownListFor(model => model.estado,
-                                               estado,  new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <br>
-
-                        <div class="form-group row">
-                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Topico: </label>
-                            <div class="col-md-10 ">
-                                @Html.DropDownListFor(model => model.topico_id,
-                                               new SelectList(ViewBag.topicos, "id", "topico", "")
-                                               , "---Select---", "")
-                                @Html.ValidationMessageFor(model => model.topico_id, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <br>
-
-                        <div class="form-group row">
-                            <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Fecha Limite: </label>
-                            <div class="col-md-10 ">
-                                @Html.EditorFor(model => model.fecha_limite, new { htmlAttributes = new { @class = "datepicker form-control" } })
-                                @Html.ValidationMessageFor(model => model.fecha_limite,"", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <br>
-
-
-                        <br>
-
-                        <div class="form-group text-center">
-                            <input type="submit" value="Guardar" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen" />
-                            <a href="@Url.Action("VerTicketsClientes","ModuloAdministrador")" class="btn btn-secondary" id="btnReturn">Retornar</a>
-
-                        </div>
-
                     </div>
+                    <br>
+                            *@
+                            <div class="form-group row">
+                                <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Estado: </label>
+                                <div class="col-md-10 ">
+                                    @Html.DropDownListFor(model => model.estado,
+                                                   estado,  new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="form-group row">
+                                <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Topico: </label>
+                                <div class="col-md-10 ">
+                                    @Html.DropDownListFor(model => model.topico_id,
+                                                   new SelectList(ViewBag.topicos, "id", "topico", "")
+                                                   , "---Select---", "")
+                                    @Html.ValidationMessageFor(model => model.topico_id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="form-group row">
+                                <label for="staticUsuario" class="col-md-2 col-form-label" style="color:black;font-weight:bold;">Fecha Limite: </label>
+                                <div class="col-md-10 ">
+                                    @Html.EditorFor(model => model.fecha_limite, new { htmlAttributes = new { @class = "datepicker form-control" } })
+                                    @Html.ValidationMessageFor(model => model.fecha_limite, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br>
+
+
+                            <br>
+
+                            <div class="form-group text-center">
+                                <input type="submit" value="Guardar" class="btn btn-info btn-group-toggle" style="background-color :lightseagreen" />
+                                <a href="@Url.Action("VerTicketsClientes","ModuloAdministrador")" class="btn btn-secondary" id="btnReturn">Retornar</a>
+
+                            </div>
+
+                        </div>
                     }
                 </div>
             </div>

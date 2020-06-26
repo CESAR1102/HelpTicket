@@ -51,7 +51,7 @@ namespace HelpTicket.Controllers
             {
                 ViewBag.Agregado = TempData["Agregado"];
             }
-			return View(tickets);
+            return View(tickets);
 		}
 
 
@@ -85,9 +85,10 @@ namespace HelpTicket.Controllers
             bool ed = ticketservice.Update(t);
 			if (ed)
 			{
+                TempData["Agregado"] = "Se modifico con exito el ticket " + t.codigo_atencion;
 				return RedirectToAction("VerTicketsClientes");
 			}
-
+            ViewBag.Error = "No se pudo Editar el ticket " + t.codigo_atencion;
 			return View();
 
 		}
@@ -222,7 +223,11 @@ namespace HelpTicket.Controllers
         {
             bool actualizo = usuarioservice.Update(usuario);
             if (actualizo)
+            {
+                TempData["Agregado"] = "Se modifico con exito el usuario " + usuario.codigo;
                 return RedirectToAction("Usuarios");
+            }
+            ViewBag.Error = "Ocurrio un error. No se pudo modificar el usuario " + usuario.codigo;
             return View();
         }
 
@@ -232,6 +237,7 @@ namespace HelpTicket.Controllers
             var modulo = System.Configuration.ConfigurationSettings.AppSettings["Modulo_Administrador"];
             var rol = System.Configuration.ConfigurationSettings.AppSettings["Rol_Administrador"];
             t.aprobador_id = umrservice.obtenerIDUserModRol(sesion.getSession("usuario").codigo, modulo, rol);
+            t.fecha_asignado = DateTime.Now;
             if (t.codigo_atencion == null || t.asignado_id == null)
             {
                 TempData["Error"] = "No se pudo asignar. Intente otra vez!";
@@ -380,9 +386,9 @@ namespace HelpTicket.Controllers
 			{
 				ViewBag.mensajeInformativo = "Aun no se ha ingresado ningun topico";
 			}
-			if (TempData["Agregado1"] != null)
+			if (TempData["Agregado"] != null)
 			{
-				ViewBag.Agregado = TempData["Agregado1"];
+				ViewBag.Agregado = TempData["Agregado"];
 			}
 			return View(topicos);
 
@@ -396,9 +402,9 @@ namespace HelpTicket.Controllers
 			topico.fecha_creacion = DateTime.Now;
 			topico.fecha_modificacion = DateTime.Now;
 			topico.usuario_modificacion = sesion.getSession("usuario").codigo;
-			if (TempData["Error1"] != null)
+			if (TempData["Error"] != null)
 			{
-				ViewBag.Error = TempData["Error1"];
+				ViewBag.Error = TempData["Error"];
 			}
 			return View(topico);
 		}
@@ -408,13 +414,13 @@ namespace HelpTicket.Controllers
 		{
 			if (t.topico== null || t.topico == string.Empty)
 			{
-				TempData["Error1"] = "No se pudo crear el topico. El nombre esta vacio.";
-				return RedirectToAction("Topicos");
+				TempData["Error"] = "No se pudo crear el topico. El nombre esta vacio.";
+				return RedirectToAction("CrearTopico");
 			}
 			if (t.topico.Length >= 50)
 			{
-				TempData["Error1"] = "El nombre debe contener como maximo 50 caracteres";
-				return RedirectToAction("Topicos");
+				TempData["Error"] = "El nombre debe contener como maximo 50 caracteres";
+				return RedirectToAction("CrearTopico");
 			}
 			ViewBag.departamentos2 = departamentoservice.FindAll();
 			t.estado = 'S';
@@ -424,13 +430,13 @@ namespace HelpTicket.Controllers
 			t.usuario_modificacion = sesion.getSession("usuario").codigo;
 			if (topicoservice.Insert(t))
 			{
-				TempData["Agregado1"] = "Se registro el topico: " + t.topico + " exitosamente";
+				TempData["Agregado"] = "Se registro el topico: " + t.topico + " exitosamente";
 				return RedirectToAction("Topicos");
 			}
 			else
 			{
 				
-				TempData["Error1"] = "No se pudo crear el topico. Intente nuevamente.";
+				TempData["Error"] = "No se pudo crear el topico. Intente nuevamente.";
 				return RedirectToAction("CrearTopico");
 			}
 		}
@@ -441,22 +447,22 @@ namespace HelpTicket.Controllers
 		{
 			if (skillservice.ExistByTopico(Convert.ToInt32(id), ""))
 			{
-				TempData["Error1"] = "No se pudo eliminar el topico. Existen Skills asociados a este topico. Revisar.";
+				TempData["Error"] = "No se pudo eliminar el topico. Existen Skills asociados a este topico. Revisar.";
 				return RedirectToAction("Topicos");
 			}
 			if (ticketservice.ExistByTopico(Convert.ToInt32(id), ""))
 			{
-				TempData["Error1"] = "No se pudo eliminar el departamento. Existen Tickets asociados a este topico. Revisar.";
+				TempData["Error"] = "No se pudo eliminar el departamento. Existen Tickets asociados a este topico. Revisar.";
 				return RedirectToAction("Topicos");
 			}
 			if (topicoservice.Delete(Convert.ToInt32(id)))
 			{
-				TempData["Agregado1"] = "Se agrego exitosamente el topico";
+				TempData["Agregado"] = "Se elimino exitosamente el topico";
 				return RedirectToAction("Topicos");
 			}
 			else
 			{
-				TempData["Error1"] = "No se pudo eliminar el topico. Intente nuevamente.";
+				TempData["Error"] = "No se pudo eliminar el topico. Intente nuevamente.";
 				return RedirectToAction("Topicos");
 			}
 		}
@@ -663,7 +669,7 @@ namespace HelpTicket.Controllers
 
             item.Add(new SelectListItem { Text = "Finalizado", Value = "F" });
             item.Add(new SelectListItem { Text = "Ingresado", Value = "I" });
-            item.Add(new SelectListItem { Text = "Anulado", Value = "A" });
+            item.Add(new SelectListItem { Text = "Anulado", Value = "N" });
             return item;
         }
     }

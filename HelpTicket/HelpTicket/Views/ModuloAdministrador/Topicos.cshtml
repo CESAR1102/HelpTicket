@@ -57,30 +57,30 @@
 				<h6 class="m-0 font-weight-bold text-dark">TÓPICOS</h6>
 			</div>
 			<div class="card-body card-block border-bottom-light">
-				@if (ViewBag.Agregado1 != null)
+				@if (ViewBag.Agregado != null)
 				{
 					<div class="container">
 						<div class="alert alert-success alert-dismissible">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							<strong>Éxito!</strong> @ViewBag.Agregado1
+							<strong>Éxito!</strong> @ViewBag.Agregado
 						</div>
 					</div>
 				}
-				@if (ViewBag.mensajeInformativo1 != null)
+				@if (ViewBag.mensajeInformativo != null)
 				{
 					<div class="container">
 						<div class="alert alert-warning alert-dismissible">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							<strong>Atención!</strong> @ViewBag.mensajeInformativo1
+							<strong>Atención!</strong> @ViewBag.mensajeInformativo
 						</div>
 					</div>
 				}
-				@if (ViewBag.Error1 != null)
+				@if (ViewBag.Error != null)
 				{
 					<div class="container">
 						<div class="alert alert-danger alert-dismissible">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							<strong>Error!</strong> @ViewBag.Error1
+							<strong>Error!</strong> @ViewBag.Error
 						</div>
 					</div>
 				}
@@ -145,7 +145,6 @@
 										</td>
 										<td>
 											@Html.ActionLink("Edit", "EditarTopicos", new { id = item.id }) |
-											@Html.ActionLink("Details", "Details", new { id = item.id }) |
 											@Html.ActionLink("Delete", "EliminarTopicos", new { id = item.id })
 										</td>
 									</tr>
