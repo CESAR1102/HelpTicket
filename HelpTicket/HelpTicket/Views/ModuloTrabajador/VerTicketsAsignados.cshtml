@@ -6,67 +6,105 @@
 
 
 <div class="col-lg-12">
-	<div class="card shadow mb-4">
-		<div class="card-header">
-			<h6 class="m-0 font-weight-bold text-dark">HISTORIAL DE TICKETS</h6>
-		</div>
-		<div class="card-body card-block border-bottom-light">
-			@if (ViewBag.Agregado != null)
-			{
-				<div class="container">
-					<div class="alert alert-success alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Éxito!</strong> @ViewBag.Agregado
-					</div>
-				</div>
-			}
-			@if (ViewBag.mensajeInformativo != null)
-			{
-				<div class="container">
-					<div class="alert alert-warning alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Atención!</strong> @ViewBag.mensajeInformativo
-					</div>
-				</div>
-			}
-			@if (ViewBag.Error != null)
-			{
-				<div class="container">
-					<div class="alert alert-danger alert-dismissible">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						<strong>Error!</strong> @ViewBag.Error
-					</div>
-				</div>
-			}
-			<div class="container">
-				<h2>Ver Tickets</h2>
-				<p>Todos tus tickets asignados</p>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Codigo de Atención</th>
-							<th>Asignado</th>
-							<th>Tópico</th>
-							<th>Estado</th>
-							<th>Detalles</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var item in Model)
-						{
-							<tr>
-								<td>@item.codigo_atencion</td>
-								<td>@item.Usuario_Modulo_Rol.usuario_id</td>
-								<td>@item.Topico.topico</td>
-								<td>@item.estado</td>
-								<td>@Html.ActionLink("Detalle", "Detalle_Tickets", new { id = item.codigo_atencion })</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-			
-		</div>
-	</div>
-</div>
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-dark">HISTORIAL DE TICKETS</h6>
+        </div>
+        <div class="card-body card-block border-bottom-light">
+            @if (ViewBag.Agregado != null)
+            {
+                <div class="container">
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Éxito!</strong> @ViewBag.Agregado
+                    </div>
+                </div>
+            }
+            @if (ViewBag.mensajeInformativo != null)
+            {
+                <div class="container">
+                    <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Atención!</strong> @ViewBag.mensajeInformativo
+                    </div>
+                </div>
+            }
+            @if (ViewBag.Error != null)
+            {
+                <div class="container">
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> @ViewBag.Error
+                    </div>
+                </div>
+            }
+            <div class="container">
+                <h2>Ver Tickets</h2>
+                <p>Todos tus tickets asignados</p>
+                <br />
 
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Codigo de Atención</th>
+                            <th>Asignado</th>
+                            <th>Tópico</th>
+                            <th>Estado</th>
+                            <th>Fecha asignado</th>
+                            <th>Fecha Vencimiento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.codigo_atencion</td>
+                                <td>@item.Usuario_Modulo_Rol.usuario_id</td>
+                                <td>@item.Topico.topico</td>
+                                <td>@item.estado</td>
+                                <td>@item.fecha_asignado.Value.ToString("dd/MM/yyyy")</td>
+                                @if ((DateTime.Now - item.fecha_limite).Days >= -1 && (DateTime.Now - item.fecha_limite).Days <= 1)
+                                {
+                                    <td style="background-color: orange">@item.fecha_limite.ToString("dd/MM/yyyy")</td>
+                                }
+                                else if (item.fecha_limite < DateTime.Now)
+                                {
+                                    <td style="background-color: red">@item.fecha_limite.ToString("dd/MM/yyyy")</td>
+                                }
+                                else //(item.fecha_limite > DateTime.Now)
+                                {
+                                    <td style="background-color: greenyellow">@item.fecha_limite.ToString("dd/MM/yyyy")</td>
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <br />
+                
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-dark">Leyenda</h6>
+        </div>
+        <div class="card-body card-block border-bottom-light">
+            <div>
+                <p style="display:inline-block">Mas de un dia para finalizar el ticket &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                <p style="background-color: greenyellow; display:inline-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </div>
+            <div>
+                <p style="display:inline-block">En un rango +- 1 dias a finalizar el ticket &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</p>
+                <p style="background-color: orange; display:inline-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </div>
+            <div>
+                <p style="display:inline-block">Mas de 1 dia de retrazo para finalizar el ticket:</p>
+                <p style="background-color: red; display:inline-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -102,6 +102,7 @@ namespace Business.Implementar
             t.codigo_atencion = code;
             t.solicitante_id = id;
             t.estado = 'I';
+            t.fecha_limite = DateTime.Now.AddDays(7);
             if (!ticket_1.Insert(t))
             {
                 msm = "Ocurrio un error. Intente nuevamente";

@@ -148,6 +148,7 @@
     <Compile Include="PartialClass\FinalizarTicket.cs" />
     <Compile Include="PartialClass\Grafica_Reporte.cs" />
     <Compile Include="PartialClass\Grafica_Reporte2.cs" />
+    <Compile Include="PartialClass\Grafica_Reporte3.cs" />
     <Compile Include="PartialClass\InfoTrabajador.cs" />
     <Compile Include="PartialClass\InputFields_ForgotPassword.cs" />
     <Compile Include="PartialClass\InputFields_Loguin.cs" />

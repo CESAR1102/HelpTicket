@@ -53,5 +53,10 @@ namespace Business.Implementar
         {
             throw new NotImplementedException();
         }
-    }
+
+		public List<Skill> Usuarios_X_Topico()
+		{
+			return skill.Usuarios_X_Topico();
+		}
+	}
 }
