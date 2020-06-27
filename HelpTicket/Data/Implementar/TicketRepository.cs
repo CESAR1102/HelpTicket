@@ -279,7 +279,7 @@ namespace Data.Implementar
                     //query.Parameters.AddWithValue("@id", id);
 
                     
-					var query = new SqlCommand("select t.codigo_atencion,o.topico,(select u.codigo from ticket t  inner" +
+					var query = new SqlCommand("select o.id as topicoId ,umr.usuario_id as asignado, t.codigo_atencion,o.topico,(select u.codigo from ticket t  inner" +
 				" join usuario_modulo_rol umr  on t.asignado_id = umr.id inner join usuario u on u.codigo = umr.usuario_id" +
 				" where t.codigo_atencion = @id) as asignado, t.descripcion, t.estado, t.fecha_asignado, t.fecha_finalizado, t.fecha_solicitado" +
 				" from ticket t inner join topico o on t.topico_id = o.id inner join usuario_modulo_rol umr on t.solicitante_id = umr.id INNER JOIN USUARIO u on u.codigo = umr.usuario_id" +
@@ -306,21 +306,23 @@ namespace Data.Implementar
 							var topico = new Topico();
                             var umr = new Usuario_Modulo_Rol();
                             ticket.codigo_atencion = dr["codigo_atencion"].ToString();
-
+		
 							umr.usuario_id = dr["asignado"].ToString();
 							ticket.descripcion = dr["descripcion"].ToString();
                             ticket.estado = Convert.ToChar(dr["estado"].ToString());
                             ticket.fecha_solicitado = Convert.ToDateTime(dr["fecha_solicitado"].ToString());
-							ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
-							ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
 
+
+
+							ticket.topico_id = Convert.ToInt32(dr["topicoId"].ToString());
 							topico.topico = dr["topico"].ToString();
 
                             ticket.Topico = topico;
                             ticket.Usuario_Modulo_Rol = umr;
-                  
-							
-					
+
+							ticket.fecha_asignado = Convert.ToDateTime(dr["fecha_asignado"].ToString());
+							ticket.fecha_finalizado = Convert.ToDateTime(dr["fecha_finalizado"].ToString());
+
 						}
 					}
 				}
